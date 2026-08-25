@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompTIA Tech+ Study Hub | FC0-U71</title>
+<meta name="description" content="Interactive CompTIA Tech+ (FC0-U71) study app with lessons, flashcards, and practice quizzes to help you pass the exam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:   #06090f;
+  --bg2:  #0b1018;
+  --bg3:  #101620;
+  --glass: rgba(255,255,255,0.035);
+  --glass2: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --accent: #10b981;
+  --accent2: #059669;
+  --blue: #38bdf8;
+  --purple: #818cf8;
+  --orange: #fb923c;
+  --red: #f87171;
+  --text:  #edf2f7;
+  --text2: #94a3b8;
+  --text3: #475569;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100dvh;
+  overflow-x:hidden;
+}
+/* ambient orbs */
+body::before {
+  content:'';position:fixed;top:-20%;left:-15%;width:55%;height:80%;
+  background:radial-gradient(ellipse,rgba(16,185,129,0.07) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+body::after {
+  content:'';position:fixed;bottom:-20%;right:-10%;width:50%;height:70%;
+  background:radial-gradient(ellipse,rgba(56,189,248,0.05) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ══════════════════════ NAV ══════════════════════ */
+nav {
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;padding:0 24px;
+  background:rgba(6,9,15,0.82);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:15px;color:#fff;flex-shrink:0;letter-spacing:-0.5px;
+}
+.nav-wordmark{line-height:1.2;}
+.nav-wordmark b{display:block;font-size:14px;font-weight:800;color:var(--text);}
+.nav-wordmark span{font-size:11px;color:var(--text3);font-weight:500;}
+.nav-tabs{display:flex;gap:3px;background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:4px;}
+.nav-tab{
+  padding:7px 18px;border-radius:9px;border:none;background:transparent;
+  color:var(--text3);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .2s ease;white-space:nowrap;
+}
+.nav-tab:hover{color:var(--text2);background:var(--glass2);}
+.nav-tab.active{background:linear-gradient(135deg,var(--accent),var(--blue));color:#fff;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-pill{
+  background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);
+  color:var(--accent);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+  transition:all .3s ease;
+}
+
+/* ══════════════════════ VIEWS ══════════════════════ */
+.view{display:none;position:relative;z-index:1;}
+.view.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .35s ease forwards;}
+
+/* ══════════════════════ HOME ══════════════════════ */
+.home-hero{
+  padding:56px 32px 0;max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.22);
+  color:var(--accent);padding:5px 13px;border-radius:20px;
+  font-size:12px;font-weight:700;letter-spacing:.04em;margin-bottom:20px;
+}
+.hero-h1{
+  font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;
+  letter-spacing:-1.5px;color:var(--text);margin-bottom:16px;
+}
+.hero-h1 em{font-style:normal;color:var(--accent);}
+.hero-body{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:52ch;}
+.hero-cta-row{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-primary{
+  padding:12px 26px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .2s ease;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(16,185,129,0.3);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{
+  padding:12px 26px;border-radius:11px;border:1px solid var(--border2);
+  background:var(--glass);color:var(--text2);font-family:'Outfit',sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease;
+}
+.btn-ghost:hover{background:var(--glass2);color:var(--text);}
+/* hero right: exam card */
+.exam-card{
+  background:var(--glass);border:1px solid var(--border2);border-radius:20px;padding:28px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+}
+.exam-card-title{font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px;}
+.exam-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.exam-row:last-child{border-bottom:none;}
+.exam-row-label{font-size:13px;color:var(--text3);font-weight:500;}
+.exam-row-val{font-size:14px;font-weight:700;color:var(--text);}
+.exam-row-val.green{color:var(--accent);}
+.exam-row-val.blue{color:var(--blue);}
+/* stats strip */
+.stats-strip{
+  display:flex;gap:0;max-width:1200px;margin:40px auto 0;padding:0 32px;
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--glass);
+}
+.stat-box{
+  flex:1;padding:22px 20px;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat-box:last-child{border-right:none;}
+.stat-num{
+  font-size:26px;font-weight:900;letter-spacing:-1px;
+  background:linear-gradient(135deg,var(--text),var(--text2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-num.g{background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-lbl{font-size:11px;color:var(--text3);font-weight:600;margin-top:3px;}
+/* domain grid */
+.section-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--text3);max-width:1200px;margin:48px auto 16px;padding:0 32px;
+}
+.domains-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  max-width:1200px;margin:0 auto 60px;padding:0 32px;
+}
+.d-card{
+  background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden;
+}
+.d-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--dc,#10b981),transparent);
+  opacity:.04;transition:opacity .25s;
+}
+.d-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,0,0,.45);}
+.d-card:hover::before{opacity:.09;}
+.d-card.done{border-color:rgba(16,185,129,.25);}
+.dc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.dc-icon{font-size:26px;line-height:1;}
+.dc-badge{
+  font-size:11px;font-weight:800;color:#fff;padding:4px 9px;
+  border-radius:20px;background:var(--dc,#10b981);white-space:nowrap;
+}
+.dc-name{font-size:15px;font-weight:800;margin-bottom:5px;color:var(--text);}
+.dc-desc{font-size:12px;color:var(--text3);line-height:1.5;}
+.dc-qs{font-size:11px;color:var(--text3);font-weight:600;margin-top:8px;}
+.dc-bar{margin-top:14px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.dc-fill{height:100%;background:var(--dc,#10b981);border-radius:2px;transition:width .5s ease;}
+.dc-check{
+  position:absolute;bottom:14px;right:14px;width:20px;height:20px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:10px;
+  display:flex;align-items:center;justify-content:center;font-weight:900;
+  opacity:0;transition:opacity .2s;
+}
+.d-card.done .dc-check{opacity:1;}
+
+/* ══════════════════════ LESSONS ══════════════════════ */
+#lessons-view.active{display:flex;}
+.lessons-wrap{display:flex;min-height:calc(100dvh - 60px);max-width:1400px;margin:0 auto;width:100%;}
+.l-sidebar{
+  width:266px;flex-shrink:0;border-right:1px solid var(--border);
+  padding:20px 12px;position:sticky;top:60px;height:calc(100dvh - 60px);overflow-y:auto;
+}
+.l-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);padding:0 8px;margin-bottom:10px;}
+.l-sitem{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;
+  border-radius:9px;cursor:pointer;transition:all .18s ease;margin-bottom:2px;
+}
+.l-sitem:hover{background:var(--glass2);}
+.l-sitem.active{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18);}
+.l-sitem-ico{font-size:15px;flex-shrink:0;}
+.l-sitem-info{flex:1;min-width:0;}
+.l-sitem-name{font-size:12px;font-weight:700;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.l-sitem.active .l-sitem-name{color:var(--accent);}
+.l-sitem-meta{font-size:10px;color:var(--text3);font-weight:500;}
+.l-sitem-check{
+  width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;color:transparent;
+}
+.l-sitem-check.done{background:var(--accent);border-color:var(--accent);color:#fff;}
+.l-main{flex:1;padding:40px 52px;max-width:880px;overflow-y:auto;}
+
+/* lesson content typography */
+.l-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 13px;
+  border-radius:20px;font-size:11px;font-weight:700;margin-bottom:16px;border:1px solid;
+}
+.l-title{font-size:clamp(26px,3vw,38px);font-weight:900;letter-spacing:-1px;line-height:1.15;margin-bottom:8px;}
+.l-meta{font-size:14px;color:var(--text3);margin-bottom:36px;line-height:1.6;}
+.cs{margin-bottom:38px;}
+.cs h3{
+  font-size:18px;font-weight:800;margin-bottom:14px;color:var(--text);
+  display:flex;align-items:center;gap:10px;
+}
+.cs h3::before{content:'';width:3px;height:18px;background:var(--sc,var(--accent));border-radius:2px;flex-shrink:0;}
+.cs p{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:10px;}
+.tw{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin:14px 0;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{
+  background:rgba(255,255,255,.04);color:var(--text3);font-weight:700;
+  font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+  padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;
+}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(255,255,255,.02);}
+tbody td:first-child{color:var(--text);font-weight:700;}
+.ibox{
+  border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:0 9px 9px 0;padding:14px 18px;margin:14px 0;
+  font-size:13px;color:var(--text2);line-height:1.6;
+}
+.ibox.tip{border-left-color:var(--blue);}
+.ibox.warn{border-left-color:var(--orange);}
+.ibox.danger{border-left-color:var(--red);}
+.ibox-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:5px;}
+.ibox.tip .ibox-lbl{color:var(--blue);}
+.ibox.warn .ibox-lbl{color:var(--orange);}
+.steps-ul{list-style:none;margin:14px 0;}
+.step-li{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.step-n{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;
+}
+.step-c h4{font-size:13px;font-weight:800;margin-bottom:3px;color:var(--text);}
+.step-c p{font-size:12px;color:var(--text3);margin:0;line-height:1.5;}
+.code-b{
+  background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:10px;
+  padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  line-height:1.75;color:#86efac;margin:14px 0;overflow-x:auto;white-space:pre;
+}
+ul.sl{list-style:none;margin:10px 0;}
+ul.sl li{
+  padding:7px 0 7px 18px;position:relative;font-size:13px;
+  color:var(--text2);line-height:1.5;border-bottom:1px solid rgba(255,255,255,.03);
+}
+ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:800;}
+.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.tag{
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  padding:4px 10px;border-radius:20px;font-size:11px;color:var(--text2);
+  font-family:'JetBrains Mono',monospace;
+}
+.l-actions{margin-top:44px;padding-top:28px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;}
+.btn-done{
+  padding:11px 24px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;
+}
+.btn-done:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(16,185,129,.3);}
+.btn-done:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none;}
+.btn-fwd{
+  padding:11px 24px;border-radius:10px;border:1px solid var(--border2);
+  background:var(--glass);color:var(--text2);font-family:'Outfit',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-fwd:hover{background:var(--glass2);color:var(--text);}
+
+/* ══════════════════════ FLASHCARDS ══════════════════════ */
+.fc-wrap{max-width:760px;margin:0 auto;padding:44px 24px;}
+.fc-header{text-align:center;margin-bottom:32px;}
+.fc-header h2{font-size:26px;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px;}
+.fc-header p{font-size:13px;color:var(--text3);}
+.deck-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.dbtn{
+  padding:7px 16px;border-radius:20px;border:1px solid var(--border);
+  background:var(--glass);color:var(--text3);font-family:'Outfit',sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;
+}
+.dbtn:hover{border-color:var(--border2);color:var(--text2);}
+.dbtn.active{background:linear-gradient(135deg,var(--accent),var(--blue));border-color:transparent;color:#fff;}
+.fc-actions{display:flex;gap:8px;justify-content:center;margin-bottom:16px;}
+.btn-sm{
+  padding:7px 14px;border-radius:8px;border:1px solid var(--border);
+  background:var(--glass);color:var(--text3);font-family:'Outfit',sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.btn-sm:hover{background:var(--glass2);color:var(--text2);}
+.fc-progress{text-align:center;margin-bottom:18px;}
+.fc-counter{font-size:12px;color:var(--text3);font-weight:600;margin-bottom:7px;}
+.fc-pbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;max-width:380px;margin:0 auto;}
+.fc-pfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:2px;transition:width .3s ease;}
+/* 3D card */
+.card-scene{perspective:1100px;width:100%;height:300px;margin:0 auto 28px;cursor:pointer;}
+.card-inner{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+}
+.card-inner.flipped{transform:rotateY(180deg);}
+.card-face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:18px;padding:36px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+}
+.card-front{
+  background:var(--bg2);border:1px solid var(--border2);
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+.card-back{
+  background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(56,189,248,.07));
+  border:1px solid rgba(16,185,129,.22);transform:rotateY(180deg);
+}
+.card-flabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);margin-bottom:14px;}
+.card-back .card-flabel{color:var(--accent);}
+.card-q{font-size:clamp(16px,2.5vw,22px);font-weight:800;line-height:1.4;color:var(--text);letter-spacing:-.3px;}
+.card-a{font-size:clamp(13px,2vw,16px);font-weight:500;line-height:1.65;color:var(--text2);}
+.card-cat{margin-top:14px;font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(255,255,255,.06);color:var(--text3);font-weight:700;}
+.card-hint{font-size:11px;color:var(--text3);margin-top:12px;display:flex;align-items:center;gap:4px;}
+@keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+.card-hint{animation:blink 2.2s ease-in-out infinite;}
+/* controls */
+.fc-ctrl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-know{
+  padding:11px 28px;border-radius:10px;border:1px solid rgba(16,185,129,.3);
+  background:rgba(16,185,129,.08);color:var(--accent);
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;
+}
+.btn-know:hover{background:rgba(16,185,129,.16);transform:translateY(-1px);}
+.btn-learn{
+  padding:11px 28px;border-radius:10px;border:1px solid rgba(248,113,113,.3);
+  background:rgba(248,113,113,.08);color:var(--red);
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;
+}
+.btn-learn:hover{background:rgba(248,113,113,.16);transform:translateY(-1px);}
+.btn-nav-fc{
+  padding:11px 18px;border-radius:10px;border:1px solid var(--border);
+  background:var(--glass);color:var(--text3);font-size:16px;cursor:pointer;transition:all .18s;
+}
+.btn-nav-fc:hover{background:var(--glass2);color:var(--text2);}
+.fc-stats{display:flex;gap:28px;justify-content:center;margin-top:22px;}
+.fc-stat-n{font-size:22px;font-weight:900;}
+.fc-stat-n.k{color:var(--accent);}
+.fc-stat-n.u{color:var(--red);}
+.fc-stat-n.r{color:var(--text2);}
+.fc-stat-l{font-size:10px;color:var(--text3);font-weight:700;margin-top:2px;}
+
+/* ══════════════════════ QUIZ ══════════════════════ */
+.quiz-wrap{max-width:700px;margin:0 auto;padding:44px 24px;}
+#quiz-content{}
+.qz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.qz-counter{font-size:12px;color:var(--text3);font-weight:700;}
+.qz-score{font-size:13px;font-weight:800;color:var(--accent);}
+.qz-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:28px;}
+.qz-barfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));transition:width .3s ease;}
+.qz-box{background:var(--glass);border:1px solid var(--border2);border-radius:var(--radius);padding:28px;margin-bottom:20px;}
+.qz-domain{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px;}
+.qz-q{font-size:17px;font-weight:800;line-height:1.5;letter-spacing:-.2px;}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:20px;}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;padding:14px 18px;
+  border-radius:11px;border:1.5px solid var(--border);background:var(--glass);
+  cursor:pointer;transition:all .18s;text-align:left;
+}
+.opt:hover:not(.dis){border-color:var(--border2);background:var(--glass2);}
+.opt.correct{border-color:rgba(16,185,129,.6);background:rgba(16,185,129,.08);}
+.opt.wrong{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.06);}
+.opt.dis{cursor:default;}
+.opt-letter{
+  width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,.06);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;flex-shrink:0;color:var(--text3);
+}
+.opt.correct .opt-letter{background:var(--accent);border-color:var(--accent);color:#fff;}
+.opt.wrong .opt-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.opt-txt{font-size:13px;color:var(--text2);line-height:1.5;padding-top:4px;}
+.qz-exp{
+  background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.18);
+  border-radius:11px;padding:18px;margin-bottom:20px;display:none;
+}
+.qz-exp.show{display:block;}
+.qz-exp-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:7px;}
+.qz-exp-txt{font-size:13px;color:var(--text2);line-height:1.65;}
+.btn-nextq{
+  width:100%;padding:14px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:all .2s;display:none;letter-spacing:.01em;
+}
+.btn-nextq.show{display:block;}
+.btn-nextq:hover{opacity:.9;transform:translateY(-1px);}
+/* results */
+.qz-results{display:none;text-align:center;padding:40px 20px;}
+.qz-results.show{display:block;}
+.res-ring{
+  width:136px;height:136px;border-radius:50%;margin:0 auto 24px;
+  display:flex;align-items:center;justify-content:center;position:relative;
+  background:conic-gradient(var(--accent) var(--rpct,0%), rgba(255,255,255,.06) 0%);
+}
+.res-ring::before{
+  content:'';position:absolute;inset:10px;border-radius:50%;background:var(--bg2);
+}
+.res-pct{position:relative;z-index:1;font-size:28px;font-weight:900;letter-spacing:-1px;}
+.res-title{font-size:24px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px;}
+.res-sub{font-size:14px;color:var(--text3);margin-bottom:32px;}
+.btn-restart{
+  padding:13px 36px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:all .2s;
+}
+.btn-restart:hover{opacity:.9;transform:translateY(-1px);}
+
+/* ══════════════════════ RESPONSIVE ══════════════════════ */
+@media(max-width:900px){
+  .home-hero{grid-template-columns:1fr;gap:28px;}
+  .exam-card{display:none;}
+  .domains-grid{grid-template-columns:repeat(2,1fr);}
+  .nav-tabs{display:none;}
+  .mobile-bar{display:flex;}
+}
+@media(max-width:600px){
+  .home-hero{padding:32px 20px 0;}
+  .stats-strip{flex-wrap:wrap;border-radius:12px;}
+  .stat-box{flex:1 1 40%;}
+  .domains-grid{grid-template-columns:1fr;padding:0 20px;}
+  .section-label{padding:0 20px;}
+  .l-sidebar{display:none;}
+  .l-main{padding:24px 20px;}
+  .fc-wrap,.quiz-wrap{padding:28px 16px;}
+}
+.mobile-bar{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(6,9,15,.9);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  justify-content:space-around;padding:8px 0 12px;
+}
+.m-tab{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--text3);
+  transition:color .2s;
+}
+.m-tab.active{color:var(--accent);}
+.m-tab-ico{font-size:20px;margin-bottom:1px;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <a class="nav-brand" href="#" onclick="switchView('home');return false;">
+    <div class="nav-logo">T+</div>
+    <div class="nav-wordmark">
+      <b>Tech+ Study Hub</b>
+      <span>FC0-U71 Exam Prep</span>
+    </div>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-home"      onclick="switchView('home')">Home</button>
+    <button class="nav-tab"        id="tab-lessons"   onclick="switchView('lessons')">Lessons</button>
+    <button class="nav-tab"        id="tab-flashcards"onclick="switchView('flashcards')">Flashcards</button>
+    <button class="nav-tab"        id="tab-quiz"      onclick="switchView('quiz')">Practice Quiz</button>
+  </div>
+  <div class="nav-right">
+    <div class="nav-pill" id="nav-pill">0 / 6 done</div>
+  </div>
+</nav>
+
+<div id="app" style="position:relative;z-index:1;">
+
+<!-- ═══════════ HOME ═══════════ -->
+<div id="home-view" class="view active">
+
+  <div class="home-hero">
+    <div class="fade-up">
+      <div class="hero-eyebrow">CompTIA · FC0-U71 · Certification Exam</div>
+      <h1 class="hero-h1">Study smarter.<br>Pass the <em>Tech+</em> exam.</h1>
+      <p class="hero-body">An interactive study hub covering all 6 exam domains. Work through lessons, drill flashcards, and test yourself until you hit 650.</p>
+      <div class="hero-cta-row">
+        <button class="btn-primary" onclick="switchView('lessons')">Start Learning</button>
+        <button class="btn-ghost"   onclick="switchView('flashcards')">Flip Flashcards</button>
+        <button class="btn-ghost"   onclick="switchView('quiz')">Take a Quiz</button>
+      </div>
+    </div>
+    <div class="exam-card fade-up">
+      <div class="exam-card-title">Exam At a Glance</div>
+      <div class="exam-row"><span class="exam-row-label">Exam Code</span><span class="exam-row-val blue">FC0-U71</span></div>
+      <div class="exam-row"><span class="exam-row-label">Questions</span><span class="exam-row-val">Max 75</span></div>
+      <div class="exam-row"><span class="exam-row-label">Duration</span><span class="exam-row-val">60 minutes</span></div>
+      <div class="exam-row"><span class="exam-row-label">Passing Score</span><span class="exam-row-val green">650 / 900</span></div>
+      <div class="exam-row"><span class="exam-row-label">Cost</span><span class="exam-row-val">~$149 USD</span></div>
+      <div class="exam-row"><span class="exam-row-label">Expires</span><span class="exam-row-val green">Never</span></div>
+      <div class="exam-row"><span class="exam-row-label">Proctored By</span><span class="exam-row-val">Pearson VUE</span></div>
+    </div>
+  </div>
+
+  <div class="stats-strip fade-up">
+    <div class="stat-box"><div class="stat-num g" id="stat-done">0</div><div class="stat-lbl">Domains Done</div></div>
+    <div class="stat-box"><div class="stat-num">6</div><div class="stat-lbl">Total Domains</div></div>
+    <div class="stat-box"><div class="stat-num g">164</div><div class="stat-lbl">Flashcards</div></div>
+    <div class="stat-box"><div class="stat-num">15</div><div class="stat-lbl">Quiz Questions</div></div>
+    <div class="stat-box"><div class="stat-num g" id="stat-known-home">0</div><div class="stat-lbl">Cards Known</div></div>
+  </div>
+
+  <div class="section-label">The 6 Exam Domains — click any to start studying</div>
+  <div class="domains-grid" id="home-grid"></div>
+
+</div>
+
+<!-- ═══════════ LESSONS ═══════════ -->
+<div id="lessons-view" class="view">
+  <div class="lessons-wrap">
+    <aside class="l-sidebar">
+      <div class="l-sidebar-lbl">Domains</div>
+      <div id="l-sidebar-list"></div>
+    </aside>
+    <main class="l-main" id="l-main"></main>
+  </div>
+</div>
+
+<!-- ═══════════ FLASHCARDS ═══════════ -->
+<div id="flashcards-view" class="view">
+  <div class="fc-wrap">
+    <div class="fc-header">
+      <h2>Flashcard Deck</h2>
+      <p>Click the card to flip it · Mark each card to track progress</p>
+    </div>
+    <div class="deck-row" id="deck-row"></div>
+    <div class="fc-actions">
+      <button class="btn-sm" onclick="shuffleDeck()">&#x1F500; Shuffle</button>
+      <button class="btn-sm" onclick="resetDeck()">&#x21BA; Reset</button>
+    </div>
+    <div class="fc-progress">
+      <div class="fc-counter" id="fc-counter">Card 1 of 164</div>
+      <div class="fc-pbar"><div class="fc-pfill" id="fc-pfill" style="width:0%"></div></div>
+    </div>
+    <div class="card-scene" onclick="flipCard()">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front">
+          <div class="card-flabel">Question — tap to reveal</div>
+          <div class="card-q" id="card-q">Loading...</div>
+          <div class="card-cat" id="card-cat"></div>
+          <div class="card-hint">&#x1F446; tap to flip</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-flabel">Answer</div>
+          <div class="card-a" id="card-a"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-ctrl">
+      <button class="btn-nav-fc" onclick="prevCard()">&#8592;</button>
+      <button class="btn-learn" onclick="markCard(false)">&#x2717; Still Learning</button>
+      <button class="btn-know"  onclick="markCard(true)">&#x2713; Know It</button>
+      <button class="btn-nav-fc" onclick="nextCard()">&#8594;</button>
+    </div>
+    <div class="fc-stats">
+      <div style="text-align:center"><div class="fc-stat-n k" id="fc-known">0</div><div class="fc-stat-l">Know It</div></div>
+      <div style="text-align:center"><div class="fc-stat-n u" id="fc-unknown">0</div><div class="fc-stat-l">Learning</div></div>
+      <div style="text-align:center"><div class="fc-stat-n r" id="fc-rem">164</div><div class="fc-stat-l">Remaining</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<div id="quiz-view" class="view">
+  <div class="quiz-wrap">
+    <div id="quiz-content">
+      <div class="qz-meta">
+        <span class="qz-counter" id="qz-counter">Question 1 of 15</span>
+        <span class="qz-score" id="qz-score">Score: 0</span>
+      </div>
+      <div class="qz-bar"><div class="qz-barfill" id="qz-barfill" style="width:0%"></div></div>
+      <div class="qz-box">
+        <div class="qz-domain" id="qz-domain"></div>
+        <div class="qz-q" id="qz-q"></div>
+      </div>
+      <div class="opts" id="qz-opts"></div>
+      <div class="qz-exp" id="qz-exp">
+        <div class="qz-exp-lbl">Explanation</div>
+        <div class="qz-exp-txt" id="qz-exp-txt"></div>
+      </div>
+      <button class="btn-nextq" id="btn-nextq" onclick="nextQuestion()">Next Question &#x2192;</button>
+    </div>
+    <div class="qz-results" id="qz-results">
+      <div class="res-ring" id="res-ring"><div class="res-pct" id="res-pct">0%</div></div>
+      <div class="res-title" id="res-title"></div>
+      <div class="res-sub" id="res-sub"></div>
+      <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #app -->
+
+<!-- mobile bottom bar -->
+<div class="mobile-bar" id="mobile-bar">
+  <button class="m-tab active" id="mtab-home"       onclick="switchView('home')"><div class="m-tab-ico">&#x1F3E0;</div>Home</button>
+  <button class="m-tab"        id="mtab-lessons"    onclick="switchView('lessons')"><div class="m-tab-ico">&#x1F4DA;</div>Lessons</button>
+  <button class="m-tab"        id="mtab-flashcards" onclick="switchView('flashcards')"><div class="m-tab-ico">&#x1F0CF;</div>Cards</button>
+  <button class="m-tab"        id="mtab-quiz"       onclick="switchView('quiz')"><div class="m-tab-ico">&#x2753;</div>Quiz</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA — DOMAINS
+// ═══════════════════════════════════════════════
+const DOMAINS = [
+{id:1,name:"IT Concepts & Terminology",weight:26,icon:"💻",color:"#8b5cf6",qs:"~19 questions",desc:"Number systems, character encoding, IPOS cycle, data hierarchy, licensing, and troubleshooting methodology.",
+content:`<div class="l-badge" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);color:#a78bfa;">💻 Domain 1 · 26%</div>
+<h1 class="l-title">IT Concepts & Terminology</h1>
+<p class="l-meta">The highest-weighted domain — the fundamental vocabulary and mechanics of all IT. Master this and every other domain becomes intuitive.</p>
+<div class="cs"><h3>1. Number Systems &amp; Notational Systems</h3>
+<p>Computers operate natively on binary electrical states. You must recognize and compare all four numbering systems.</p>
+<div class="tw"><table><thead><tr><th>System</th><th>Base</th><th>Digits / Symbols</th><th>Primary IT Use</th></tr></thead><tbody>
+<tr><td>Binary</td><td>Base 2</td><td>0, 1</td><td>Core machine language, CPU logic, data storage/transmission</td></tr>
+<tr><td>Octal</td><td>Base 8</td><td>0–7</td><td>Linux/Unix file permissions (e.g., chmod 755), legacy systems</td></tr>
+<tr><td>Decimal</td><td>Base 10</td><td>0–9</td><td>Standard human numbering, everyday user interfaces</td></tr>
+<tr><td>Hexadecimal</td><td>Base 16</td><td>0–9, A–F (A=10, B=11, C=12, D=13, E=14, F=15)</td><td>Memory addresses, MAC addresses, IPv6, HTML/CSS hex color codes (#38BDF8)</td></tr>
+</tbody></table></div>
+<div class="ibox"><div class="ibox-lbl">Key Mathematical Concept</div>1 Bit = 0 or 1. <strong>1 Nibble = 4 bits = 1 Hex digit</strong> (e.g. 1010 in binary = A in hex = 10 in decimal). <strong>1 Byte = 8 bits = 2 Hex digits</strong> (e.g. FF = 11111111 = 255 in decimal).</div></div>
+<div class="cs"><h3>2. Data Representation &amp; Character Encoding</h3>
+<p>How text, numbers, and symbols are encoded into binary bytes.</p>
+<div class="tw"><table><thead><tr><th>Standard</th><th>Bit Width</th><th>Capacity</th><th>Key Features</th></tr></thead><tbody>
+<tr><td>ASCII</td><td>7-bit (or 8-bit Extended)</td><td>128 (256 extended)</td><td>American Standard Code for Info Interchange. Encodes basic English alphabet (A-Z, a-z), digits (0-9), punctuation, and control codes.</td></tr>
+<tr><td>Unicode</td><td>Variable (8–32 bits)</td><td>149,000+ characters</td><td>Global standard supporting virtually all world languages, historical scripts, math symbols, and modern emojis (🚀).</td></tr>
+<tr><td>UTF-8</td><td>1 to 4 bytes per char</td><td>Universal</td><td>Dominant web encoding standard. 100% backward-compatible with 7-bit ASCII.</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Exam Clue</div>If an exam question mentions international characters, non-English alphabets, or emojis, the answer is <strong>Unicode / UTF-8</strong>.</div></div>
+<div class="cs"><h3>3. The IPOS Computing Cycle</h3>
+<p>The four primary stages of computer data processing:</p>
+<div class="tw"><table><thead><tr><th>Stage</th><th>Function</th><th>Example Devices &amp; Components</th></tr></thead><tbody>
+<tr><td>Input</td><td>Capturing raw data/commands into the system</td><td>Keyboard, mouse, touchscreen, barcode scanner, microphone, webcam, sensors</td></tr>
+<tr><td>Processing</td><td>Executing calculations and instructions</td><td>CPU (Central Processing Unit), GPU (Graphics Processing Unit), ALU, registers</td></tr>
+<tr><td>Output</td><td>Presenting processed results to humans/machines</td><td>Monitors/displays, printers, speakers, headphones, haptic actuators, projectors</td></tr>
+<tr><td>Storage</td><td>Retaining data and software temporarily or permanently</td><td>Temporary: RAM, cache. Permanent: SSD, HDD, NVMe, USB flash, optical discs, cloud</td></tr>
+</tbody></table></div>
+<div class="ibox"><div class="ibox-lbl">Hybrid I/O Devices</div>Touchscreens, multi-function printers (scanner + printer), and VR headsets perform <strong>both Input and Output</strong>.</div></div>
+<div class="cs"><h3>4. Data vs. Information vs. Knowledge (DIKW)</h3>
+<div class="tw"><table><thead><tr><th>Level</th><th>Definition</th><th>Real-World Example</th></tr></thead><tbody>
+<tr><td>Data</td><td>Raw, unorganized facts or symbols without context</td><td>103.8</td></tr>
+<tr><td>Information</td><td>Data processed, labeled, and contextualized with meaning</td><td>Patient Body Temp: 103.8°F (High Fever)</td></tr>
+<tr><td>Knowledge</td><td>Information combined with understanding &amp; applied in context</td><td>A 103.8°F fever in an adult requires clinical cooling therapy and diagnostic tests</td></tr>
+<tr><td>Wisdom</td><td>Applying knowledge and ethics to long-term preventative decisions</td><td>Implementing hygiene and sanitation protocols across the clinic to prevent infection outbreaks</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>5. Units of Measure &amp; Throughput Calculations</h3>
+<div class="tw"><table><thead><tr><th>Category</th><th>Unit</th><th>Symbol</th><th>Equivalent</th></tr></thead><tbody>
+<tr><td>Storage (Bytes)</td><td>Bit / Byte</td><td>b / B</td><td>1 Byte = 8 bits</td></tr>
+<tr><td>Storage (Bytes)</td><td>Kilobyte (KB)</td><td>KB</td><td>1,024 Bytes</td></tr>
+<tr><td>Storage (Bytes)</td><td>Megabyte (MB)</td><td>MB</td><td>1,024 KB (~1 high-res photo)</td></tr>
+<tr><td>Storage (Bytes)</td><td>Gigabyte (GB)</td><td>GB</td><td>1,024 MB (~1 HD video)</td></tr>
+<tr><td>Storage (Bytes)</td><td>Terabyte (TB)</td><td>TB</td><td>1,024 GB (Modern laptop drive)</td></tr>
+<tr><td>Storage (Bytes)</td><td>Petabyte (PB)</td><td>PB</td><td>1,024 TB (Enterprise data center)</td></tr>
+<tr><td>Speed (Network)</td><td>bps / Mbps / Gbps</td><td>Mbps / Gbps</td><td>Megabits / Gigabits per second (lowercase b)</td></tr>
+<tr><td>Processing (CPU)</td><td>Hertz / GHz</td><td>GHz</td><td>Clock cycles per second (billions/sec)</td></tr>
+</tbody></table></div>
+<div class="ibox warn"><div class="ibox-lbl">Throughput Conversion Formula</div><strong>Transfer Speed in MB/s = Speed in Mbps ÷ 8</strong><br>Example: A 100 Mbps internet connection downloads data at max 12.5 MB/s ($100 \div 8$). Network speed = bits; File size = Bytes.</div></div>
+<div class="cs"><h3>6. Intellectual Property &amp; Software Licensing</h3>
+<div class="tw"><table><thead><tr><th>Type</th><th>Protects</th><th>Key Traits</th></tr></thead><tbody>
+<tr><td>Copyright</td><td>Original creative works (software code, books, art, music)</td><td>Automatic upon creation; life of author + 70 years</td></tr>
+<tr><td>Patent</td><td>Inventions, physical hardware designs, unique technical processes</td><td>Must be registered; typically 20-year exclusivity</td></tr>
+<tr><td>Trademark</td><td>Brand names, logos, slogans, product marks (™, ®)</td><td>Protects brand identity; renewable indefinitely while in commercial use</td></tr>
+<tr><td>Trade Secret</td><td>Confidential business formulas, proprietary algorithms</td><td>Protected indefinitely via NDAs and security measures (e.g., Google Search algorithm)</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Licensing Model</th><th>Source Code Access</th><th>Description</th></tr></thead><tbody>
+<tr><td>Proprietary / Commercial</td><td>Closed</td><td>Source code is private; must purchase license/subscription (e.g. Windows, Adobe CC)</td></tr>
+<tr><td>Open Source (FOSS)</td><td>Open</td><td>Source code publicly accessible for inspection, modification, and redistribution (e.g. Linux, Python)</td></tr>
+<tr><td>Freeware</td><td>Closed</td><td>Free to use at no cost, but source code is private and proprietary (e.g. Adobe Reader, Skype)</td></tr>
+<tr><td>Shareware / Trialware</td><td>Closed</td><td>Free trial period or limited features; payment required for full access (e.g. WinRAR)</td></tr>
+<tr><td>EULA</td><td>Legal Contract</td><td>End User License Agreement — terms governing software usage and restrictions</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Enterprise Licensing</div><strong>Per-Seat:</strong> 1 license per specific user. <strong>Concurrent:</strong> Fixed number of simultaneous users across a network. <strong>Site License:</strong> Unlimited installs across an entire location/facility.</div></div>
+<div class="cs"><h3>7. 6-Step Troubleshooting Methodology (Deep Dive)</h3>
+<ul class="steps-ul">
+<li class="step-li"><div class="step-n">1</div><div class="step-c"><h4>Identify the Problem</h4><p>Gather info from user. Ask <strong>open-ended questions</strong> first (symptoms), then <strong>closed-ended questions</strong> (verify facts). Ask: <em>"Has anything changed recently?"</em> Replicate the issue and review error logs.</p></div></li>
+<li class="step-li"><div class="step-n">2</div><div class="step-c"><h4>Establish a Theory of Probable Cause</h4><p>Question the obvious (cables, power switches). Consider simple, common explanations first. Consult knowledge bases and documentation.</p></div></li>
+<li class="step-li"><div class="step-n">3</div><div class="step-c"><h4>Test the Theory to Determine the Cause</h4><p>Run targeted tests. If theory is confirmed → proceed to Step 4. If theory fails → form a new theory. If unable to resolve → <strong>escalate</strong> to a senior technician.</p></div></li>
+<li class="step-li"><div class="step-n">4</div><div class="step-c"><h4>Establish a Plan of Action &amp; Implement</h4><p>Plan out step-by-step resolution. Identify potential side effects/risks before executing the fix.</p></div></li>
+<li class="step-li"><div class="step-n">5</div><div class="step-c"><h4>Verify Full System Functionality</h4><p>Have the user test the system. Confirm normal operation and implement preventive measures to stop recurrence.</p></div></li>
+<li class="step-li"><div class="step-n">6</div><div class="step-c"><h4>Document Findings, Actions &amp; Outcomes</h4><p>Record symptoms, cause, and resolution in the ticketing system and corporate knowledge base for future reference.</p></div></li>
+</ul>
+<div class="ibox tip"><div class="ibox-lbl">Mnemonic</div><strong>"I Eat Tacos Every Vacation Day"</strong> — Identify, Establish theory, Test, Establish plan, Verify, Document</div></div>
+<div class="cs"><h3>8. Safety, Digital Ethics &amp; Acronyms</h3>
+<ul class="sl">
+<li><strong>ESD (Electrostatic Discharge):</strong> Static electricity shock that damages sensitive microchips. Prevent by wearing an anti-static wrist strap.</li>
+<li><strong>UPS (Uninterruptible Power Supply):</strong> Battery backup providing emergency power during blackouts to enable graceful shutdowns.</li>
+<li><strong>PII (Personally Identifiable Information):</strong> Sensitive private data (SSN, Full Name, DOB) protected by privacy laws (GDPR, HIPAA, CCPA).</li>
+<li><strong>AUP (Acceptable Use Policy):</strong> Organizational policy outlining allowed and prohibited uses of company computers and networks.</li>
+</ul>
+<div class="tag-row"><span class="tag">CPU</span><span class="tag">GPU</span><span class="tag">RAM</span><span class="tag">ROM</span><span class="tag">BIOS</span><span class="tag">UEFI</span><span class="tag">SSD</span><span class="tag">HDD</span><span class="tag">NIC</span><span class="tag">MAC</span><span class="tag">IP</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">ISP</span><span class="tag">GUI</span><span class="tag">CLI</span><span class="tag">UPS</span><span class="tag">ESD</span><span class="tag">PII</span><span class="tag">AUP</span><span class="tag">EULA</span><span class="tag">ASCII</span><span class="tag">UTF-8</span></div></div>`},
+
+{id:2,name:"Infrastructure",weight:18,icon:"🔧",color:"#3b82f6",qs:"~13 questions",desc:"Hardware components, networking devices, cloud service models, and virtualization.",
+content:`<div class="l-badge" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3);color:#60a5fa;">🔧 Domain 2 · 18%</div>
+<h1 class="l-title">Infrastructure</h1>
+<p class="l-meta">Covers hardware, networking, cloud computing, and virtualization. Focus on the PURPOSE of each technology, not deep configuration details.</p>
+<div class="cs"><h3>Internal Hardware Components</h3>
+<div class="tw"><table><thead><tr><th>Component</th><th>Function</th><th>Notes</th></tr></thead><tbody>
+<tr><td>CPU</td><td>Executes program instructions</td><td>Measured in GHz clock speed and number of cores</td></tr>
+<tr><td>RAM</td><td>Fast temporary storage for active processes</td><td>Volatile — cleared on shutdown</td></tr>
+<tr><td>Motherboard</td><td>Main circuit board connecting all components</td><td>Contains CPU socket, RAM slots, expansion slots</td></tr>
+<tr><td>HDD</td><td>Spinning magnetic disk storage</td><td>Slower, cheaper per GB, more fragile</td></tr>
+<tr><td>SSD</td><td>Flash-based storage with no moving parts</td><td>Faster, more durable, more expensive per GB</td></tr>
+<tr><td>PSU</td><td>Power Supply Unit — converts AC wall power to DC</td><td>Powers all internal components</td></tr>
+<tr><td>GPU</td><td>Renders graphics with parallel processing</td><td>Essential for gaming, video editing, AI workloads</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>Networking Fundamentals</h3>
+<div class="tw"><table><thead><tr><th>Device</th><th>Function</th></tr></thead><tbody>
+<tr><td>Router</td><td>Connects different networks (e.g., home LAN to the internet)</td></tr>
+<tr><td>Switch</td><td>Connects devices within the same network (LAN)</td></tr>
+<tr><td>Modem</td><td>Converts the ISP's signal to a usable format for your network</td></tr>
+<tr><td>Access Point</td><td>Extends or creates Wi-Fi coverage in a space</td></tr>
+<tr><td>Firewall</td><td>Monitors and filters network traffic based on security rules</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Type</th><th>Full Name</th><th>Scope</th></tr></thead><tbody>
+<tr><td>PAN</td><td>Personal Area Network</td><td>Bluetooth range (~10 meters)</td></tr>
+<tr><td>LAN</td><td>Local Area Network</td><td>Home or office building</td></tr>
+<tr><td>MAN</td><td>Metropolitan Area Network</td><td>City-wide</td></tr>
+<tr><td>WAN</td><td>Wide Area Network</td><td>Country-wide or the internet itself</td></tr>
+</tbody></table></div>
+<div class="ibox"><div class="ibox-lbl">IP Addressing</div>Every device needs an IP. <strong>IPv4</strong>: 32-bit (e.g. 192.168.1.1) — limited. <strong>IPv6</strong>: 128-bit — vast. <strong>DHCP</strong> auto-assigns IPs. <strong>DNS</strong> translates domain names to IPs.</div></div>
+<div class="cs"><h3>Virtualization</h3>
+<div class="tw"><table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody>
+<tr><td>Virtual Machine (VM)</td><td>A software emulation of a physical computer; runs its own OS</td></tr>
+<tr><td>Hypervisor</td><td>Software layer that creates and manages VMs</td></tr>
+<tr><td>Type 1 (Bare-metal)</td><td>Runs directly on hardware — VMware ESXi, Microsoft Hyper-V</td></tr>
+<tr><td>Type 2 (Hosted)</td><td>Runs on top of an existing OS — VirtualBox, VMware Workstation</td></tr>
+<tr><td>Snapshot</td><td>Saved state of a VM at a point in time — enables fast rollback</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Why Virtualize?</div>Better hardware utilization, isolation between VMs, easy snapshots for backup/restore, run multiple OSes on one physical machine.</div></div>
+<div class="cs"><h3>Cloud Computing Service Models</h3>
+<div class="tw"><table><thead><tr><th>Model</th><th>Provider Manages</th><th>Customer Manages</th><th>Examples</th></tr></thead><tbody>
+<tr><td>IaaS</td><td>Hardware, networking, storage</td><td>OS, apps, data</td><td>AWS EC2, Azure VMs</td></tr>
+<tr><td>PaaS</td><td>Hardware + OS + runtime</td><td>Apps and data only</td><td>Google App Engine</td></tr>
+<tr><td>SaaS</td><td>Everything including the app</td><td>Just use the application</td><td>Gmail, Office 365, Salesforce</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Deployment Model</th><th>Description</th></tr></thead><tbody>
+<tr><td>Public Cloud</td><td>Shared infrastructure managed by provider (AWS, Azure, GCP)</td></tr>
+<tr><td>Private Cloud</td><td>Dedicated to one org; more control and security</td></tr>
+<tr><td>Hybrid Cloud</td><td>Mix of public + private, connecting on-premises to cloud</td></tr>
+<tr><td>Community Cloud</td><td>Shared by a specific group, e.g., government agencies</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Mnemonic</div><strong>"I Passed the SAT"</strong> — IaaS (most customer control) → PaaS → SaaS (least customer control)</div></div>
+<div class="cs"><h3 style="--sc:#38bdf8">Networking Protocols &amp; Ports</h3>
+<p>The exam tests you on matching protocols to their function and port number. Know all of these.</p>
+<div class="tw"><table><thead><tr><th>Protocol</th><th>Port</th><th>Function</th></tr></thead><tbody>
+<tr><td>HTTP</td><td>80</td><td>Standard unencrypted web page loading</td></tr>
+<tr><td>HTTPS</td><td>443</td><td>Encrypted web pages — uses TLS/SSL</td></tr>
+<tr><td>FTP</td><td>20 / 21</td><td>File transfer between client and server</td></tr>
+<tr><td>SFTP / SSH</td><td>22</td><td>Encrypted file transfer / secure remote shell</td></tr>
+<tr><td>Telnet</td><td>23</td><td>Unencrypted remote access — INSECURE, avoid</td></tr>
+<tr><td>SMTP</td><td>25</td><td>Sends outgoing email to mail server</td></tr>
+<tr><td>POP3</td><td>110</td><td>Downloads email; removes it from the server</td></tr>
+<tr><td>IMAP</td><td>143</td><td>Reads email; keeps it on the server (multi-device sync)</td></tr>
+<tr><td>DNS</td><td>53</td><td>Translates domain names to IP addresses</td></tr>
+<tr><td>DHCP</td><td>67 / 68</td><td>Auto-assigns IP addresses to devices</td></tr>
+<tr><td>RDP</td><td>3389</td><td>Graphical remote desktop (Windows)</td></tr>
+<tr><td>SNMP</td><td>161</td><td>Monitors and manages network devices</td></tr>
+</tbody></table></div>
+<div class="ibox warn"><div class="ibox-lbl">Email Protocol Trap</div><strong>SMTP</strong> = Sending mail. <strong>POP3</strong> = Downloads mail (removes from server). <strong>IMAP</strong> = Syncs mail across all devices (stays on server). Exam questions often make you pick between POP3 and IMAP.</div></div>
+<div class="cs"><h3 style="--sc:#38bdf8">TCP vs. UDP</h3>
+<div class="tw"><table><thead><tr><th>Feature</th><th>TCP</th><th>UDP</th></tr></thead><tbody>
+<tr><td>Connection type</td><td>Connection-oriented (3-way handshake first)</td><td>Connectionless (fire and forget)</td></tr>
+<tr><td>Reliability</td><td>Guaranteed — retransmits lost packets</td><td>No guarantee — packets can be lost</td></tr>
+<tr><td>Speed</td><td>Slower — overhead from error checking</td><td>Faster — no handshake overhead</td></tr>
+<tr><td>Best for</td><td>Web browsing, email, file transfer, databases</td><td>Streaming, gaming, VoIP, DNS queries</td></tr>
+<tr><td>Examples</td><td>HTTP, HTTPS, FTP, SMTP, SSH, RDP</td><td>DNS, VoIP, online gaming, live video</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Quick Rule</div>TCP = reliable, ordered, slower. UDP = fast, lossy, no order guaranteed. Streaming and gaming tolerate some packet loss — speed matters more.</div></div>
+<div class="cs"><h3 style="--sc:#38bdf8">MAC Address vs. IP Address</h3>
+<div class="tw"><table><thead><tr><th>Feature</th><th>MAC Address</th><th>IP Address</th></tr></thead><tbody>
+<tr><td>Full Name</td><td>Media Access Control</td><td>Internet Protocol</td></tr>
+<tr><td>Purpose</td><td>Identifies a device on a local network segment</td><td>Identifies a device across any network or the internet</td></tr>
+<tr><td>Assigned By</td><td>Manufacturer (burned into the NIC)</td><td>DHCP server or manually by admin</td></tr>
+<tr><td>Format</td><td>6 pairs of hex: 00:1A:2B:3C:4D:5E</td><td>IPv4: 192.168.1.10 / IPv6: 2001:db8::1</td></tr>
+<tr><td>Scope</td><td>Local only — not routed across internet</td><td>Globally routable (public IP)</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3 style="--sc:#38bdf8">Wi-Fi Standards (IEEE 802.11)</h3>
+<div class="tw"><table><thead><tr><th>Standard</th><th>Name</th><th>Max Speed</th><th>Frequency</th></tr></thead><tbody>
+<tr><td>802.11a</td><td>Wi-Fi 1</td><td>54 Mbps</td><td>5 GHz</td></tr>
+<tr><td>802.11b</td><td>Wi-Fi 2</td><td>11 Mbps</td><td>2.4 GHz</td></tr>
+<tr><td>802.11g</td><td>Wi-Fi 3</td><td>54 Mbps</td><td>2.4 GHz</td></tr>
+<tr><td>802.11n</td><td>Wi-Fi 4</td><td>600 Mbps</td><td>2.4 &amp; 5 GHz</td></tr>
+<tr><td>802.11ac</td><td>Wi-Fi 5</td><td>~3.5 Gbps</td><td>5 GHz</td></tr>
+<tr><td>802.11ax</td><td>Wi-Fi 6</td><td>~9.6 Gbps</td><td>2.4, 5 &amp; 6 GHz</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Band</th><th>Range</th><th>Speed</th><th>Interference</th></tr></thead><tbody>
+<tr><td>2.4 GHz</td><td>Longer</td><td>Slower</td><td>High — microwaves, neighbors, baby monitors</td></tr>
+<tr><td>5 GHz</td><td>Shorter</td><td>Faster</td><td>Low — less congested band</td></tr>
+<tr><td>6 GHz</td><td>Shortest</td><td>Fastest</td><td>Least — newest, almost no congestion</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Frequency Tip</div>Interference question → 2.4 GHz. Speed/throughput question → 5 GHz or 6 GHz. Range question → 2.4 GHz travels farther through walls.</div></div>
+<div class="cs"><h3 style="--sc:#38bdf8">Essential Networking Terms</h3>
+<div class="tw"><table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody>
+<tr><td>Bandwidth</td><td>Maximum capacity of a connection (e.g., 1 Gbps)</td></tr>
+<tr><td>Latency</td><td>Delay in data transmission — lower ms = better</td></tr>
+<tr><td>Packet</td><td>A chunk of data sent across a network; large files split into many</td></tr>
+<tr><td>Port</td><td>A logical number (0–65535) identifying a specific service on a device</td></tr>
+<tr><td>Default Gateway</td><td>The router IP that devices use to send traffic outside their local network</td></tr>
+<tr><td>NAT</td><td>Network Address Translation — converts private IPs to one public IP at the router</td></tr>
+<tr><td>SSID</td><td>Service Set Identifier — the name of a Wi-Fi network</td></tr>
+<tr><td>Subnet Mask</td><td>Separates IP into network vs. host portion (e.g., 255.255.255.0)</td></tr>
+<tr><td>Ping</td><td>Command-line tool testing connectivity and measuring round-trip latency</td></tr>
+<tr><td>Traceroute</td><td>Maps every hop between your device and a destination; finds slow/broken routers</td></tr>
+</tbody></table></div></div>`},
+
+{id:3,name:"Applications & Software",weight:14,icon:"📱",color:"#06b6d4",qs:"~10 questions",desc:"OS architecture, file systems & journaling, software delivery, enterprise apps, browser security, and modern AI.",
+content:`<div class="l-badge" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#22d3ee;">📱 Domain 3 · 14%</div>
+<h1 class="l-title">Applications & Software</h1>
+<p class="l-meta">Covers operating systems, file systems, software delivery, browser mechanics, and modern Artificial Intelligence (AI) — a major highlight of the Tech+ FC0-U71 exam.</p>
+<div class="cs"><h3>1. Operating System Architecture &amp; Functions</h3>
+<p>An OS is the core software managing hardware abstraction, multitasking, memory, and access control.</p>
+<div class="tw"><table><thead><tr><th>Layer / Component</th><th>Type</th><th>Core Responsibilities</th></tr></thead><tbody>
+<tr><td>System Kernel</td><td>Core Engine</td><td>Privileged program loaded at boot; manages CPU scheduling, virtual memory paging, hardware I/O, and device drivers.</td></tr>
+<tr><td>User Shell (GUI / CLI)</td><td>Interface Layer</td><td>Outer interface for users/programs. GUI = graphical windows/menus (Explorer/Finder); CLI = text automation (PowerShell, Bash).</td></tr>
+<tr><td>Process / Task</td><td>Active Program</td><td>An actively running program consuming CPU &amp; RAM. Managed via Task Manager (Win), Activity Monitor (Mac), or top/ps (Linux).</td></tr>
+<tr><td>Service / Daemon</td><td>Background Task</td><td>Runs continuously in the background without a user interface (e.g., Print Spooler, SSH daemon sshd, Web Server httpd).</td></tr>
+<tr><td>Device Driver</td><td>Hardware Translator</td><td>Specialized software enabling the OS kernel to communicate with specific hardware devices (GPU, NIC, printer).</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Architecture</th><th>Address Width</th><th>Max Usable RAM</th><th>Application Compatibility</th></tr></thead><tbody>
+<tr><td>32-bit (x86)</td><td>32 bits ($2^{32}$)</td><td><strong>4 GB maximum</strong></td><td>Can only run 32-bit applications. Cannot execute 64-bit software.</td></tr>
+<tr><td>64-bit (x64)</td><td>64 bits ($2^{64}$)</td><td><strong>16 Exabytes</strong> (Multi-TB)</td><td>Runs both 64-bit and 32-bit applications (e.g. Program Files x86 on Windows).</td></tr>
+</tbody></table></div>
+<div class="ibox warn"><div class="ibox-lbl">Exam Trap</div>A 32-bit OS can <strong>never utilize more than 4 GB of RAM</strong>, even if the computer has 16 GB of physical RAM installed.</div></div>
+<div class="cs"><h3>2. File Systems &amp; File Management</h3>
+<p>How operating systems organize, index, secure, and recover files on physical disks.</p>
+<div class="tw"><table><thead><tr><th>File System</th><th>Primary OS</th><th>Max File Size</th><th>Key Capabilities</th></tr></thead><tbody>
+<tr><td>NTFS</td><td>Windows</td><td>16 TB – 8 PB</td><td>Permissions (ACLs), Compression, BitLocker encryption, and <strong>Journaling</strong> for crash recovery.</td></tr>
+<tr><td>FAT32</td><td>Universal (Win, Mac, Linux, Consoles)</td><td><strong>4 GB</strong> (Strict Limit)</td><td>Universal cross-platform compatibility; legacy flash drives; <strong>no native permissions or journaling</strong>.</td></tr>
+<tr><td>exFAT</td><td>Cross-Platform (Win &amp; Mac)</td><td>16 Exabytes</td><td>Modern high-capacity flash drive standard; compatible across Windows and Mac; removes FAT32's 4 GB limit.</td></tr>
+<tr><td>ext4</td><td>Linux</td><td>16 TB</td><td>Default Linux filesystem; robust <strong>journaling</strong>, high-performance volume management, and permission controls.</td></tr>
+<tr><td>APFS</td><td>macOS / iOS</td><td>8 Exabytes</td><td>Default modern Apple filesystem; flash/SSD-optimized, fast cloning, space sharing, and native file encryption.</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">File System Journaling</div>Journaling writes pending file changes to a circular log before saving to disk. If power cuts off mid-write, the OS reads the journal to recover cleanly without file corruption.</div></div>
+<div class="cs"><h3>3. File Attributes &amp; Common File Formats</h3>
+<div class="tw"><table><thead><tr><th>Attribute</th><th>Meaning</th><th>Description</th></tr></thead><tbody>
+<tr><td>Read-Only (R)</td><td>View only</td><td>File can be opened/read, but cannot be modified, overwritten, or deleted.</td></tr>
+<tr><td>Hidden (H)</td><td>Invisible</td><td>Concealed from standard directory listings to prevent accidental deletion.</td></tr>
+<tr><td>System (S)</td><td>OS critical</td><td>Core operating system file required for booting and stability.</td></tr>
+<tr><td>Archive (A)</td><td>Backup flag</td><td>Indicates the file has been modified since the last backup cycle.</td></tr>
+</tbody></table></div>
+<div class="tag-row"><span class="tag">.exe</span><span class="tag">.msi</span><span class="tag">.app</span><span class="tag">.dmg</span><span class="tag">.bat</span><span class="tag">.ps1</span><span class="tag">.sh</span><span class="tag">.py</span><span class="tag">.zip</span><span class="tag">.iso</span><span class="tag">.docx</span><span class="tag">.xlsx</span><span class="tag">.pdf</span><span class="tag">.csv</span></div></div>
+<div class="cs"><h3>4. Software Categories &amp; Enterprise Business Tools</h3>
+<div class="tw"><table><thead><tr><th>Category</th><th>Description</th><th>Examples</th></tr></thead><tbody>
+<tr><td>Productivity</td><td>Word processing, spreadsheets, presentations, email/calendars</td><td>Microsoft 365, Google Workspace, LibreOffice</td></tr>
+<tr><td>Collaboration</td><td>Real-time chat, video conferencing, screen sharing</td><td>Slack, Microsoft Teams, Zoom, Webex</td></tr>
+<tr><td>CRM</td><td>Customer Relationship Management — sales leads, client history, customer support tickets</td><td>Salesforce, HubSpot</td></tr>
+<tr><td>ERP</td><td>Enterprise Resource Planning — centralized supply chain, manufacturing, inventory, accounting, and payroll</td><td>SAP, Oracle ERP</td></tr>
+<tr><td>Accounting</td><td>General ledger, invoicing, tax compliance, payroll</td><td>QuickBooks, Xero</td></tr>
+<tr><td>Project Management</td><td>Sprint planning, Kanban boards, Gantt charts, task tracking</td><td>Jira, Asana, Trello</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Delivery Model</th><th>Where Executed</th><th>Offline Access?</th><th>Installation Required?</th></tr></thead><tbody>
+<tr><td>Locally Installed</td><td>Local CPU &amp; RAM</td><td>Yes</td><td>Yes (Local installer)</td></tr>
+<tr><td>Web-based / Cloud SaaS</td><td>Remote cloud server (via browser)</td><td>Usually No (Needs internet)</td><td>No (Zero install)</td></tr>
+<tr><td>Mobile App</td><td>ARM processor (sandboxed)</td><td>Depends on app</td><td>Yes (App Store / Google Play)</td></tr>
+<tr><td>Portable App</td><td>Runs directly from USB drive</td><td>Yes</td><td>No (No registry changes)</td></tr>
+</tbody></table></div>
+<div class="ibox"><div class="ibox-lbl">Software Lifecycles</div><strong>Hotfix/Patch:</strong> Emergency fix for a specific bug/vulnerability. <strong>Service Pack:</strong> Cumulative bundle of updates. <strong>End-of-Life (EOL):</strong> Vendor ceases updates; running EOL software creates severe security risks.</div></div>
+<div class="cs"><h3>5. Web Browser Architecture, Performance &amp; Privacy</h3>
+<ul class="sl">
+<li><strong>Browser Cache:</strong> Stores static assets (images, CSS, JS) on local disk to make future visits load instantly. <em>Troubleshooting: Clear cache if websites display stale or broken layouts.</em></li>
+<li><strong>Browser Cookies:</strong> Small files holding login tokens, user preferences, and shopping carts. (First-party = website preferences; Third-party = cross-site tracking).</li>
+<li><strong>Private / Incognito Browsing:</strong> Stops the browser from saving history, cache, and cookies <em>locally on that machine</em>. It does <strong>NOT</strong> hide traffic from ISPs, corporate firewalls, or websites.</li>
+<li><strong>Digital Certificates &amp; HTTPS:</strong> Browsers verify SSL/TLS certificates issued by Certificate Authorities (CAs). Red error pages indicate expired, self-signed, or untrusted certs.</li>
+<li><strong>Extensions &amp; Add-ons:</strong> Add functionality (ad blockers, password managers). Unvetted extensions pose major spyware risks.</li>
+<li><strong>Pop-up Blockers:</strong> Suppresses unsolicited advertising windows; supports site-specific whitelist rules.</li>
+</ul></div>
+<div class="cs"><h3>6. Artificial Intelligence (AI) — Comprehensive Guide</h3>
+<div class="tw"><table><thead><tr><th>AI Paradigm</th><th>Definition</th><th>Examples &amp; Real-World IT Use</th></tr></thead><tbody>
+<tr><td>Artificial Intelligence (AI)</td><td>Broad discipline of machines simulating human cognitive functions and problem solving.</td><td>Autonomous robotics, expert systems, game AI</td></tr>
+<tr><td>Machine Learning (ML)</td><td>Algorithms that improve automatically by analyzing historical training data patterns.</td><td>Spam filtering, recommendation algorithms, fraud detection</td></tr>
+<tr><td>Deep Learning</td><td>Multi-layered artificial neural networks modeling complex speech and vision.</td><td>Self-driving cars, facial recognition, natural language processing</td></tr>
+<tr><td>Generative AI</td><td>AI that creates brand-new, original content (text, synthetic code, images, audio, video) from prompts.</td><td>ChatGPT, Claude, Google Gemini, Midjourney, GitHub Copilot</td></tr>
+<tr><td>Predictive AI</td><td>AI that analyzes historical data to forecast trends or classify risk.</td><td>Credit card fraud detection, server load forecasting, weather prediction</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>AI Term / Concept</th><th>Definition &amp; Importance</th></tr></thead><tbody>
+<tr><td>Large Language Model (LLM)</td><td>Deep learning model trained on vast text corpora to understand and generate human language, summaries, and code.</td></tr>
+<tr><td>Prompt &amp; Prompt Engineering</td><td>Input given to an AI. Prompt engineering crafts structured roles, constraints, and examples to produce optimal outputs.</td></tr>
+<tr><td>AI Hallucination</td><td>When an AI generates factually incorrect, fabricated, or nonsensical statements with extreme confidence.</td></tr>
+<tr><td>Data Privacy &amp; IP Leakage Risk</td><td><strong>Crucial Exam Concept:</strong> Pasting proprietary company code or PII into public AI tools can leak trade secrets or expose confidential data.</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Key Business AI Uses</div>24/7 Level-1 helpdesk triage chatbots · Automated code generation and unit testing · Rapid document summarization · Predictive maintenance alerts.</div></div>`},
+
+{id:4,name:"Software Development Concepts",weight:10,icon:"🖥️",color:"#f59e0b",qs:"~7 questions",desc:"Language categories, data types, control flow, flowchart symbols, Boolean logic, OOP, SDLC & Git.",
+content:`<div class="l-badge" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3);color:#fbbf24;">🖥️ Domain 4 · 10%</div>
+<h1 class="l-title">Software Development Concepts</h1>
+<p class="l-meta">Focuses on programmatic logic, data types, control flow, flowcharting, and modern development lifecycles. No code writing required — master the concepts and syntax patterns.</p>
+<div class="cs"><h3>1. Programming Language Categories &amp; Execution</h3>
+<div class="tw"><table><thead><tr><th>Category</th><th>How It Executes</th><th>Key Advantages</th><th>Examples</th></tr></thead><tbody>
+<tr><td>Compiled</td><td>Compiler converts entire source code into native binary machine code (.exe) before execution.</td><td>Fastest execution; direct hardware access; catches syntax bugs before running.</td><td>C, C++, Rust, Go</td></tr>
+<tr><td>Interpreted</td><td>Interpreter reads and executes code line-by-line in memory at runtime.</td><td>High portability; rapid prototyping; no build step.</td><td>Python, Ruby, JavaScript, PHP</td></tr>
+<tr><td>Hybrid / Bytecode</td><td>Compiled into bytecode executed inside a Virtual Machine (JVM / .NET CLR).</td><td>Cross-platform "write once, run anywhere"; automatic memory management.</td><td>Java, C# (.NET)</td></tr>
+<tr><td>Scripting</td><td>Lightweight interpreted language for automating tasks and system tasks.</td><td>Easy automation; fast execution of operational commands.</td><td>PowerShell, Bash, Python, JS</td></tr>
+<tr><td>Assembly</td><td>Low-level mnemonic language (MOV, ADD, JMP) mapping 1-to-1 to CPU instructions.</td><td>Maximum performance; microsecond hardware control.</td><td>x86 Assembly, ARM Assembly</td></tr>
+<tr><td>Markup</td><td>Structures and presents data using tags; <strong>contains no programmatic logic</strong>.</td><td>Universal standard for document layouts and data interchange.</td><td>HTML, XML, Markdown, JSON</td></tr>
+<tr><td>Query</td><td>Specialized declarative language for requesting/updating database records.</td><td>Optimized for relational database operations.</td><td>SQL</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>2. Identifiers, Primitive Data Types &amp; Data Structures</h3>
+<div class="tw"><table><thead><tr><th>Data Concept</th><th>Type</th><th>Definition &amp; Characteristics</th><th>Example Values</th></tr></thead><tbody>
+<tr><td>Variable</td><td>Identifier</td><td>Named memory container whose value <strong>can change</strong> during execution.</td><td>score = 100</td></tr>
+<tr><td>Constant</td><td>Identifier</td><td>Named value permanently locked at declaration; <strong>cannot be modified</strong>.</td><td>const PI = 3.14159</td></tr>
+<tr><td>Char</td><td>Primitive</td><td>A single alphanumeric character, digit, or symbol in single quotes.</td><td>'A', '9', '#'</td></tr>
+<tr><td>String</td><td>Primitive</td><td>An ordered sequence of text characters in double quotes.</td><td>"CompTIA Tech+"</td></tr>
+<tr><td>Integer</td><td>Primitive</td><td>Whole positive or negative number with zero decimal places.</td><td>42, -10, 2048</td></tr>
+<tr><td>Float / Double</td><td>Primitive</td><td>Real numbers containing decimal fractions. Double = 64-bit precision.</td><td>3.14159, 99.99</td></tr>
+<tr><td>Boolean</td><td>Primitive</td><td>Binary logical state with only two possible values: True or False.</td><td>True, False</td></tr>
+<tr><td>Array / List</td><td>Composite</td><td>Ordered, zero-indexed collection of items of the same data type.</td><td>fruits[0] = "Apple"</td></tr>
+<tr><td>Dictionary / Map</td><td>Composite</td><td>Collection of unique keys paired with associated data values.</td><td>{"user": "jdoe", "role": "admin"}</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>3. Control Structures &amp; Flow Control</h3>
+<div class="code-b">// 1. Branching (IF / ELSE &amp; SWITCH)
+IF userAge &gt;= 18 THEN
+    display "Access Granted"
+ELSE
+    display "Access Denied"
+ENDIF
+
+// 2. Count-controlled Loop (FOR) — known iteration count
+FOR count = 1 TO 5
+    print "Packet #" + count
+ENDFOR
+
+// 3. Condition-controlled Loop (WHILE) — checks BEFORE running
+WHILE battery &gt; 0
+    runDevice()
+    battery = battery - 1
+ENDWHILE
+
+// 4. Post-check Loop (DO-WHILE) — GUARANTEED to execute at least ONCE
+DO
+    password = promptUser("Enter Password: ")
+WHILE validate(password) == False</div>
+<div class="ibox tip"><div class="ibox-lbl">Functions &amp; Methods</div>A <strong>Function</strong> is a reusable block of code. <strong>Parameters</strong> are input values passed into the function; the <strong>Return Value</strong> is the output data sent back upon completion.</div></div>
+<div class="cs"><h3>4. Flowchart Symbols &amp; Visual Logic</h3>
+<p>Crucial exam topic — know each standard flowchart symbol shape and its exact meaning.</p>
+<div class="tw"><table><thead><tr><th>Symbol Shape</th><th>Formal Name</th><th>Meaning &amp; Role in Diagram</th></tr></thead><tbody>
+<tr><td>Oval / Rounded Pill</td><td>Terminator</td><td>Represents the official <strong>Start</strong> or <strong>End</strong> of the program flow.</td></tr>
+<tr><td>Rectangle</td><td>Process</td><td>Represents an action, calculation, arithmetic operation, or variable assignment (e.g. x = y + 1).</td></tr>
+<tr><td>Diamond</td><td>Decision</td><td>Represents <strong>Branching / Conditionals</strong> (e.g., Is score &gt;= 70?). Has multiple exit paths (Yes/No, True/False).</td></tr>
+<tr><td>Parallelogram</td><td>Input / Output (I/O)</td><td>Represents reading user input or displaying/printing output results.</td></tr>
+<tr><td>Arrow</td><td>Flow Line</td><td>Connects symbols to indicate the chronological direction of execution.</td></tr>
+</tbody></table></div>
+<div class="ibox"><div class="ibox-lbl">Pseudocode</div>An informal, plain-English outline of program logic that looks like code structure but ignores strict language syntax. Used to design and communicate algorithms prior to coding.</div></div>
+<div class="cs"><h3>5. Boolean Logic &amp; Truth Tables</h3>
+<div class="tw"><table><thead><tr><th>Input A</th><th>Input B</th><th>AND (A &amp;&amp; B)</th><th>OR (A || B)</th><th>XOR (A ^ B)</th><th>NOT A (!A)</th></tr></thead><tbody>
+<tr><td>False</td><td>False</td><td>False</td><td>False</td><td>False</td><td>True</td></tr>
+<tr><td>False</td><td>True</td><td>False</td><td>True</td><td>True</td><td>True</td></tr>
+<tr><td>True</td><td>False</td><td>False</td><td>True</td><td>True</td><td>False</td></tr>
+<tr><td>True</td><td>True</td><td><strong>True</strong></td><td><strong>True</strong></td><td><strong>False</strong></td><td>False</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Quick Logic Rules</div><strong>AND:</strong> True ONLY if BOTH inputs are True.<br><strong>OR:</strong> True if AT LEAST ONE input is True.<br><strong>XOR (Exclusive OR):</strong> True if EXACTLY ONE input is True, but False if both are True or both are False.</div></div>
+<div class="cs"><h3>6. Object-Oriented Programming (OOP)</h3>
+<div class="tw"><table><thead><tr><th>OOP Concept</th><th>Definition</th><th>Real-World Analogy</th></tr></thead><tbody>
+<tr><td>Class</td><td>A blueprint or template defining attributes and methods.</td><td>Architectural blueprint of a house</td></tr>
+<tr><td>Object / Instance</td><td>A concrete, distinct realization of a class created in memory.</td><td>The actual physical house built from the blueprint</td></tr>
+<tr><td>Attributes (Properties)</td><td>Data variables stored inside an object describing its state.</td><td>House color, number of bedrooms, square footage</td></tr>
+<tr><td>Methods</td><td>Callable functions representing behaviors the object can perform.</td><td>openDoor(), turnOnLights(), lockWindows()</td></tr>
+<tr><td>Encapsulation</td><td>Bundling data and methods into a single unit; hiding internal details.</td><td>Operating a TV with a remote without rewiring internal circuits</td></tr>
+<tr><td>Inheritance</td><td>Child class automatically inheriting properties/methods from a parent class.</td><td>SportsCar class inheriting base attributes from Vehicle class</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>7. Software Development Life Cycle (SDLC) &amp; Version Control</h3>
+<div class="tw"><table><thead><tr><th>SDLC Methodology</th><th>Core Philosophy</th><th>Key Characteristics</th></tr></thead><tbody>
+<tr><td>Waterfall</td><td>Sequential / Linear</td><td>Rigid phase-by-phase model (Requirements ➔ Design ➔ Code ➔ Test ➔ Deploy); each phase must finish before the next begins.</td></tr>
+<tr><td>Agile / Scrum</td><td>Iterative / Adaptive</td><td>Flexible development delivering working software in short 1–4 week sprints with continuous customer feedback.</td></tr>
+<tr><td>DevOps</td><td>Continuous Integration</td><td>Combines Development and IT Operations with automated CI/CD pipelines for continuous testing and rapid deployment.</td></tr>
+</tbody></table></div>
+<div class="tag-row"><span class="tag">Git</span><span class="tag">Repository</span><span class="tag">Commit</span><span class="tag">Branch</span><span class="tag">Merge</span><span class="tag">Pull Request</span><span class="tag">CI/CD</span><span class="tag">IDE</span></div></div>`},
+
+{id:5,name:"Database Fundamentals",weight:13,icon:"🗄️",color:"#10b981",qs:"~10 questions",desc:"Database structures, schemas, Primary/Foreign keys, SQL CRUD, Big Data, NoSQL, and 3-2-1 backups.",
+content:`<div class="l-badge" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#34d399;">🗄️ Domain 5 · 13%</div>
+<h1 class="l-title">Database Fundamentals</h1>
+<p class="l-meta">Covers relational structures, data integrity, SQL commands, non-relational alternatives, Big Data analytics, and enterprise disaster recovery backup strategies.</p>
+<div class="cs"><h3>1. Data as an Asset, Big Data &amp; ETL Pipelines</h3>
+<div class="tw"><table><thead><tr><th>Concept</th><th>Definition</th><th>Importance in IT</th></tr></thead><tbody>
+<tr><td>Big Data (3 Vs)</td><td><strong>Volume</strong> (massive petabyte scale), <strong>Velocity</strong> (rapid real-time arrival rate), <strong>Variety</strong> (structured, semi-structured, and unstructured formats).</td><td>Requires distributed processing clusters (Hadoop/Spark) rather than single-server databases.</td></tr>
+<tr><td>Data Warehouse</td><td>Centralized repository of cleaned, structured historical data.</td><td>Optimized for <strong>Business Intelligence (BI)</strong>, analytical reports, and executive dashboards.</td></tr>
+<tr><td>Data Lake</td><td>Vast storage pool holding raw, unfiltered data in native format.</td><td>Stores structured, semi-structured, and raw unstructured binary data until needed.</td></tr>
+<tr><td>ETL Process</td><td><strong>Extract</strong> (pull from source systems) ➔ <strong>Transform</strong> (cleanse, validate, normalize) ➔ <strong>Load</strong> (insert into warehouse).</td><td>The standard engineering workflow for building BI reporting systems.</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>2. Relational Database Concepts &amp; Integrity</h3>
+<div class="tw"><table><thead><tr><th>Structural Component</th><th>Formal Alternative</th><th>Definition</th></tr></thead><tbody>
+<tr><td>Database Schema</td><td>Data Blueprint</td><td>Formal architectural design defining tables, columns, data types, constraints, and relationships.</td></tr>
+<tr><td>Table</td><td>Entity / Relation</td><td>Two-dimensional grid of rows and columns storing related entity records.</td></tr>
+<tr><td>Row</td><td>Record / Tuple</td><td>Single complete horizontal data entry representing one specific entity instance.</td></tr>
+<tr><td>Column</td><td>Field / Attribute</td><td>Vertical data category enforced with a strict data type (e.g. INT, VARCHAR, DATE).</td></tr>
+<tr><td>Primary Key (PK)</td><td>Unique Identifier</td><td>Column uniquely identifying every individual record. <strong>CAN NEVER BE NULL; MUST BE UNIQUE</strong>.</td></tr>
+<tr><td>Foreign Key (FK)</td><td>Relational Link</td><td>Column in a child table referencing the Primary Key of a parent table.</td></tr>
+<tr><td>Referential Integrity</td><td>Relational Constraint</td><td>Rule ensuring Foreign Keys must always point to existing, valid Primary Key records (prevents orphan data).</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Relationship Types</div><strong>1:1 (One-to-One):</strong> 1 Employee ➔ 1 Company Car.<br><strong>1:N (One-to-Many):</strong> 1 Customer ➔ Many Orders (most common).<br><strong>N:M (Many-to-Many):</strong> Students ➔ Courses (requires a middle junction/bridge table).</div></div>
+<div class="cs"><h3>3. Data Classification: Structured vs. Semi-Structured vs. Unstructured</h3>
+<div class="tw"><table><thead><tr><th>Category</th><th>Structure</th><th>Query / Storage Engine</th><th>Examples</th></tr></thead><tbody>
+<tr><td>Structured</td><td>Strict tabular schema (rows &amp; columns)</td><td>Relational DBMS (RDBMS) via SQL</td><td>PostgreSQL, MySQL, Oracle, SQL Server, Excel</td></tr>
+<tr><td>Semi-Structured</td><td>Uses tags, markers, or key-value hierarchies</td><td>Document NoSQL databases, text parsers</td><td>JSON, XML, YAML, CSV files</td></tr>
+<tr><td>Unstructured</td><td>No predefined schema or formatting model (~80% of data)</td><td>Data Lakes, object / blob storage</td><td>Audio WAV, MP4 video, scanned PDFs, raw emails</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Database Paradigm</th><th>Data Model</th><th>Scalability</th><th>Leading Implementations</th></tr></thead><tbody>
+<tr><td>Relational (SQL)</td><td>Tables with strict schemas &amp; ACID transactions</td><td>Vertical (Bigger CPU/RAM on 1 server)</td><td>PostgreSQL, MySQL, SQL Server, SQLite</td></tr>
+<tr><td>Document NoSQL</td><td>Stores JSON-like document trees</td><td>Horizontal (Distributed cluster of servers)</td><td>MongoDB, CouchDB</td></tr>
+<tr><td>Key-Value NoSQL</td><td>In-memory dictionary lookup</td><td>Horizontal (Ultra-low latency cache)</td><td>Redis, Memcached</td></tr>
+<tr><td>Flat File</td><td>Single unlinked tabular sheet</td><td>None (Lacks multi-user concurrency)</td><td>.csv, .xlsx files</td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>4. SQL — Structured Query Language &amp; CRUD</h3>
+<div class="code-b">-- 1. DATA DEFINITION LANGUAGE (DDL)
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    FullName VARCHAR(100) NOT NULL,
+    Department VARCHAR(50),
+    Salary INT
+);
+
+-- 2. CREATE (INSERT)
+INSERT INTO Employees (EmpID, FullName, Department, Salary)
+VALUES (101, 'Jane Smith', 'Engineering', 95000);
+
+-- 3. READ (SELECT with filter &amp; sort)
+SELECT FullName, Salary 
+FROM Employees 
+WHERE Department = 'Engineering' AND Salary &gt; 80000
+ORDER BY Salary DESC;
+
+-- 4. UPDATE (CRITICAL: Always include WHERE clause!)
+UPDATE Employees 
+SET Salary = 98000 
+WHERE EmpID = 101;
+
+-- 5. DELETE (CRITICAL: Always include WHERE clause!)
+DELETE FROM Employees 
+WHERE EmpID = 101;
+
+-- 6. RELATIONAL QUERY (INNER JOIN)
+SELECT Employees.FullName, Departments.BuildingName
+FROM Employees
+INNER JOIN Departments ON Employees.Department = Departments.DeptName;</div>
+<div class="ibox warn"><div class="ibox-lbl">Exam Trap — Missing WHERE Clause</div>Executing <code>UPDATE Employees SET Salary = 0;</code> or <code>DELETE FROM Employees;</code> without a <code>WHERE</code> clause will modify or wipe out <strong>EVERY record in the entire table</strong>!</div></div>
+<div class="cs"><h3>5. Data Protection, Backup Strategies &amp; Disaster Recovery</h3>
+<div class="tw"><table><thead><tr><th>Backup Method</th><th>What It Copies</th><th>Storage Required</th><th>Backup Speed</th><th>Restoration Process &amp; Speed</th></tr></thead><tbody>
+<tr><td>Full Backup</td><td>Complete copy of <strong>all data</strong></td><td>Highest</td><td>Slowest</td><td><strong>Fastest single-step restoration</strong> (only needs the 1 full backup set).</td></tr>
+<tr><td>Incremental</td><td>Only data changed since <strong>LAST backup of any type</strong></td><td>Lowest</td><td>Fastest</td><td><strong>Slowest / complex restoration</strong> (requires last Full + <em>every</em> sequential Incremental backup).</td></tr>
+<tr><td>Differential</td><td>All data changed since the <strong>LAST FULL backup</strong></td><td>Moderate</td><td>Moderate</td><td><strong>Fast 2-step restoration</strong> (requires last Full + <em>only the single latest</em> Differential backup).</td></tr>
+<tr><td>Snapshot</td><td>Point-in-time byte-level virtual disk image</td><td>Variable</td><td>Near-Instant</td><td>Rapid rollback of a VM to a specific operational state.</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">The 3-2-1 Backup Rule</div>Maintain <strong>3</strong> total copies of data, on <strong>2</strong> different storage media types, with at least <strong>1</strong> copy stored <strong>OFF-SITE</strong> (in the cloud or remote facility).</div>
+<div class="tw"><table><thead><tr><th>Metric</th><th>Name</th><th>Question Answered</th><th>Example</th></tr></thead><tbody>
+<tr><td>RPO</td><td>Recovery Point Objective</td><td>"How much data can we tolerate losing?" (Max age of restored data)</td><td>RPO = 2 hours means backups/replication must occur at least every 2 hours.</td></tr>
+<tr><td>RTO</td><td>Recovery Time Objective</td><td>"How long can systems be offline?" (Max downtime to restore)</td><td>RTO = 30 minutes requires automated failover and rapid recovery procedures.</td></tr>
+</tbody></table></div></div>`},
+
+{id:6,name:"Security",weight:19,icon:"🔒",color:"#f43f5e",qs:"~14 questions",desc:"CIA triad, AAA framework, malware taxonomy, social engineering, MFA, PKI, and SOHO wireless hardening.",
+content:`<div class="l-badge" style="background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.3);color:#fb7185;">🔒 Domain 6 · 19%</div>
+<h1 class="l-title">Security</h1>
+<p class="l-meta">Second-highest weighted domain. Focus on information security principles, threat mitigation, authentication factors, cryptography, device hardening, and wireless network defense.</p>
+<div class="cs"><h3>1. Core Security Principles, Frameworks &amp; Compliance</h3>
+<div class="tw"><table><thead><tr><th>Principle / Framework</th><th>Definition</th><th>Key Technical Controls</th></tr></thead><tbody>
+<tr><td>Confidentiality (CIA)</td><td>Ensuring sensitive data is accessible <strong>only to authorized individuals</strong>.</td><td>AES Encryption, Access Control Lists (ACLs), Least Privilege, MFA</td></tr>
+<tr><td>Integrity (CIA)</td><td>Ensuring data remains <strong>accurate, consistent, and untampered</strong>.</td><td>Cryptographic Hashing (SHA-256, MD5), Digital Signatures, Write-protection</td></tr>
+<tr><td>Availability (CIA)</td><td>Ensuring systems are <strong>operational and accessible when needed</strong>.</td><td>RAID, Redundant Power, UPS Battery Backups, Failover Clusters, DDoS Defense</td></tr>
+<tr><td>Authentication (AAA)</td><td>Verifying the declared identity of a user or system.</td><td>Passwords, PINs, Smart Cards, Biometric Scanners</td></tr>
+<tr><td>Authorization (AAA)</td><td>Determining specific permissions and access rights.</td><td>Read/Write/Execute ACLs, Role-Based Access Controls (RBAC)</td></tr>
+<tr><td>Accounting (AAA)</td><td>Logging and tracking user activities and session events.</td><td>Security Event Logs, SIEM Audit Trails</td></tr>
+<tr><td>Non-Repudiation</td><td>Assurance that an actor cannot deny performing an action.</td><td>Digital Signatures, Public Key Infrastructure (PKI)</td></tr>
+<tr><td>Principle of Least Privilege</td><td>Users receive only minimum access required for their role.</td><td>Role-based permissions, removing local admin rights</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Privacy &amp; Compliance</div><strong>PII:</strong> Personally Identifiable Information (SSN, Name, DOB).<br><strong>GDPR:</strong> EU privacy law mandating user consent &amp; data erasure.<br><strong>HIPAA:</strong> US healthcare privacy standard.<br><strong>PCI-DSS:</strong> Security standard for credit card transactions.</div></div>
+<div class="cs"><h3>2. Threat Landscape, Malware &amp; Social Engineering</h3>
+<div class="tw"><table><thead><tr><th>Threat Type</th><th>Category</th><th>Propagation &amp; Characteristics</th></tr></thead><tbody>
+<tr><td>Virus</td><td>Malware</td><td>Attaches to host files; <strong>REQUIRES human action</strong> (opening file) to execute and replicate.</td></tr>
+<tr><td>Worm</td><td>Malware</td><td>Standalone software; self-replicates across networks <strong>WITHOUT human action</strong>.</td></tr>
+<tr><td>Trojan</td><td>Malware</td><td>Disguises as legitimate software (free utility/game) while opening a covert backdoor.</td></tr>
+<tr><td>Ransomware</td><td>Malware</td><td>Encrypts user files with strong cryptography; demands extortion payment for key.</td></tr>
+<tr><td>Spyware / Keylogger</td><td>Malware</td><td>Silently records keystrokes, steals credentials, and monitors user activity.</td></tr>
+<tr><td>Adware</td><td>Malware</td><td>Displays unsolicited pop-up advertisements; often bundled in freeware.</td></tr>
+<tr><td>Rootkit</td><td>Malware</td><td>Injects into OS kernel; replaces core binaries to hide from antivirus tools.</td></tr>
+<tr><td>Phishing</td><td>Social Eng.</td><td>Broad fraudulent emails impersonating trusted brands to harvest credentials.</td></tr>
+<tr><td>Spear Phishing</td><td>Social Eng.</td><td>Targeted, customized phishing email directed at a specific employee or department.</td></tr>
+<tr><td>Whaling</td><td>Social Eng.</td><td>Spear phishing targeting high-level corporate executives (CEO, CFO).</td></tr>
+<tr><td>Vishing / Smishing</td><td>Social Eng.</td><td>Voice phone call phishing (Vishing) or SMS text message phishing (Smishing).</td></tr>
+<tr><td>Pretexting</td><td>Social Eng.</td><td>Inventing a fake backstory/scenario to trick someone into revealing sensitive data.</td></tr>
+<tr><td>Baiting</td><td>Social Eng.</td><td>Leaving infected USB flash drives in public/office areas labeled "Payroll."</td></tr>
+<tr><td>Tailgating</td><td>Physical</td><td>Physically following an authorized employee through a secure badge door.</td></tr>
+<tr><td>Shoulder Surfing</td><td>Physical</td><td>Visually spying on screens or keypads. <em>Mitigation: Privacy screen filters.</em></td></tr>
+<tr><td>Dumpster Diving</td><td>Physical</td><td>Searching trash for sensitive documents. <em>Mitigation: Cross-cut shredders.</em></td></tr>
+</tbody></table></div></div>
+<div class="cs"><h3>3. Device Hardening, Password Hygiene &amp; Multi-Factor Authentication</h3>
+<div class="tw"><table><thead><tr><th>MFA Factor Category</th><th>Description</th><th>Real-World Examples</th></tr></thead><tbody>
+<tr><td>Something you Know</td><td>Knowledge factor (memorized info)</td><td>Password, PIN, security challenge question</td></tr>
+<tr><td>Something you Have</td><td>Possession factor (physical token/device)</td><td>Authenticator app (TOTP), SMS code, hardware YubiKey, smart card</td></tr>
+<tr><td>Something you Are</td><td>Inherence factor (biometrics)</td><td>Fingerprint scanner, facial recognition (FaceID), retina/iris scan</td></tr>
+</tbody></table></div>
+<div class="ibox warn"><div class="ibox-lbl">Exam Trap — False MFA</div>A <strong>Password + PIN</strong> is <strong>NOT</strong> MFA because both are <em>"Something you Know."</em> MFA requires <strong>2+ DIFFERENT factor categories</strong>.</div>
+<ul class="sl">
+<li><strong>Password Best Practices:</strong> Minimum 12–16 characters mixing uppercase, lowercase, numbers, and symbols. Use password managers.</li>
+<li><strong>Account Lockout Policy:</strong> Temporarily locks an account after 3–5 consecutive failed login attempts — <strong>neutralizes brute-force attacks</strong>.</li>
+<li><strong>Physical Hardening:</strong> Kensington cable locks, mantraps (two-door airlocks), and automatic screen lockouts (<strong>Win + L</strong>).</li>
+</ul></div>
+<div class="cs"><h3>4. Cryptography, Encryption &amp; PKI</h3>
+<div class="tw"><table><thead><tr><th>Type</th><th>Key Count</th><th>Operation &amp; Strength</th><th>Primary Use Case</th></tr></thead><tbody>
+<tr><td>Symmetric Encryption</td><td>1 Shared Key</td><td>Same key encrypts and decrypts (AES-128/256). Very fast.</td><td>Bulk data at rest on hard drives (BitLocker, FileVault)</td></tr>
+<tr><td>Asymmetric Encryption</td><td>2 Key Pair</td><td>Public Key (encrypts) + Private Key (decrypts) (RSA, ECC).</td><td>Key exchange, digital certificates, HTTPS/TLS, digital signatures</td></tr>
+<tr><td>Cryptographic Hashing</td><td>None (One-Way)</td><td>One-way mathematical checksum (SHA-256, MD5). Cannot be decrypted.</td><td>Verifying data <strong>Integrity</strong> and password storage</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Data State</th><th>Definition</th><th>Protection Methods</th></tr></thead><tbody>
+<tr><td>Data at Rest</td><td>Inactive data stored on physical disks or media</td><td>Full Disk Encryption (FDE), BitLocker (Windows), FileVault (macOS)</td></tr>
+<tr><td>Data in Transit</td><td>Data actively traveling over networks or the internet</td><td>HTTPS / TLS, VPN (IPsec/SSL), SSH, S/MIME email encryption</td></tr>
+<tr><td>Data in Use</td><td>Data actively in system RAM or CPU registers</td><td>Memory encryption, secure enclaves</td></tr>
+</tbody></table></div>
+<div class="ibox tip"><div class="ibox-lbl">Certificate Authority (CA)</div>A trusted third party (Let's Encrypt, DigiCert) that issues digital SSL/TLS certificates binding a domain's identity to a public key.</div></div>
+<div class="cs"><h3>5. SOHO Wireless Network Security Hardening</h3>
+<div class="tw"><table><thead><tr><th>Standard</th><th>Cipher</th><th>Security Level &amp; Characteristics</th></tr></thead><tbody>
+<tr><td>Open / None</td><td>None</td><td>Zero encryption; all packets sent in plaintext. Public Wi-Fi risk.</td></tr>
+<tr><td>WEP</td><td>RC4</td><td><strong>Severely Flawed &amp; Deprecated.</strong> Easily cracked in under 5 minutes.</td></tr>
+<tr><td>WPA</td><td>TKIP</td><td><strong>Deprecated.</strong> Transitional fix for WEP; vulnerable to packet spoofing.</td></tr>
+<tr><td>WPA2</td><td>AES-CCMP</td><td><strong>Current Standard.</strong> Strong encryption; requires complex passphrases.</td></tr>
+<tr><td>WPA3</td><td>AES-GCMP / SAE</td><td><strong>Latest &amp; Most Secure.</strong> Uses SAE to stop offline dictionary attacks; individualized encryption.</td></tr>
+</tbody></table></div>
+<div class="tag-row"><span class="tag">Disable WPS</span><span class="tag">Change Default SSID</span><span class="tag">Change Admin Password</span><span class="tag">Enable Guest Network</span><span class="tag">WPA3-SAE</span><span class="tag">Firmware Updates</span></div></div>`},
+];
+
+// ═══════════════════════════════════════════════
+// DATA — FLASHCARDS
+// ═══════════════════════════════════════════════
+const FC = [
+  // D1
+  {d:1,q:"What is Binary?",a:"Base-2 number system using only 0 and 1. The fundamental language of computers — all data is ultimately stored and processed in binary.",cat:"Number Systems"},
+  {d:1,q:"What is Hexadecimal?",a:"Base-16 number system using digits 0–9 and letters A–F. One hex digit = 4 binary bits. Used for memory addresses, MAC addresses, and HTML color codes.",cat:"Number Systems"},
+  {d:1,q:"How many bits are in a byte?",a:"8 bits = 1 byte. A byte is the fundamental unit of storage. Two hex digits = 1 byte. Example: FF in hex = 11111111 in binary = 255 in decimal.",cat:"Units of Measure"},
+  {d:1,q:"What is the difference between MB and Mb?",a:"MB = Megabyte (storage) = 8 Megabits. Mb = Megabit (network speed). A 100Mbps connection transfers approximately 12.5 MB per second.",cat:"Units of Measure"},
+  {d:1,q:"Name the 6 CompTIA troubleshooting steps in order.",a:"1) Identify the problem · 2) Establish a theory · 3) Test the theory · 4) Establish a plan & implement · 5) Verify functionality · 6) Document findings",cat:"Troubleshooting"},
+  {d:1,q:"What is Step 1 of the troubleshooting methodology?",a:"Identify the Problem — gather information from the user, observe symptoms, replicate the issue if possible, and ask open-ended questions.",cat:"Troubleshooting"},
+  {d:1,q:"What happens if your theory in Step 3 is wrong?",a:"Establish a new theory of probable cause or escalate to a higher-level technician. Do not implement a fix based on an unvalidated theory.",cat:"Troubleshooting"},
+  {d:1,q:"What does RAM stand for and what makes it unique?",a:"Random Access Memory. It is VOLATILE — data is completely lost when the computer is powered off. Used for fast, temporary storage of currently active tasks.",cat:"Computing Basics"},
+  {d:1,q:"What is the difference between HDD and SSD?",a:"HDD uses spinning magnetic platters — slower, cheaper per GB, more fragile. SSD uses flash memory — significantly faster, more durable (no moving parts), more expensive per GB.",cat:"Computing Basics"},
+  {d:1,q:"What does DNS do?",a:"Domain Name System — translates human-readable domain names (e.g., google.com) into IP addresses that computers use to communicate on a network.",cat:"IT Terminology"},
+  {d:1,q:"What does DHCP do?",a:"Dynamic Host Configuration Protocol — automatically assigns IP addresses and network configuration settings to devices that join a network.",cat:"IT Terminology"},
+  {d:1,q:"What is ROM?",a:"Read-Only Memory — non-volatile memory that permanently stores firmware (like the BIOS/UEFI). Unlike RAM, data survives a power-off.",cat:"Computing Basics"},
+  // D1 — Deep Dive Concepts & Terminology
+  {d:1,q:"What is the IPOS computing cycle?",a:"Input (data entered), Processing (CPU executes calculations), Output (results displayed/printed), Storage (data saved temporarily in RAM or permanently on SSD/HDD).",cat:"Computing Basics"},
+  {d:1,q:"Data vs. Information — what is the key difference?",a:"Data is raw, unorganized facts or numbers without context (e.g., '103.8'). Information is data that has been processed, labeled, and given meaning (e.g., 'Patient Temp: 103.8°F').",cat:"Data Concepts"},
+  {d:1,q:"What is the difference between ASCII and Unicode?",a:"ASCII is an older 7/8-bit standard representing basic English letters and numbers (max 128/256 chars). Unicode (UTF-8) is a universal standard supporting 149,000+ characters, all global languages, and emojis.",cat:"Character Encoding"},
+  {d:1,q:"What is UTF-8 and why is it so common?",a:"A variable-width Unicode encoding (1 to 4 bytes per character). It is 100% backward-compatible with ASCII and is the dominant encoding standard across the web.",cat:"Character Encoding"},
+  {d:1,q:"How do you convert internet speed in Mbps to download speed in MB/s?",a:"Divide the speed in Mbps by 8 (since 8 bits = 1 Byte). For example, a 100 Mbps internet connection downloads at a theoretical maximum speed of 12.5 MB/s.",cat:"Units of Measure"},
+  {d:1,q:"What is the difference between Copyright and Patent?",a:"Copyright protects original creative works and code (automatic, life of author + 70 yrs). Patent protects physical inventions and unique technical processes (requires registration, typically 20 yrs).",cat:"Intellectual Property"},
+  {d:1,q:"What is a Trademark vs. a Trade Secret?",a:"Trademark protects brand names, logos, and slogans ('™', '®'). Trade Secret protects confidential, competitive business formulas or algorithms (like Google Search) via NDAs.",cat:"Intellectual Property"},
+  {d:1,q:"Open Source (FOSS) vs. Freeware?",a:"Open Source provides full access to inspect, modify, and redistribute source code (e.g., Linux). Freeware is free of charge to use, but its source code remains closed/proprietary (e.g., Adobe Reader).",cat:"Software Licensing"},
+  {d:1,q:"What is an End User License Agreement (EULA)?",a:"A legally binding contract between a software creator/publisher and the user defining permitted uses, restrictions, and copyright boundaries upon installation.",cat:"Software Licensing"},
+  {d:1,q:"Per-Seat vs. Concurrent vs. Site Licensing?",a:"Per-Seat: 1 license assigned to 1 specific user/machine. Concurrent: fixed number of simultaneous active users allowed at once. Site License: unlimited installs across an entire physical facility or organization.",cat:"Software Licensing"},
+  {d:1,q:"In troubleshooting, when do you ask Open-Ended vs. Closed-Ended questions?",a:"Ask Open-Ended questions first to let the user describe symptoms ('What happened before the crash?'). Ask Closed-Ended questions later to verify specific facts ('Did error code 404 appear?').",cat:"Troubleshooting"},
+  {d:1,q:"What critical question should always be asked in Step 1 of troubleshooting?",a:"'Has anything changed recently?' (e.g., software updates, new peripherals, moved cables, power flickers). Most IT problems are triggered by recent changes.",cat:"Troubleshooting"},
+  {d:1,q:"What is the difference between CPU Clock Speed and Core Count?",a:"Clock speed (measured in GHz) is how many cycles per second a single core executes. Core count is the number of independent physical processing units running tasks in parallel.",cat:"Computing Basics"},
+  {d:1,q:"What is ESD and how is it prevented?",a:"Electrostatic Discharge — static electricity sparks that destroy sensitive computer chips. Prevented by wearing an anti-static wrist strap, using anti-static mats, and touching grounded chassis metal.",cat:"Safety & Ethics"},
+  {d:1,q:"What is PII and why must it be protected?",a:"Personally Identifiable Information — any sensitive data that can uniquely identify an individual (SSN, Full Name, DOB, Biometrics). Legally protected under privacy laws like GDPR and HIPAA.",cat:"Safety & Ethics"},
+  {d:1,q:"What is an Acceptable Use Policy (AUP)?",a:"An official organizational document outlining what employees or students can and cannot do on company computers, networks, and internet connections.",cat:"Safety & Ethics"},
+  // D2
+  {d:2,q:"What is the difference between a Router and a Switch?",a:"Router: connects different networks (e.g., home LAN to the internet) and routes traffic between them. Switch: connects devices within the same network (LAN).",cat:"Networking"},
+  {d:2,q:"What is a Virtual Machine (VM)?",a:"A software-based emulation of a physical computer. It runs its own complete operating system and applications inside another physical computer.",cat:"Virtualization"},
+  {d:2,q:"Type 1 vs Type 2 Hypervisor?",a:"Type 1 (bare-metal): runs directly on hardware — VMware ESXi, Hyper-V. More efficient. Type 2 (hosted): runs on top of an existing OS — VirtualBox, VMware Workstation.",cat:"Virtualization"},
+  {d:2,q:"What are the 3 cloud service models?",a:"IaaS (Infrastructure) — customer manages OS and up. PaaS (Platform) — customer manages apps and data. SaaS (Software) — provider manages everything.",cat:"Cloud Computing"},
+  {d:2,q:"What is IaaS?",a:"Infrastructure as a Service. The cloud provider manages physical hardware, networking, and storage. The customer manages the OS, applications, and data. Example: AWS EC2.",cat:"Cloud Computing"},
+  {d:2,q:"What is SaaS?",a:"Software as a Service. The provider manages everything including the full application. Users simply access it via a web browser. Examples: Gmail, Office 365, Salesforce.",cat:"Cloud Computing"},
+  {d:2,q:"What is PaaS?",a:"Platform as a Service. The provider manages hardware and the operating system/runtime. The customer manages only their applications and data. Example: Google App Engine.",cat:"Cloud Computing"},
+  {d:2,q:"What is a VM Snapshot?",a:"A saved state of a virtual machine at a specific point in time — including memory contents, disk state, and settings. Allows fast rollback if something goes wrong.",cat:"Virtualization"},
+  {d:2,q:"What does cloud Elasticity mean?",a:"The ability to automatically scale computing resources up or down based on current demand, paying only for what is actually used at any given time.",cat:"Cloud Computing"},
+  {d:2,q:"What is a Hybrid Cloud?",a:"A cloud deployment that combines both public cloud resources and private cloud/on-premises infrastructure, connected together. Offers flexibility and control.",cat:"Cloud Computing"},
+  {d:2,q:"IPv4 vs IPv6?",a:"IPv4: 32-bit address (e.g., 192.168.1.1) — limited pool of ~4.3 billion addresses, running out. IPv6: 128-bit address — vastly larger pool, designed to replace IPv4.",cat:"Networking"},
+  {d:2,q:"What is a Firewall?",a:"A network security device (hardware or software) that monitors and controls incoming and outgoing network traffic based on predefined security rules.",cat:"Networking"},
+  // D2 — Protocols & Networking Deep Dive
+  {d:2,q:"What port does HTTP use?",a:"Port 80. HTTP (Hypertext Transfer Protocol) is unencrypted web traffic. HTTPS uses port 443 and adds TLS encryption — always prefer HTTPS.",cat:"Protocols & Ports"},
+  {d:2,q:"What port does HTTPS use?",a:"Port 443. HTTPS = HTTP + TLS encryption. Look for the padlock icon in your browser. All modern websites should use HTTPS to protect data in transit.",cat:"Protocols & Ports"},
+  {d:2,q:"What port does SSH use and why is it better than Telnet?",a:"SSH uses port 22. It provides ENCRYPTED remote command-line access. Telnet (port 23) is completely unencrypted — credentials are sent as plaintext. Never use Telnet.",cat:"Protocols & Ports"},
+  {d:2,q:"What is the difference between SMTP, POP3, and IMAP?",a:"SMTP (port 25): SENDS outgoing email. POP3 (port 110): DOWNLOADS email to device, removes from server. IMAP (port 143): SYNCS email — keeps it on the server, accessible from any device.",cat:"Protocols & Ports"},
+  {d:2,q:"What port does FTP use?",a:"FTP uses port 20 (data transfer) and port 21 (control/commands). Transfers files between client and server — but is unencrypted. Use SFTP (port 22) for secure transfers.",cat:"Protocols & Ports"},
+  {d:2,q:"What port does DNS use?",a:"Port 53. DNS (Domain Name System) uses both UDP (fast, most queries) and TCP (for large responses like zone transfers). It translates domain names into IP addresses.",cat:"Protocols & Ports"},
+  {d:2,q:"What port does RDP use?",a:"Port 3389. RDP (Remote Desktop Protocol) provides graphical remote access to Windows machines. Because it's a high-value target, it should be behind a VPN or firewall.",cat:"Protocols & Ports"},
+  {d:2,q:"TCP vs. UDP — which is reliable and which is fast?",a:"TCP is reliable: connection-oriented, guarantees delivery in order, retransmits lost packets. UDP is fast: connectionless, no delivery guarantee, used for streaming/gaming/VoIP where speed beats reliability.",cat:"TCP/UDP"},
+  {d:2,q:"Why would streaming video use UDP instead of TCP?",a:"UDP is faster with no handshake overhead. For live video, a slightly lost frame is invisible — but buffering from TCP retransmissions would be very noticeable. Speed matters more than perfection.",cat:"TCP/UDP"},
+  {d:2,q:"MAC Address vs. IP Address — what's the key difference?",a:"MAC: hardware address burned into the NIC by the manufacturer; identifies devices on a LOCAL network; format 00:1A:2B:3C:4D:5E. IP: logical address; can change; identifies devices across ANY network or internet.",cat:"Networking"},
+  {d:2,q:"What is a Default Gateway?",a:"The IP address of the local router that devices send traffic to when the destination is OUTSIDE the local network (e.g., accessing the internet). Typically 192.168.1.1 in home networks.",cat:"Networking"},
+  {d:2,q:"What does NAT do?",a:"Network Address Translation — the router converts multiple private IP addresses (192.168.x.x) into one single public IP address when traffic goes to the internet. Conserves public IPs and hides internal network structure.",cat:"Networking"},
+  {d:2,q:"Wi-Fi 5 (802.11ac) vs. Wi-Fi 6 (802.11ax)?",a:"Wi-Fi 5 (802.11ac): ~3.5 Gbps max; 5 GHz only. Wi-Fi 6 (802.11ax): ~9.6 Gbps max; 2.4, 5 & 6 GHz bands; much more efficient in dense/crowded environments.",cat:"Wireless Standards"},
+  {d:2,q:"2.4 GHz vs. 5 GHz Wi-Fi — when do you use each?",a:"2.4 GHz: longer range, penetrates walls better, more interference from microwaves and neighbors, slower. 5 GHz: shorter range, less interference, much faster. Choose 5 GHz when speed matters and you're close to the router.",cat:"Wireless Standards"},
+  // D3
+  {d:3,q:"Which OS is open-source and dominates servers?",a:"Linux — open-source, highly customizable, runs the majority of web servers worldwide. Key distributions: Ubuntu, CentOS, Debian, Red Hat.",cat:"Operating Systems"},
+  {d:3,q:"GUI vs CLI?",a:"GUI (Graphical User Interface): visual, mouse-driven — Windows desktop. CLI (Command Line Interface): text-only commands — Terminal, PowerShell, Command Prompt.",cat:"Operating Systems"},
+  {d:3,q:"What is NTFS?",a:"New Technology File System — Windows' primary file system. Supports large files, file permissions, encryption, and journaling for crash recovery.",cat:"Applications & Software"},
+  {d:3,q:"System Software vs Application Software?",a:"System Software: manages hardware resources — operating systems, device drivers. Application Software: user-facing programs for specific tasks — Word, Chrome, Photoshop.",cat:"Applications & Software"},
+  {d:3,q:"What is Firmware?",a:"Software permanently embedded into hardware devices. Controls the device at a low level. Examples: BIOS/UEFI (PC startup), router firmware, printer firmware.",cat:"Applications & Software"},
+  {d:3,q:"What is Generative AI?",a:"A type of AI that creates new content — text, images, audio, code — based on patterns learned from training data. Examples: ChatGPT, DALL-E, GitHub Copilot.",cat:"AI Tools"},
+  {d:3,q:"What does browser Incognito mode actually do?",a:"Prevents the browser from saving local history, cookies, and form data. Your ISP, employer network, and websites you visit can still see your activity.",cat:"Browser Features"},
+  {d:3,q:"What is a Browser Cookie?",a:"A small file stored on your device by a website. Used to remember login sessions, user preferences, shopping carts, and for tracking purposes.",cat:"Browser Features"},
+  {d:3,q:"What is Open Source software?",a:"Software whose source code is publicly available — anyone can freely view, modify, and distribute it. Examples: Linux, Firefox, VLC, LibreOffice, Python.",cat:"Applications & Software"},
+  {d:3,q:"What is a Large Language Model (LLM)?",a:"An AI system trained on massive datasets of text. It can understand and generate human-like text. Powers tools like ChatGPT, Claude, and Google Gemini.",cat:"AI Tools"},
+  // D3 — Deep Dive Applications & Software
+  {d:3,q:"Kernel vs. Shell in an OS — what does each do?",a:"The Kernel is the core program managing CPU, memory, and hardware. The Shell is the outer interface (GUI or CLI) allowing users and applications to communicate with the kernel.",cat:"Operating Systems"},
+  {d:3,q:"Why can a 32-bit (x86) OS only address 4 GB of RAM?",a:"A 32-bit processor has 2^32 possible memory address combinations, which equals exactly 4,294,967,296 bytes (4 GB). A 64-bit (x64) OS removes this limit (~16 Exabytes).",cat:"Operating Systems"},
+  {d:3,q:"What is a Process vs. a Service (or Daemon)?",a:"A Process is an active running program with user interaction (seen in Task Manager). A Service (Windows) or Daemon (Linux) runs continuously in the background with no user interface.",cat:"Operating Systems"},
+  {d:3,q:"What is File System Journaling?",a:"A feature (in NTFS, ext4, APFS) that logs pending file changes in a special journal before writing them, preventing file corruption if the system crashes or loses power.",cat:"File Systems"},
+  {d:3,q:"What is the 4 GB file size limit on FAT32?",a:"FAT32 cannot store any individual file larger than 4 GB (due to a 32-bit file size field). Use exFAT or NTFS for large files like 4K videos or VM disk images.",cat:"File Systems"},
+  {d:3,q:"What do file attributes Read-Only, Hidden, and System mean?",a:"Read-Only: cannot be modified/deleted. Hidden: invisible in standard directory views. System: essential OS file critical for booting/operation.",cat:"File Management"},
+  {d:3,q:"What is the difference between Hotfix, Feature Update, and Service Pack?",a:"Hotfix/Patch: targeted fix for an emergency bug or security flaw. Feature Update: adds new capabilities. Service Pack/Rollup: cumulative bundle of all past updates and fixes.",cat:"Software Management"},
+  {d:3,q:"What does End-of-Life (EOL) mean for software?",a:"The software vendor officially stops developing, updating, and issuing security patches for that version. Continuing to use EOL software poses a severe security vulnerability.",cat:"Software Management"},
+  {d:3,q:"CRM vs. ERP software — what does each do?",a:"CRM (Customer Relationship Management): manages customer interactions, sales leads, and client data (Salesforce). ERP (Enterprise Resource Planning): manages entire business operations, supply chain, inventory, and payroll (SAP).",cat:"Enterprise Software"},
+  {d:3,q:"Browser Cache vs. Browser Cookies?",a:"Cache: stores static website files (images, CSS, JS) locally to speed up future page loads. Cookies: small text files storing login sessions, shopping carts, user preferences, and tracking IDs.",cat:"Web Browsers"},
+  {d:3,q:"What are the limits of Private / Incognito browsing?",a:"It only prevents local browsing history, cache, and cookies from being saved on that device. Your ISP, network router, employer monitoring, and visited websites can still see your activity.",cat:"Web Browsers"},
+  {d:3,q:"What causes a browser SSL/TLS certificate error?",a:"The website's HTTPS certificate is expired, self-signed, untrusted by the browser's Certificate Authority (CA) list, or the domain name doesn't match the certificate.",cat:"Web Browsers"},
+  {d:3,q:"What is Generative AI vs. Predictive AI?",a:"Generative AI creates new content (text, images, synthetic code, audio) from prompts. Predictive AI analyzes past data to identify patterns and forecast future outcomes (fraud detection, stock trends).",cat:"AI Tools"},
+  {d:3,q:"What is an AI Hallucination?",a:"When a Generative AI or Large Language Model (LLM) generates plausible-sounding but factually incorrect, fabricated, or nonsensical information with high confidence.",cat:"AI Tools"},
+  {d:3,q:"What is the main security risk of using public AI tools for work?",a:"Data Privacy / IP Leakage — pasting proprietary company code, confidential financials, or PII into public AI prompts can expose that data or incorporate it into future model training.",cat:"AI Tools"},
+  {d:3,q:"What is Prompt Engineering?",a:"The practice of crafting precise, contextual, and structured text prompts (including role definitions, constraints, and examples) to guide an AI to produce optimal results.",cat:"AI Tools"},
+  // D4
+  {d:4,q:"Compiled vs Interpreted language?",a:"Compiled: entire source code converted to machine code before running (C, C++, Go) — faster. Interpreted: executed line-by-line at runtime (Python, Ruby) — more flexible.",cat:"Programming Languages"},
+  {d:4,q:"What is an Algorithm?",a:"A finite, well-defined, step-by-step sequence of rules or instructions designed to solve a specific problem or complete a task.",cat:"Dev Concepts"},
+  {d:4,q:"What is Pseudocode?",a:"A plain-language, informal description of a program's logic. It looks like code but isn't actual syntax of any language. Used for planning and design before writing real code.",cat:"Dev Concepts"},
+  {d:4,q:"What are the 4 main data types?",a:"Integer (whole numbers), Float/Double (decimal numbers), String (text in quotes), Boolean (True or False only).",cat:"Programming Concepts"},
+  {d:4,q:"What is Boolean Logic?",a:"Logic using AND, OR, and NOT operators to combine or negate conditions. The foundation of all decision-making in computers and digital circuits.",cat:"Dev Concepts"},
+  {d:4,q:"HTML, CSS, JavaScript — what does each do?",a:"HTML: structures webpage content (skeleton). CSS: styles appearance — colors, fonts, layout (decoration). JavaScript: adds interactivity and dynamic behavior (action).",cat:"Web Development"},
+  {d:4,q:"What is a Function in programming?",a:"A reusable, named block of code that performs a specific task. Functions accept inputs (parameters), perform work, and often return an output value.",cat:"Programming Concepts"},
+  {d:4,q:"What is a Compiler?",a:"A tool that translates the entire human-written source code into machine code (binary instructions) all at once, before the program is ever run.",cat:"Dev Concepts"},
+  {d:4,q:"What is Object-Oriented Programming?",a:"A programming paradigm that organizes code around objects — entities that have properties (data/attributes) and methods (behaviors/functions). Examples: Java, C#, Python.",cat:"Dev Concepts"},
+  // D4 — Deep Dive Software Development Concepts
+  {d:4,q:"Compiled vs. Interpreted Languages — what's the key difference?",a:"Compiled: entire source code is translated to machine code before execution (C, C++, Rust) — very fast. Interpreted: code is executed line-by-line at runtime by an interpreter (Python, JS) — portable but slower.",cat:"Programming Languages"},
+  {d:4,q:"What is Assembly Language?",a:"A low-level human-readable language (using mnemonics like MOV, ADD, JMP) that corresponds 1-to-1 with specific CPU machine instructions.",cat:"Programming Languages"},
+  {d:4,q:"What is a Markup Language vs. a Programming Language?",a:"Markup languages (HTML, XML, Markdown) structure and present content using tags but have no execution logic (no loops or math). Programming languages contain logical instructions.",cat:"Programming Languages"},
+  {d:4,q:"Variable vs. Constant in programming?",a:"A Variable is a named storage location whose value can change during execution (e.g., score = 10). A Constant is fixed at declaration and cannot be modified at runtime (e.g., PI = 3.14).",cat:"Data Types & Identifiers"},
+  {d:4,q:"What are the 5 primitive data types in programming?",a:"1) Integer (whole number), 2) Float/Double (decimal number), 3) Char (single character), 4) String (sequence of text characters), 5) Boolean (True or False).",cat:"Data Types & Identifiers"},
+  {d:4,q:"What is an Array vs. a Dictionary (Map)?",a:"Array: an ordered, zero-indexed list of elements of the same type (e.g., [10, 20, 30]). Dictionary: a collection of unique key-value pairs (e.g., {'name': 'Alice', 'role': 'Admin'}).",cat:"Data Structures"},
+  {d:4,q:"WHILE Loop vs. DO-WHILE Loop?",a:"A WHILE loop checks the condition BEFORE running and may execute 0 times. A DO-WHILE loop checks the condition AFTER running, guaranteeing at least ONE execution.",cat:"Control Structures"},
+  {d:4,q:"What is a Function, and what are Parameters vs. Return Values?",a:"A Function is a reusable block of code. Parameters are input variables passed into the function; the Return Value is the output data sent back after completion.",cat:"Control Structures"},
+  {d:4,q:"Flowchart Symbols — what do the Oval, Rectangle, and Diamond mean?",a:"Oval = Start/End (Terminator). Rectangle = Process/Action (calculation, variable assignment). Diamond = Decision/Branching (conditional test with Yes/No paths).",cat:"Flowcharts & Logic"},
+  {d:4,q:"What is the Parallelogram symbol in a flowchart?",a:"Input / Output (I/O) — represents reading data into the system (e.g., user input) or displaying/printing results.",cat:"Flowcharts & Logic"},
+  {d:4,q:"What is Pseudocode?",a:"An informal, plain-English outline of program logic that looks like code structure but ignores strict programming syntax. Used to plan algorithms before coding.",cat:"Algorithms & Logic"},
+  {d:4,q:"Boolean Logic — AND vs. OR vs. XOR?",a:"AND: True only if BOTH inputs are True. OR: True if AT LEAST ONE input is True. XOR (Exclusive OR): True if EXACTLY ONE input is True, but False if both are True or both are False.",cat:"Boolean Logic"},
+  {d:4,q:"In OOP, what is a Class vs. an Object?",a:"A Class is a blueprint or template defining attributes and methods. An Object is a specific concrete instance created from that class blueprint.",cat:"Object-Oriented Programming"},
+  {d:4,q:"In OOP, what are Attributes vs. Methods?",a:"Attributes (Properties) are data variables stored inside an object (e.g., color, speed). Methods are functions or actions the object can perform (e.g., drive(), brake()).",cat:"Object-Oriented Programming"},
+  {d:4,q:"Waterfall vs. Agile SDLC methodologies?",a:"Waterfall: sequential, rigid phase-by-phase model where each phase must finish before the next begins. Agile: iterative, flexible development using short sprints (1–4 weeks) with continuous feedback.",cat:"Software Development Life Cycle"},
+  {d:4,q:"In Git version control, what is a Commit vs. a Branch?",a:"A Commit is a saved historical snapshot of code changes with a message. A Branch is an independent line of development allowing features to be built without breaking main production code.",cat:"Version Control"},
+  // D5
+  {d:5,q:"What is a Primary Key?",a:"A field that uniquely identifies each record (row) in a database table. It cannot be null and cannot be duplicated. Every table should have one.",cat:"Database Concepts"},
+  {d:5,q:"What is a Foreign Key?",a:"A field in one table that references (links to) the Primary Key of another table. Used to create relationships between tables in a relational database.",cat:"Database Concepts"},
+  {d:5,q:"What does CRUD stand for?",a:"Create, Read, Update, Delete — the four fundamental operations for managing data. SQL: INSERT (Create), SELECT (Read), UPDATE (Update), DELETE (Delete).",cat:"Database Concepts"},
+  {d:5,q:"What SQL command retrieves data?",a:"SELECT — e.g., SELECT * FROM users WHERE age > 18; The asterisk (*) selects all columns. WHERE filters results by a condition.",cat:"SQL"},
+  {d:5,q:"Full vs Incremental backup?",a:"Full: copies everything every time — most storage, fastest single restore. Incremental: copies only changes since the last backup of any type — least storage, slowest restore.",cat:"Backups"},
+  {d:5,q:"What is a Differential backup?",a:"Copies all changes since the last FULL backup. Requires more space than incremental but restores faster — you only need the last full backup plus the latest differential.",cat:"Backups"},
+  {d:5,q:"Relational vs NoSQL database?",a:"Relational: tables with fixed schemas and defined relationships; uses SQL (MySQL, PostgreSQL). NoSQL: flexible structure; great for big, unstructured, or rapidly changing data (MongoDB).",cat:"Database Types"},
+  {d:5,q:"What is RPO vs RTO?",a:"RPO (Recovery Point Objective): max acceptable data loss — how old can restored data be? RTO (Recovery Time Objective): max acceptable downtime — how fast must systems be restored?",cat:"Backups"},
+  {d:5,q:"What does DBMS stand for?",a:"Database Management System — software used to create, organize, manage, and query databases. Examples: MySQL, PostgreSQL, SQLite, Oracle, Microsoft SQL Server.",cat:"Database Concepts"},
+  {d:5,q:"What SQL command removes a record?",a:"DELETE — e.g., DELETE FROM users WHERE id = 5; Always include a WHERE clause or you'll delete ALL records in the table.",cat:"SQL"},
+  // D5 — Deep Dive Database Fundamentals
+  {d:5,q:"What are the 3 Vs of Big Data?",a:"Volume (massive petabyte scale), Velocity (high-speed real-time generation rate), and Variety (structured tables, semi-structured JSON, unstructured media).",cat:"Big Data & Analytics"},
+  {d:5,q:"Data Warehouse vs. Data Lake?",a:"Data Warehouse: centralized repository of cleaned, structured historical data optimized for BI reporting and analytics. Data Lake: vast pool storing raw, unfiltered data in native format until needed.",cat:"Big Data & Analytics"},
+  {d:5,q:"What is the ETL process in data analytics?",a:"Extract (retrieve raw data from sources), Transform (cleanse, validate, and normalize data), and Load (insert structured data into a data warehouse).",cat:"Big Data & Analytics"},
+  {d:5,q:"Structured vs. Semi-Structured vs. Unstructured Data?",a:"Structured: strict tabular schema queryable with SQL (RDBMS). Semi-Structured: uses tags/key-values without rigid tables (JSON, XML). Unstructured: no predefined model (video, audio, raw text, PDFs).",cat:"Data Structures"},
+  {d:5,q:"What is Referential Integrity in a relational database?",a:"A database rule ensuring that a Foreign Key in a child table must always match an existing, valid Primary Key in the parent table, preventing orphaned records.",cat:"Database Concepts"},
+  {d:5,q:"What is a Database Schema?",a:"The formal architectural blueprint defining the structure of a database — including its tables, columns, data types, constraints, and relationships.",cat:"Database Concepts"},
+  {d:5,q:"One-to-Many vs. Many-to-Many relationships?",a:"One-to-Many: 1 record relates to many child records (1 Customer -> Many Orders). Many-to-Many: multiple records relate to multiple records (Students <-> Courses), requiring a junction table.",cat:"Database Concepts"},
+  {d:5,q:"Relational Database (SQL) vs. Document NoSQL (MongoDB)?",a:"Relational: rigid schemas, structured tables, ACID compliance, uses SQL (PostgreSQL, MySQL). Document NoSQL: flexible schema, stores JSON-like documents, scales horizontally across clusters (MongoDB).",cat:"Database Types"},
+  {d:5,q:"What are DDL vs. DML commands in SQL?",a:"DDL (Data Definition Language): manages structure (CREATE, ALTER, DROP). DML (Data Manipulation Language): manages data records (SELECT, INSERT, UPDATE, DELETE).",cat:"SQL"},
+  {d:5,q:"What is an SQL INNER JOIN?",a:"A query operation that combines rows from two tables based on a shared related column, returning only records where there is a match in BOTH tables.",cat:"SQL"},
+  {d:5,q:"Why is a WHERE clause critical in UPDATE and DELETE statements?",a:"Without a WHERE clause, the UPDATE or DELETE statement will modify or delete EVERY single record in the entire table.",cat:"SQL"},
+  {d:5,q:"Incremental Backup vs. Differential Backup restoration?",a:"Incremental restoration requires the last Full backup PLUS every sequential incremental backup. Differential restoration requires only the last Full backup PLUS the single latest differential.",cat:"Backups & Recovery"},
+  {d:5,q:"What is the 3-2-1 Backup Rule?",a:"Maintain 3 total copies of data, across 2 different storage media types, with at least 1 copy stored OFF-SITE (in the cloud or remote facility) for disaster recovery.",cat:"Backups & Recovery"},
+  {d:5,q:"RPO vs. RTO in disaster recovery?",a:"RPO (Recovery Point Objective): maximum acceptable data loss measured in time (how old data can be). RTO (Recovery Time Objective): maximum acceptable downtime to restore operations.",cat:"Backups & Recovery"},
+  {d:5,q:"What is Database Replication?",a:"Continuously copying data from a primary database server to one or more secondary replica servers to provide high availability, fault tolerance, and load balancing.",cat:"Database Administration"},
+  {d:5,q:"What is the difference between Flat File and Relational database?",a:"Flat files (CSV, Excel) store data in a single unlinked table with no concurrency or referential integrity. Relational databases split data across multiple normalized tables linked by keys.",cat:"Database Types"},
+  // D6
+  {d:6,q:"What is the CIA Triad?",a:"The three core principles of information security: Confidentiality (only authorized access), Integrity (data is accurate and untampered), Availability (systems accessible when needed).",cat:"Security Fundamentals"},
+  {d:6,q:"What is Ransomware?",a:"Malware that encrypts the victim's files, making them inaccessible, and demands a ransom payment (usually cryptocurrency) in exchange for the decryption key.",cat:"Threats"},
+  {d:6,q:"What is Phishing?",a:"A social engineering attack using fraudulent emails, text messages, or websites impersonating trusted entities to trick users into revealing credentials or sensitive data.",cat:"Threats"},
+  {d:6,q:"What is Multi-Factor Authentication?",a:"A security method requiring 2+ verification factors: Something you Know (password) + Something you Have (phone/token) + Something you Are (biometrics). Much stronger than password alone.",cat:"Authentication"},
+  {d:6,q:"What is the Principle of Least Privilege?",a:"Users should only have access to the resources and data they absolutely need for their specific job role — nothing more. Minimizes damage from compromised or malicious accounts.",cat:"Security Fundamentals"},
+  {d:6,q:"What is a VPN?",a:"Virtual Private Network — creates an encrypted tunnel between your device and a VPN server. Protects data in transit on public Wi-Fi and masks your real IP address.",cat:"Encryption"},
+  {d:6,q:"WPA2 vs WPA3?",a:"WPA2: uses AES encryption; current standard in most homes; vulnerable to offline dictionary attacks. WPA3: latest and strongest; more resistant to brute-force; provides individualized encryption.",cat:"Wireless Security"},
+  {d:6,q:"What is Encryption?",a:"Converting plaintext (readable data) into ciphertext (scrambled, unreadable data) using an algorithm and cryptographic key. Only parties with the correct key can decrypt it.",cat:"Encryption"},
+  {d:6,q:"Virus vs Worm?",a:"Virus: attaches to and infects existing files; REQUIRES user action to spread (e.g., opening an infected file). Worm: self-replicates and spreads across networks completely without any user action.",cat:"Threats"},
+  {d:6,q:"What is Social Engineering?",a:"Manipulating people — not exploiting technology — into revealing sensitive information or performing unsafe actions. Examples: phishing, pretexting, baiting, tailgating, vishing.",cat:"Threats"},
+  {d:6,q:"What is HTTPS?",a:"HyperText Transfer Protocol Secure — uses TLS/SSL encryption to protect data transmitted between your browser and a website. Look for the padlock icon in the address bar.",cat:"Encryption"},
+  {d:6,q:"What is encryption 'at rest'?",a:"Encrypting data stored on a device or server to protect it when not actively being transmitted. Examples: BitLocker (Windows), FileVault (macOS), encrypted cloud storage buckets.",cat:"Encryption"},
+  // D6 — Deep Dive Security Concepts
+  {d:6,q:"What is the AAA security framework?",a:"Authentication (verifying who you are), Authorization (determining what permissions you have), and Accounting/Auditing (logging and tracking what actions you performed).",cat:"Security Frameworks"},
+  {d:6,q:"What is Non-Repudiation?",a:"A security assurance that a user or system cannot deny having performed an action or sent a message, achieved via digital signatures and PKI.",cat:"Security Frameworks"},
+  {d:6,q:"Virus vs. Worm vs. Trojan?",a:"Virus: attaches to files and requires human action to execute. Worm: self-replicates across networks without human action. Trojan: disguises as legitimate software to open a backdoor.",cat:"Threats & Malware"},
+  {d:6,q:"What is Ransomware?",a:"Malware that encrypts victim files using strong cryptography and demands payment (usually cryptocurrency) in exchange for the decryption key.",cat:"Threats & Malware"},
+  {d:6,q:"Phishing vs. Spear Phishing vs. Whaling?",a:"Phishing: broad generic scam emails. Spear Phishing: highly targeted emails customized for a specific person. Whaling: targeted spear phishing against C-suite executives (CEO/CFO).",cat:"Social Engineering"},
+  {d:6,q:"What is Shoulder Surfing and how is it prevented?",a:"Directly spying on someone's screen or keystrokes to steal passwords/PINs in public. Prevented by installing polarized privacy screen filters.",cat:"Social Engineering"},
+  {d:6,q:"What is Tailgating (Piggybacking) in physical security?",a:"An unauthorized person physically following an authorized employee through a secure doorway or badge-access turnstile without swiping their own badge.",cat:"Physical Security"},
+  {d:6,q:"Why is a password + PIN combination NOT Multi-Factor Authentication?",a:"Because both password and PIN belong to the SAME factor category ('Something you Know'). MFA requires 2+ DIFFERENT categories (e.g. Knowledge + Possession).",cat:"Authentication & MFA"},
+  {d:6,q:"What are the 3 primary MFA factor categories?",a:"1) Something you Know (password, PIN), 2) Something you Have (authenticator app, phone, smart card), 3) Something you Are (biometrics: fingerprint, face, iris).",cat:"Authentication & MFA"},
+  {d:6,q:"Symmetric vs. Asymmetric Encryption?",a:"Symmetric: uses a single shared secret key for both encryption and decryption (AES) — fast. Asymmetric: uses a public key (encrypt) and private key (decrypt) pair (RSA) — secure key exchange.",cat:"Cryptography & PKI"},
+  {d:6,q:"Encryption at Rest vs. Encryption in Transit?",a:"At Rest: encrypts stored data on disks/USBs (BitLocker, FileVault). In Transit: encrypts data travelling over networks (HTTPS/TLS, VPN/IPsec, SSH).",cat:"Cryptography & PKI"},
+  {d:6,q:"What is Cryptographic Hashing and what is it used for?",a:"A one-way mathematical function (SHA-256, MD5) generating a fixed-length checksum used to verify data Integrity. It cannot be decrypted back into plaintext.",cat:"Cryptography & PKI"},
+  {d:6,q:"What is a Certificate Authority (CA)?",a:"A trusted third-party organization (e.g., Let's Encrypt, DigiCert) that validates identities and issues digital SSL/TLS certificates binding a domain to a public key.",cat:"Cryptography & PKI"},
+  {d:6,q:"WPA2 vs. WPA3 Wi-Fi security?",a:"WPA2: uses AES-CCMP encryption; vulnerable to offline dictionary attacks. WPA3: uses SAE (Simultaneous Authentication of Equals), providing robust protection against dictionary attacks and individualized encryption.",cat:"Wireless Security"},
+  {d:6,q:"Why should WPS (Wi-Fi Protected Setup) be disabled on wireless routers?",a:"WPS has a severe PIN brute-force vulnerability that allows attackers to crack the Wi-Fi password in minutes regardless of password length.",cat:"Wireless Security"},
+  {d:6,q:"What is an Account Lockout Policy and what attack does it stop?",a:"A security rule that temporarily locks a user account after 3–5 consecutive failed login attempts, effectively neutralizing online brute-force and dictionary attacks.",cat:"Device Hardening"},
+];
+
+// ═══════════════════════════════════════════════
+// DATA — QUIZ
+// ═══════════════════════════════════════════════
+const QQ = [
+  {dom:"Domain 1 — IT Concepts",q:"A technician has identified and replicated a user's problem. What should the technician do NEXT?",opts:["Implement a fix right away","Establish a theory of probable cause","Document the findings","Verify full system functionality"],c:1,exp:"After Step 1 (Identify the problem), the next step is Step 2: Establish a theory of probable cause. You must have a validated theory before implementing any fix."},
+  {dom:"Domain 1 — IT Concepts",q:"A file is 4 GB. How many MB is this equivalent to?",opts:["400 MB","2,048 MB","4,096 MB","8,192 MB"],c:2,exp:"1 GB = 1,024 MB. So 4 GB = 4 × 1,024 = 4,096 MB. Storage measurement uses binary multiples of 1,024."},
+  {dom:"Domain 1 — IT Concepts",q:"Which number system uses digits 0–9 AND letters A through F?",opts:["Binary","Octal","Decimal","Hexadecimal"],c:3,exp:"Hexadecimal is base-16 and uses 0–9 plus A=10, B=11, C=12, D=13, E=14, F=15. It's commonly used for memory addresses and color codes."},
+  {dom:"Domain 2 — Infrastructure",q:"A company uses a cloud solution where the provider manages everything — servers, OS, and the application. Employees access it via a web browser. What cloud model is this?",opts:["IaaS","PaaS","SaaS","Private Cloud"],c:2,exp:"SaaS (Software as a Service) means the provider manages everything including the full application. Users just access the software via browser without managing any infrastructure."},
+  {dom:"Domain 2 — Infrastructure",q:"Which network device connects different networks and routes traffic between them?",opts:["Switch","Hub","Router","Access Point"],c:2,exp:"A router connects different networks and routes traffic between them (e.g., your home LAN to the internet). A switch connects devices within the same network."},
+  {dom:"Domain 2 — Infrastructure",q:"A VM Snapshot is BEST described as:",opts:["A full copy of the host machine's files","A screenshot of the VM's current display","A saved state of a VM at a specific point in time","A backup of the hypervisor's configuration"],c:2,exp:"A VM snapshot saves the complete state of a virtual machine at a specific moment — memory, disk, and settings. It enables fast rollback if a change breaks something."},
+  {dom:"Domain 3 — Applications & Software",q:"A user opens a website using Incognito mode. Which of the following is TRUE?",opts:["The ISP cannot see the user's traffic","No record of the visit is saved locally on the device","The website cannot track the user at all","The connection is automatically encrypted"],c:1,exp:"Incognito/Private mode only prevents the browser from saving local history, cookies, and form data on the device. The ISP, employer network, and websites can still see your traffic."},
+  {dom:"Domain 4 — Software Development",q:"A developer writes code that is executed line-by-line each time the program runs. What type of language is this?",opts:["Compiled","Interpreted","Markup","Assembly"],c:1,exp:"Interpreted languages execute code line-by-line at runtime without pre-compiling. Examples: Python, Ruby, JavaScript. Compiled languages (C, C++) convert the entire program to machine code before running."},
+  {dom:"Domain 5 — Database Fundamentals",q:"Which SQL command is used to RETRIEVE data from a database?",opts:["INSERT","UPDATE","SELECT","DELETE"],c:2,exp:"SELECT is the SQL command for reading/retrieving data — the R in CRUD (Create, Read, Update, Delete). Example: SELECT * FROM users WHERE age > 18;"},
+  {dom:"Domain 5 — Database Fundamentals",q:"A company runs full backups every Sunday and incremental backups Monday–Saturday. The system fails on Friday. How many backup sets are needed to fully restore?",opts:["Sunday's full backup only","Sunday's full + Thursday's incremental only","Sunday's full + Monday through Thursday incrementals","Only Thursday's incremental"],c:2,exp:"Incremental backups save changes since the LAST backup of ANY type. To restore Friday's state, you need Sunday's full backup PLUS every incremental since then (Mon, Tue, Wed, Thu) — this is why incremental restores are slower."},
+  {dom:"Domain 6 — Security",q:"Which authentication method provides the HIGHEST level of security?",opts:["Username and password only","Long PIN number only","Password + fingerprint scan","Security question answer"],c:2,exp:"Password (something you know) + fingerprint (something you are) = Multi-Factor Authentication using two different factor types. This is dramatically more secure than any single factor."},
+  {dom:"Domain 6 — Security",q:"A user gets an email appearing to be from their bank asking them to click a link and verify their login. This is an example of:",opts:["Ransomware","Phishing","Brute Force Attack","Man-in-the-Middle"],c:1,exp:"Phishing uses fraudulent emails, messages, or websites impersonating trusted entities to trick users into revealing credentials. It is a form of social engineering."},
+  {dom:"Domain 6 — Security",q:"Which wireless security protocol is the MOST secure and is the current latest standard?",opts:["WEP","WPA","WPA2","WPA3"],c:3,exp:"WPA3 is the latest and most secure Wi-Fi security protocol. It provides stronger encryption and is more resistant to offline brute-force attacks. WEP is completely obsolete and cracked in minutes."},
+  {dom:"Domain 6 — Security",q:"The CIA Triad principle of Availability means:",opts:["Only authorized users can access data","Data cannot be modified without authorization","Systems and data are accessible when authorized users need them","All communications must be encrypted"],c:2,exp:"Availability means that systems and data are operational and accessible to authorized users whenever needed. Threats to availability include DoS attacks, hardware failures, and outages."},
+  {dom:"Domain 5 — Database Fundamentals",q:"What is the purpose of a Primary Key in a database table?",opts:["It encrypts sensitive columns in the table","It links two different tables together","It uniquely identifies each record in the table","It defines the data type of each column"],c:2,exp:"A Primary Key uniquely identifies every record (row) in a table. No two rows can share the same value, and it cannot be null. A Foreign Key (different concept) is what links tables together."},
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let completedDomains = JSON.parse(localStorage.getItem('tp_done')||'[]');
+let fcKnown         = JSON.parse(localStorage.getItem('tp_known')||'[]');
+let currentDomainIdx = 0;
+let curDeck = [...FC];
+let curCardIdx = 0;
+let cardFlipped = false;
+let knownSet = new Set(fcKnown);
+let unknownSet = new Set();
+let qzIdx = 0, qzScore = 0, qzAnswered = false;
+
+// ═══════════════════════════════════════════════
+// VIEW SWITCH
+// ═══════════════════════════════════════════════
+function switchView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.m-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById(v+'-view').classList.add('active');
+  const t=document.getElementById('tab-'+v); if(t)t.classList.add('active');
+  const mt=document.getElementById('mtab-'+v); if(mt)mt.classList.add('active');
+  if(v==='home'){renderHome();}
+  if(v==='lessons'){renderLessons();}
+  if(v==='flashcards'){initFC();}
+  if(v==='quiz'){initQuiz();}
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════
+function renderHome(){
+  document.getElementById('stat-done').textContent=completedDomains.length;
+  document.getElementById('stat-known-home').textContent=knownSet.size;
+  document.getElementById('nav-pill').textContent=completedDomains.length+' / 6 done';
+  const g=document.getElementById('home-grid');
+  g.innerHTML=DOMAINS.map((d,i)=>{
+    const done=completedDomains.includes(d.id);
+    return`<div class="d-card ${done?'done':''}" style="--dc:${d.color}" onclick="openLesson(${i})">
+      <div class="dc-top"><span class="dc-icon">${d.icon}</span><span class="dc-badge">${d.weight}%</span></div>
+      <div class="dc-name">Domain ${d.id}: ${d.name}</div>
+      <div class="dc-desc">${d.desc}</div>
+      <div class="dc-qs">${d.qs}</div>
+      <div class="dc-bar"><div class="dc-fill" style="width:${done?100:0}%"></div></div>
+      <div class="dc-check">&#x2713;</div>
+    </div>`;
+  }).join('');
+}
+function openLesson(i){currentDomainIdx=i;switchView('lessons');}
+
+// ═══════════════════════════════════════════════
+// LESSONS
+// ═══════════════════════════════════════════════
+function renderLessons(){
+  buildSidebar();
+  loadDomainContent(currentDomainIdx);
+}
+function buildSidebar(){
+  document.getElementById('l-sidebar-list').innerHTML=DOMAINS.map((d,i)=>{
+    const done=completedDomains.includes(d.id);
+    return`<div class="l-sitem ${i===currentDomainIdx?'active':''}" onclick="selectDomain(${i})">
+      <span class="l-sitem-ico">${d.icon}</span>
+      <div class="l-sitem-info">
+        <div class="l-sitem-name">Domain ${d.id}: ${d.name}</div>
+        <div class="l-sitem-meta">${d.weight}% · ${d.qs}</div>
+      </div>
+      <div class="l-sitem-check ${done?'done':''}">${done?'&#x2713;':''}</div>
+    </div>`;
+  }).join('');
+}
+function selectDomain(i){
+  currentDomainIdx=i;
+  buildSidebar();
+  loadDomainContent(i);
+  document.getElementById('l-main').scrollTop=0;
+}
+function loadDomainContent(i){
+  const d=DOMAINS[i];
+  const done=completedDomains.includes(d.id);
+  const isLast=(i===DOMAINS.length-1);
+  document.getElementById('l-main').innerHTML=`<div class="fade-up">${d.content}
+    <div class="l-actions">
+      <button class="btn-done ${done?'':''}}" id="btn-done" onclick="markDone(${i})" ${done?'disabled':''}>
+        ${done?'&#x2713; Completed':'&#x2713; Mark as Complete'}
+      </button>
+      ${!isLast
+        ?`<button class="btn-fwd" onclick="selectDomain(${i+1})">Next Domain &#x2192;</button>`
+        :`<button class="btn-fwd" onclick="switchView('flashcards')">Study Flashcards &#x1F0CF;</button>`
+      }
+    </div></div>`;
+}
+function markDone(i){
+  const d=DOMAINS[i];
+  if(!completedDomains.includes(d.id)){
+    completedDomains.push(d.id);
+    localStorage.setItem('tp_done',JSON.stringify(completedDomains));
+  }
+  buildSidebar();
+  loadDomainContent(i);
+  document.getElementById('nav-pill').textContent=completedDomains.length+' / 6 done';
+}
+
+// ═══════════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════════
+function initFC(){
+  const dr=document.getElementById('deck-row');
+  dr.innerHTML=`<button class="dbtn active" data-d="all" onclick="selDeck('all',this)">All (${FC.length})</button>`
+    +DOMAINS.map(d=>`<button class="dbtn" data-d="${d.id}" onclick="selDeck(${d.id},this)">${d.icon} D${d.id} (${FC.filter(c=>c.d===d.id).length})</button>`).join('');
+  selDeck('all',dr.querySelector('[data-d="all"]'));
+}
+function selDeck(domain,btn){
+  document.querySelectorAll('.dbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  curDeck = domain==='all' ? [...FC] : FC.filter(c=>c.d===domain);
+  curCardIdx=0; unknownSet.clear(); showCard();
+}
+function shuffleDeck(){
+  for(let i=curDeck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[curDeck[i],curDeck[j]]=[curDeck[j],curDeck[i]];}
+  curCardIdx=0;showCard();
+}
+function resetDeck(){
+  curCardIdx=0;knownSet.clear();unknownSet.clear();
+  localStorage.setItem('tp_known',JSON.stringify([]));
+  updateFCStats();showCard();
+  document.getElementById('card-inner').classList.remove('flipped');cardFlipped=false;
+}
+function showCard(){
+  if(!curDeck.length)return;
+  const c=curDeck[curCardIdx];
+  document.getElementById('card-q').textContent=c.q;
+  document.getElementById('card-a').textContent=c.a;
+  document.getElementById('card-cat').textContent=c.cat;
+  document.getElementById('fc-counter').textContent=`Card ${curCardIdx+1} of ${curDeck.length}`;
+  document.getElementById('fc-pfill').style.width=((curCardIdx+1)/curDeck.length*100)+'%';
+  document.getElementById('card-inner').classList.remove('flipped');
+  cardFlipped=false;
+}
+function flipCard(){
+  cardFlipped=!cardFlipped;
+  document.getElementById('card-inner').classList.toggle('flipped',cardFlipped);
+}
+function nextCard(){if(curCardIdx<curDeck.length-1){curCardIdx++;showCard();}}
+function prevCard(){if(curCardIdx>0){curCardIdx--;showCard();}}
+function markCard(known){
+  if(known){knownSet.add(curCardIdx);unknownSet.delete(curCardIdx);}
+  else{unknownSet.add(curCardIdx);knownSet.delete(curCardIdx);}
+  localStorage.setItem('tp_known',JSON.stringify([...knownSet]));
+  updateFCStats();nextCard();
+}
+function updateFCStats(){
+  const rem=curDeck.length-knownSet.size-unknownSet.size;
+  document.getElementById('fc-known').textContent=knownSet.size;
+  document.getElementById('fc-unknown').textContent=unknownSet.size;
+  document.getElementById('fc-rem').textContent=Math.max(0,rem);
+}
+
+// ═══════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════
+function initQuiz(){
+  qzIdx=0;qzScore=0;qzAnswered=false;
+  document.getElementById('quiz-content').style.display='block';
+  document.getElementById('qz-results').classList.remove('show');
+  renderQ();
+}
+function renderQ(){
+  const q=QQ[qzIdx],tot=QQ.length,pct=(qzIdx/tot)*100;
+  document.getElementById('qz-counter').textContent=`Question ${qzIdx+1} of ${tot}`;
+  document.getElementById('qz-score').textContent=`Score: ${qzScore}/${qzIdx}`;
+  document.getElementById('qz-barfill').style.width=pct+'%';
+  document.getElementById('qz-domain').textContent=q.dom;
+  document.getElementById('qz-q').textContent=q.q;
+  const letters=['A','B','C','D'];
+  document.getElementById('qz-opts').innerHTML=q.opts.map((o,i)=>
+    `<div class="opt" id="opt-${i}" onclick="selectAns(${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      <div class="opt-txt">${o}</div>
+    </div>`).join('');
+  document.getElementById('qz-exp').classList.remove('show');
+  document.getElementById('btn-nextq').classList.remove('show');
+  document.getElementById('btn-nextq').textContent=qzIdx<QQ.length-1?'Next Question →':'See Results →';
+  qzAnswered=false;
+}
+function selectAns(i){
+  if(qzAnswered)return;
+  qzAnswered=true;
+  const q=QQ[qzIdx];
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('dis'));
+  document.getElementById('opt-'+q.c).classList.add('correct');
+  if(i===q.c)qzScore++;
+  else document.getElementById('opt-'+i).classList.add('wrong');
+  document.getElementById('qz-score').textContent=`Score: ${qzScore}/${qzIdx+1}`;
+  document.getElementById('qz-exp-txt').textContent=q.exp;
+  document.getElementById('qz-exp').classList.add('show');
+  document.getElementById('btn-nextq').classList.add('show');
+}
+function nextQuestion(){
+  qzIdx++;
+  if(qzIdx>=QQ.length)showResults();
+  else renderQ();
+}
+function showResults(){
+  document.getElementById('quiz-content').style.display='none';
+  const r=document.getElementById('qz-results');r.classList.add('show');
+  const pct=Math.round(qzScore/QQ.length*100);
+  const ring=document.getElementById('res-ring');
+  ring.style.setProperty('--rpct',pct*3.6+'deg');
+  let color=pct>=80?'var(--accent)':pct>=60?'var(--blue)':'var(--orange)';
+  ring.style.background=`conic-gradient(${color} ${pct*3.6}deg, rgba(255,255,255,.06) 0%)`;
+  document.getElementById('res-pct').textContent=pct+'%';
+  document.getElementById('res-title').textContent=pct>=80?'Excellent Work! 🎉':pct>=60?'Good Progress! 👍':'Keep Studying! 📚';
+  document.getElementById('res-sub').textContent=`You answered ${qzScore} out of ${QQ.length} correctly.`;
+}
+function restartQuiz(){initQuiz();}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();
+  // keyboard nav for flashcards
+  document.addEventListener('keydown',e=>{
+    const fc=document.getElementById('flashcards-view');
+    if(!fc.classList.contains('active'))return;
+    if(e.key==='ArrowRight')nextCard();
+    if(e.key==='ArrowLeft')prevCard();
+    if(e.key===' '){e.preventDefault();flipCard();}
+    if(e.key==='1')markCard(true);
+    if(e.key==='2')markCard(false);
+  });
+});
+</script>
+</body>
+</html>
