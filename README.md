@@ -5,7 +5,7 @@ A helper website to help me review for a certification. Created with Claude Code
 [![msedge_cQtxcNnJYR](https://github.com/user-attachments/assets/a118972a-5842-46c3-a6c2-078324da4ccd)](https://jzurcc.github.io/comptia-tech-review-website/)
 **Mobile View:**
 <a href="https://jzurcc.github.io/comptia-tech-review-website/" target="_blank">
-  <img width="1080" height="2143" alt="mobile view" src="https://github.com/user-attachments/assets/9cc36c02-f3fd-488a-8774-ae3f25f884c9" />
+  <img width="540" height="1071" alt="mobile view" src="https://github.com/user-attachments/assets/9cc36c02-f3fd-488a-8774-ae3f25f884c9" />
 </a>
 
 
