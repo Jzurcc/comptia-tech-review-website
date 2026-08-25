@@ -5,6 +5,34 @@ A helper website to help me review for a certification. Created with Claude Code
 > **Goal:** Pass the FC0-U71 exam with confidence.
 > **Approach:** Systematic domain mastery + active recall + scenario-based practice.
 > **Overview:** [CompTIA_Tech+.md](CompTIA_Tech+.md)
+
+---
+
+## Primary Sources & Official References
+
+The lessons, flashcards, tables, and study materials in this guide are curated directly from the following official exam objectives, industry standards, and technical documentation:
+
+### 1. Official CompTIA Exam Standards
+- **CompTIA Tech+ (FC0-U71) Official Exam Objectives & Blueprint:** [CompTIA Official Site](https://www.comptia.org/certifications/tech)
+- **CompTIA Certification Exam Policies, Grading & Objectives Guide:** [CompTIA Testing Policies](https://www.comptia.org/testing/testing-policies-procedures)
+- **Educational Curriculum & Domain Breakdowns:** CompTIA Courseware, InfoSecTrain, Tertiary Courses Singapore, Edusum, SkillTestPro, and Pearson VUE.
+
+### 2. Networking, Hardware & Protocols
+- **IANA Service Name and Transport Protocol Port Number Registry:** (HTTP 80, HTTPS 443, DNS 53, DHCP 67/68, SSH 22, Telnet 23, RDP 3389, SMTP 25, IMAP 143, POP3 110, FTP 20/21).
+- **IEEE 802.11 Standards Committee:** Wireless specifications (802.11a/b/g/n/ac/ax/be, 2.4 GHz vs. 5 GHz vs. 6 GHz frequency spectrum).
+- **IETF RFC Specifications:** IPv4 (RFC 791), IPv6 (RFC 8200), TCP (RFC 9293), and UDP (RFC 768).
+
+### 3. Cybersecurity, Encryption & Privacy Compliance
+- **NIST Special Publication 800-63B:** Digital Identity Guidelines, Password Hygiene & Authentication Factors.
+- **ISO/IEC 27001 Information Security Management:** The CIA Triad, AAA Security Framework, and Least Privilege principles.
+- **Wi-Fi Alliance Security Certifications:** WEP, WPA, WPA2-AES, and WPA3-SAE standards.
+- **Data Privacy & Protection Regulations:** GDPR (EU Regulation 2016/679), HIPAA Privacy Rule (45 CFR Part 160/164), and PCI-DSS v4.0.
+
+### 4. Software Development & Database Standards
+- **ISO/IEC 9075:** Information technology — Database languages — SQL (DDL, DML, ACID properties, relational integrity).
+- **W3C Web Standards:** HTML5 & CSS3 recommendations (World Wide Web Consortium).
+- **Unicode Consortium:** The Unicode Standard & UTF-8 Character Encoding (ISO/IEC 10646).
+
 ---
 
 ## 📌 Table of Contents
