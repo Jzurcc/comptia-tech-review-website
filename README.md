@@ -1265,7 +1265,9 @@ Data loss can result from hardware failures, ransomware, accidental deletion, or
 
 ## 8. Domain 6 — Security (19%)
 
-> Second-highest weighted domain. Focuses on information security principles, threat mitigation, authentication factors, cryptography, device hardening, and wireless network defense. Expect scenario-based questions where you must identify the appropriate control or attack vector.
+> **Weight: 19% (Second-Highest Domain on FC0-U71)**. Focuses on foundational cybersecurity principles, malware classification and mitigation, modern authentication and password management, symmetric/asymmetric cryptography, endpoint and mobile device security, safe browsing habits, and SOHO wireless network defense.
+
+---
 
 ### 8.1 Core Security Principles, Frameworks & Compliance
 
@@ -1283,84 +1285,131 @@ Data loss can result from hardware failures, ransomware, accidental deletion, or
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### The CIA Triad
+#### 1. The CIA Triad
 - **Confidentiality:** Ensuring that sensitive data is accessible **only to authorized individuals, entities, or processes**.
-  - *Controls:* Cryptographic encryption (AES/BitLocker), Access Control Lists (ACLs), Multi-Factor Authentication (MFA), Principle of Least Privilege.
-- **Integrity:** Ensuring that data remains **accurate, consistent, and unaltered** by unauthorized modification, tampering, or malicious corruption.
-  - *Controls:* Cryptographic hashing (SHA-256, MD5 checksums), Digital Signatures, write-protection, database constraints.
+  - *Technical Controls:* Cryptographic encryption (AES/BitLocker), Access Control Lists (ACLs), Multi-Factor Authentication (MFA), Principle of Least Privilege, data classification.
+- **Integrity:** Ensuring that data remains **accurate, complete, and unaltered** by unauthorized modification, tampering, or malicious corruption.
+  - *Technical Controls:* Cryptographic hashing (SHA-256, MD5 checksums), Digital Signatures, database constraints, write-protection, versioning.
 - **Availability:** Ensuring that systems, networks, and applications are **fully operational and accessible to authorized users when needed**.
-  - *Controls:* Hardware redundancy (RAID), redundant power supplies, Uninterruptible Power Supplies (UPS), fault-tolerant clustering, automated backups, DDoS mitigation.
+  - *Technical Controls:* Hardware redundancy (RAID 1/5/6/10), redundant power supplies, Uninterruptible Power Supplies (UPS), failover clustering, automated off-site backups, DDoS mitigation.
 
-#### The AAA Security Framework
+#### 2. The AAA Security Framework
 - **Authentication:** Verifying the declared identity of a user or system (*"Who are you and prove it?"* — Passwords, biometrics, hardware tokens).
-- **Authorization:** Determining the specific permissions, rights, and resource access granted to an authenticated user (*"What are you allowed to do?"* — Read, Write, Execute, Admin rights).
+- **Authorization:** Determining the specific permissions, rights, and resource access granted to an authenticated user (*"What are you allowed to do?"* — Read, Write, Execute, Admin rights, RBAC).
 - **Accounting (Auditing):** Tracking, measuring, and recording user sessions, resource access, and system activities in persistent audit logs (*"What did you do, when did you do it, and what was the outcome?"*).
 
-#### Additional Key Concepts
+#### 3. Foundational Security Concepts
 - **Non-Repudiation:** A security assurance that a sender or actor cannot deny having performed an action, executed a transaction, or transmitted a message (enacted via **Digital Signatures** and Public Key Infrastructure).
-- **Principle of Least Privilege:** Security standard dictating that users and software processes must only be granted the minimum permissions necessary to accomplish their assigned job duties — nothing more.
-- **Personally Identifiable Information (PII) & Compliance:**
-  - *PII:* Any data that can distinguish or trace an individual's identity (e.g., Social Security Number, biometric data, driver's license, credit card numbers).
-  - *GDPR (General Data Protection Regulation):* Strict EU privacy law mandating user consent, data protection by design, and the "Right to be Forgotten."
-  - *HIPAA (Health Insurance Portability and Accountability Act):* US standard regulating patient Protected Health Information (PHI).
-  - *PCI-DSS:* Strict industry standard for organizations that process, store, or transmit credit cardholder data.
+- **Principle of Least Privilege:** Security standard dictating that users, services, and applications must only be granted the minimum permissions necessary to accomplish their assigned job duties — nothing more. Eliminates unnecessary administrative privileges.
+- **Separation of Duties:** Dividing critical tasks among multiple individuals to prevent fraud, theft, or catastrophic errors (e.g., one person requests a purchase, a second approves it, a third issues payment).
+
+#### 4. Privacy Regulations & Compliance Frameworks
+
+| Regulation / Standard | Jurisdiction / Industry | Scope & Core Requirements | Key Penalties & Mandates |
+|---|---|---|---|
+| **PII (Personally Identifiable Information)** | Global | Any data that can distinguish or trace an individual's identity (SSN, Full Legal Name, DOB, Biometric records, Driver's License, Home Address). | Mandatory protection under global privacy laws. |
+| **GDPR (General Data Protection Regulation)** | European Union (EU) | Regulates personal data collection, processing, and storage for EU residents. | Mandates explicit user consent, breach notifications within 72 hours, and the **"Right to be Forgotten" (Data Erasure)**. |
+| **HIPAA (Health Insurance Portability and Accountability Act)** | United States (Healthcare) | Regulates the privacy and security of **Protected Health Information (PHI)** across hospitals, insurers, and medical clinics. | Strict administrative, physical, and technical safeguards for electronic PHI (ePHI). |
+| **PCI-DSS (Payment Card Industry Data Security Standard)** | Global (Financial / Retail) | Technical security standards for all entities that process, store, or transmit payment cardholder data. | Mandates encryption in transit/rest, firewalls, regular vulnerability scans, and strict access controls. |
 
 ---
 
-### 8.2 Threat Landscape, Malware & Attack Vectors
+### 8.2 Threat Landscape, Malware Taxonomy & Social Engineering
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    MALWARE CLASSIFICATION                   │
+│                    MALWARE TAXONOMY MATRIX                  │
 │                                                             │
-│  • VIRUS       ──▶  Attaches to host file; REQUIRES human   │
-│                     action to execute and replicate.        │
-│  • WORM        ──▶  Standalone; self-replicates across      │
-│                     networks WITHOUT human action.          │
+│  • VIRUS       ──▶  Infects host files; REQUIRES human      │
+│                     action (opening file) to execute.       │
+│  • WORM        ──▶  Standalone software; self-replicates    │
+│                     across networks WITHOUT human action.   │
 │  • TROJAN      ──▶  Disguised as legitimate utility; opens  │
 │                     covert backdoor for remote access.      │
-│  • RANSOMWARE  ──▶  Encrypts user files; extorts payment    │
-│                     for decryption key.                     │
+│  • RANSOMWARE  ──▶  Encrypts victim files; extorts payment  │
+│                     in cryptocurrency for decryption key.   │
+│  • SPYWARE     ──▶  Silently logs keystrokes, steals logins,│
+│                     and monitors user activity.             │
 │  • ROOTKIT     ──▶  Replaces OS kernel binaries to maintain │
 │                     stealthy administrative control.        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### Malware Taxonomy
+#### 1. Complete Malware Taxonomy
 
-| Malware Type | Spreading Mechanism | Primary Impact & Behaviors | Key Clue on Exam |
-|--------------|---------------------|----------------------------|------------------|
-| **Virus** | Human executes infected executable file or macro. | Corrupts files, consumes resources, alters system boot sectors. | "User opened an infected email attachment..." |
-| **Worm** | Self-replicates across networks automatically via software vulnerabilities. | Rapid network bandwidth exhaustion, automated mass exploitation. | "Spreads across the entire corporate network without user intervention..." |
-| **Trojan** | Disguises as useful software (game, utility, free antivirus). | Installs hidden backdoors, keyloggers, or unauthorized remote access tools. | "User downloaded a free screen recorder that opened a backdoor..." |
-| **Ransomware** | Phishing email or exploit kit executes strong cryptographic payload. | Encrypts local and network shared files; displays countdown extortion ransom note. | "Files have .locked extensions and demand bitcoin payment..." |
-| **Spyware / Keylogger** | Bundled in freeware or drive-by web downloads. | Silently records keystrokes, steals passwords, monitors screen activity. | "Passwords and banking credentials stolen silently in the background..." |
-| **Adware** | Bundled with free software installers. | Hijacks browser default search engine and generates continuous intrusive pop-up ads. | "Unwanted pop-up advertisements appear continuously..." |
-| **Rootkit** | Exploits system privileges to inject into OS kernel space. | Modifies low-level system binaries; hides active processes from antivirus scanners and Task Manager. | "Malware undetected by standard antivirus that replaces OS kernel files..." |
+| Malware Type | Primary Propagation Vector | Malicious Behaviors & Impact | CompTIA Exam Clue / Trigger Phrase |
+|---|---|---|---|
+| **Virus** | Human executes an infected program, macro, or email attachment. | Alters/corrupts files, consumes CPU/RAM, infects boot sectors. | *"User opened an infected email attachment and the virus spread to local files..."* |
+| **Worm** | Self-replicates across networks automatically via unpatched OS/service vulnerabilities. | Rapidly exhausts network bandwidth, consumes server connections, mass infection. | *"Spreads across the entire corporate network automatically without any user interaction..."* |
+| **Trojan** | User intentionally downloads a file disguised as useful software (free game, cracked utility). | Installs covert backdoors, Remote Access Trojans (RATs), keyloggers. | *"User downloaded a free utility that appeared legitimate, but opened an unauthorized backdoor..."* |
+| **Ransomware** | Phishing attachment, drive-by download, or remote exploit. | Encrypts local drives and mapped network shares with unbreakable cryptography; displays extortion ransom note. | *"Files have .locked extensions and a countdown ransom demands Bitcoin payment..."* |
+| **Spyware / Keylogger** | Bundled with freeware, pirated software, or malicious browser extensions. | Silently records keystrokes, harvests banking passwords, captures screen activity. | *"User's bank account credentials were stolen silently without system errors or crashes..."* |
+| **Adware** | Bundled with free software installers. | Hijacks browser default search engines, displays persistent invasive pop-up advertisements. | *"Unwanted pop-up advertisements appear continuously during web browsing..."* |
+| **Rootkit** | Injected with administrative privileges into the OS Kernel (Ring 0). | Modifies low-level system binaries; hides active processes, network ports, and files from antivirus and Task Manager. | *"Malware undetected by standard antivirus that replaces OS kernel binaries..."* |
+| **Botnet / Zombie** | Malware infected by command-and-control (C2) servers. | Harnesses thousands of compromised computers/IoT devices to execute coordinated DDoS attacks or crypto-mining. | *"Thousands of hijacked computers flooding a web server with traffic..."* |
 
-#### Social Engineering Attacks (Manipulating the Human Element)
+#### 2. Social Engineering Attacks (Manipulating the Human Element)
 
-| Social Attack | Attack Vector & Methodology | Mitigation Strategy |
-|---------------|-----------------------------|---------------------|
-| **Phishing** | Broad fraudulent emails impersonating trusted brands (banks, PayPal) with malicious links. | Email spam filters, security awareness training. |
-| **Spear Phishing** | Highly customized, researched phishing email targeting a specific individual or department. | Verification protocols for financial transfers. |
-| **Whaling** | Spear phishing specifically targeting senior corporate executives (CEO, CFO, Board members). | Strict out-of-band wire transfer confirmation. |
-| **Vishing & Smishing** | Voice phishing phone calls (Vishing) or fraudulent SMS text messages (Smishing). | Never share 2FA codes or credentials over phone/text. |
-| **Pretexting** | Creating an elaborate invented scenario/backstory to trick an employee into surrendering confidential records. | Employee verification protocols and background checks. |
-| **Baiting** | Leaving infected USB flash drives in parking lots, waiting rooms, or lobbies labeled "Confidential Payroll." | Disabling AutoRun, security awareness training, endpoint USB lockouts. |
-| **Tailgating (Piggybacking)** | Physically following an authorized person through a secured door or badge turnstile without scanning an access badge. | Security guards, mantraps (two-door airlocks), turnstiles, badge enforcement. |
-| **Shoulder Surfing** | Visually spying on another person's screen, keyboard, or PIN pad in public spaces (airports, cafes). | Polarized privacy screen filters, shielding keypad with hand. |
-| **Dumpster Diving** | Searching through discarded corporate trash bins for paper documents containing passwords, customer PII, or network diagrams. | Cross-cut paper shredders, locked document disposal bins. |
+| Social Attack Vector | Methodology & Attack Mechanism | Primary Target | Defense & Mitigation |
+|---|---|---|---|
+| **Phishing** | Broad, generic fraudulent emails imitating banks or services with malicious links. | General Public / All Employees | Email spam filters, security awareness training, domain validation. |
+| **Spear Phishing** | Highly customized, researched phishing email customized with specific personal details. | Specific Employee / Department | Verification protocols for financial transactions and credentials. |
+| **Whaling** | Spear phishing specifically targeting senior corporate executives (CEO, CFO, Board). | C-Suite Executives | Strict out-of-band wire transfer authorization procedures. |
+| **Vishing (Voice Phishing)** | Phone calls pretending to be IT support, tax authorities, or banks demanding urgent action. | Phone Users | Never share passwords/2FA codes over the phone; verify identity via official callback. |
+| **Smishing (SMS Phishing)** | Fraudulent SMS text messages containing urgent links (fake package deliveries, bank alerts). | Mobile Device Users | Avoid clicking links in unsolicited texts; navigate directly to official websites. |
+| **Pretexting** | Creating an elaborate fabricated scenario/backstory to trick staff into surrendering data. | Helpdesk / Receptionists | Multi-step identity verification protocols and strict data release policies. |
+| **Baiting** | Leaving infected USB flash drives in parking lots, waiting rooms, or lobbies labeled "Q4 Payroll". | Curious Employees | Disabling USB AutoRun, endpoint USB port blocking, security awareness training. |
+| **Tailgating (Piggybacking)** | Physically following an authorized person through a secured door without scanning a badge. | Building Security | Mantraps (two-door airlocks), turnstiles, security guards, badge enforcement. |
+| **Shoulder Surfing** | Visually spying on another person's screen, keyboard, or PIN pad in public areas (airports, cafes). | Mobile Workers | Polarized privacy screen filters, shielding keypads with hands. |
+| **Dumpster Diving** | Searching through discarded corporate trash for printed passwords, client PII, or network diagrams. | Disposal Bins | Cross-cut paper shredders, locked secure document disposal bins, degaussing. |
 
-#### System & Network Attacks
-- **Brute Force Attack:** Automated tool attempting every possible mathematical combination of characters until it discovers the correct password.
-- **Dictionary Attack:** Automated attack attempting passwords from a precompiled list of common dictionary words, slang, and leaked passwords.
-- **Man-in-the-Middle (MitM) / On-Path:** Attacker secretly intercepts, alters, and relays communication between two parties who believe they are communicating securely.
-- **Denial of Service (DoS / DDoS):** Overwhelming a target server or network with massive flood traffic to exhaust resources and take services offline (Distributed DoS uses a coordinated **botnet** of compromised zombie devices).
+#### 3. Network & System Attack Vectors
+- **Brute Force Attack:** Automated software testing every conceivable combination of letters, numbers, and symbols until the correct password is found.
+- **Dictionary Attack:** Automated attack using precompiled wordlists of common passwords, slang words, and compromised credential databases.
+- **Credential Stuffing:** Automated injection of stolen username/password pairs from a third-party breach against unrelated online services (exploiting widespread **password reuse**).
+- **Man-in-the-Middle (MitM) / On-Path:** An attacker secretly intercepts, relays, and potentially alters communications between two trusting parties (e.g. over unencrypted public Wi-Fi).
+- **Denial of Service (DoS / DDoS):** Flooding a targeted server, website, or network router with bogus traffic to overwhelm bandwidth and processing capacity, causing complete service unavailability.
 
 ---
 
-### 8.3 Device Hardening, Password Hygiene & Multi-Factor Authentication
+### 8.3 Endpoint Defense, Device Hardening & Patch Management
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 ENDPOINT DEFENSE-IN-DEPTH                   │
+│                                                             │
+│   HOST-BASED FIREWALL  ──▶  Blocks unauthorized in/out ports│
+│   ANTI-MALWARE ENGINE  ──▶  Signatures + Heuristics + Sandbox│
+│   AUTOMATED PATCHING   ──▶  Eliminates known OS/app flaws   │
+│   ACCESS CONTROLS      ──▶  Least privilege (No local admin)│
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### 1. Anti-Malware Detection Engine Technologies
+- **Signature-Based Detection:** Compares file checksums and byte sequences against a local/cloud database of known malware signatures. Extremely fast and accurate for known threats; blind to novel zero-day attacks.
+- **Heuristic / Behavioral Analysis:** Monitors active software for suspicious behaviors (e.g., attempting to modify system boot sectors, mass-encrypting files, injecting into other processes). Detects new and mutating malware.
+- **Sandboxing:** Automatically isolates and executes suspicious, unknown files in a secure, virtualized environment to observe behavior before allowing execution on the host OS.
+
+#### 2. Firewalls: Host-Based vs. Network Hardware
+- **Host-Based Firewall (Software):** Runs locally on a single endpoint (e.g., Windows Defender Firewall, macOS Firewall). Monitors and filters inbound and outbound network traffic for that specific computer based on application rules and ports.
+- **Network Hardware Firewall:** Dedicated physical appliance installed between different network zones (e.g., between the LAN and the Internet). Filters traffic for all connected network devices simultaneously using stateful packet inspection.
+
+#### 3. Patch Management & System Lifecycles
+- **Security Updates / Patches:** Targeted code updates issued by software vendors to fix discovered security vulnerabilities, preventing exploits.
+- **Zero-Day Vulnerability:** A software flaw that is actively exploited in the wild before the software developer is aware of it or has released a patch.
+- **End-of-Life (EOL) / End-of-Support (EOS):** When a vendor officially terminates updates, technical support, and security patches for a software product (e.g., Windows 7, Windows XP). Continuing to run EOL software represents a severe security liability.
+- **Firmware & BIOS/UEFI Security:** Updating motherboard and hardware firmware patches low-level vulnerabilities. **Secure Boot** ensures that only cryptographically signed, trusted operating system bootloaders can start the computer.
+
+#### 4. Mobile Device Security & Management (MDM)
+- **MDM (Mobile Device Management):** Centralized enterprise software suite allowing IT administrators to manage, secure, and enforce policies across corporate and employee mobile smartphones and tablets.
+- **Remote Wipe:** Ability to remotely erase all data on a lost, stolen, or compromised mobile device over the cellular/Wi-Fi network.
+- **Device Encryption:** Automatic full-storage encryption built into mobile hardware (Apple Secure Enclave, Android File-Based Encryption).
+- **Failed Passcode Lockout:** Configuring mobile operating systems to wipe all user data after 10 consecutive failed passcode attempts.
+- **Sideloading & Jailbreaking/Rooting Risks:** Sideloading (installing apps from outside official app stores) and Jailbreaking/Rooting (removing OS security sandbox restrictions) bypass security controls and drastically increase malware infection risks.
+
+---
+
+### 8.4 Password Management, Authentication & Safe Browsing Habits
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1376,32 +1425,50 @@ Data loss can result from hardware failures, ransomware, accidental deletion, or
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### Password Best Practices & Account Policies
-- **Length & Complexity:** Minimum 12–16 characters mixing uppercase letters, lowercase letters, numbers, and special symbols (`!@#$%^&*`). Passphrases consisting of 4+ random unrelated words offer superior entropy and user recall.
-- **Account Lockout Policies (Crucial Exam Concept):** Automatically locking a user account after 3 to 5 consecutive failed login attempts. **Neutralizes online brute-force and dictionary attacks**.
-- **Password History & Expiration:** Preventing users from recycling their previous 5–10 passwords when rotating credentials.
-- **Password Managers:** Secure cryptographic vaults that generate, encrypt, and auto-fill unique, complex passwords for every website.
-
-#### Multi-Factor Authentication (MFA)
+#### 1. Multi-Factor Authentication (MFA) Matrix
 MFA requires a user to present **two or more distinct authentication factors** from different categories:
 
-| Factor Category | Description | Real-World Examples |
-|-----------------|-------------|---------------------|
-| **Something you Know (Knowledge)** | Information the user memorizes | Passwords, PINs, mother's maiden name security questions. |
-| **Something you Have (Possession)** | A physical object or hardware device owned by the user | Smartphone (TOTP app codes like Google Authenticator), SMS verification code, hardware token (YubiKey), smart card. |
-| **Something you Are (Inherence)** | Biological or biometric characteristics unique to the user | Fingerprint scanner, facial recognition (FaceID), iris/retina scan, voiceprint. |
+| Factor Category | Formal Term | Description | Real-World Examples |
+|---|---|---|---|
+| **Something you Know** | Knowledge Factor | Information the user has memorized in their head. | Passwords, PINs, security challenge questions. |
+| **Something you Have** | Possession Factor | A physical device, card, or token owned by the user. | Smartphone authenticator app (TOTP codes like Google Authenticator), SMS verification code, hardware token (YubiKey), RFID smart card. |
+| **Something you Are** | Inherence Factor | Unique biological or physical biometric characteristics. | Fingerprint reader, facial recognition (FaceID), retina/iris scan, voice recognition. |
 
-> **Exam Trap — False MFA:** Combining a **Password** with a **PIN** is **NOT** MFA because both belong to the exact same factor category (*"Something you Know"*).
+> **Crucial Exam Trap — False MFA:** Combining a **Password** with a **PIN** is **NOT** Multi-Factor Authentication because both belong to the exact same factor category (*"Something you Know"*). True MFA mandates at least **two distinct categories** (e.g. Password + Authenticator App).
 
-#### Physical Security Controls
-- **Kensington Cable Locks:** Physically securing laptops, desktop chassis, and monitors to immovable desks.
-- **Mantrap / Air Lock:** A secure entry area with two interlocking doors where the first door must close before the second opens, preventing tailgating.
-- **Clean Desk Policy:** Mandates that all sensitive documents, USB drives, and written notes must be locked away when workstations are unattended.
-- **Screen Lockout (Windows + L):** Configuring operating systems to automatically lock the screen after 5–10 minutes of inactivity.
+#### 2. Modern Password Hygiene & Account Policies
+- **Length & Complexity:** Passwords should be a minimum of 12–16 characters mixing uppercase, lowercase, digits, and special symbols. Passphrases consisting of 4+ random unrelated words offer superior entropy and human memorability.
+- **Account Lockout Policy (Essential Exam Concept):** Automatically locking a user account after 3 to 5 consecutive failed login attempts. **Completely neutralizes online brute-force and dictionary attacks**.
+- **Password Managers:** Secure cryptographic vaults that generate, store, and auto-fill strong, unique passwords for every account. **Anti-Phishing Benefit:** Password managers will refuse to auto-fill credentials on spoofed or fraudulent domain names.
+- **Single Sign-On (SSO):** An authentication scheme that allows a user to log in with a single set of credentials to access multiple independent software applications, simplifying credential management and enabling centralized account revocation.
+
+#### 3. Safe Browsing Habits & Web Certificate Inspection
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 SAFE BROWSING & CERTIFICATE INSPECTION      │
+│                                                             │
+│  🔒 https://www.bank.com  ──▶  Valid SSL/TLS Certificate    │
+│                                • Issued by Trusted CA       │
+│                                • Domain exact match         │
+│                                • Data encrypted in transit  │
+│                                                             │
+│  ⚠️ http://www.baank.com   ──▶  Typosquatting Phishing Trap  │
+│                                • No TLS encryption          │
+│                                • Credentials sent plaintext │
+└─────────────────────────────────────────────────────────────┘
+```
+
+- **Digital Certificate Verification:** Checking for the HTTPS padlock icon in the browser address bar. If a browser displays an *"Invalid Certificate"* or *"Untrusted Authority"* warning:
+  - *Causes:* The certificate is expired, self-signed, untrusted by the browser root store, or issued to a different domain name.
+  - *Action:* **Never bypass the warning or submit confidential credentials**.
+- **Typosquatting (URL Hijacking):** Attackers register common typographical misspellings of popular domains (e.g. `goolge.com`, `paypa1.com`) to lure victims into entering credentials on look-alike phishing sites.
+- **Drive-by Downloads:** Unintended software downloads that occur automatically without user consent when visiting a compromised or malicious webpage.
+- **Browser Extension / Add-on Security:** Malicious extensions can intercept keystrokes, inject adware, and steal session cookies. Install extensions only from official browser web stores and audit permissions regularly.
 
 ---
 
-### 8.4 Cryptography, Encryption & Public Key Infrastructure (PKI)
+### 8.5 Cryptography, Encryption & Public Key Infrastructure (PKI)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1419,40 +1486,40 @@ MFA requires a user to present **two or more distinct authentication factors** f
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### Core Cryptographic Terminology
-- **Plaintext:** Original, unencrypted, human-readable data.
-- **Ciphertext:** Scrambled, unreadable data generated by applying an encryption algorithm and cryptographic key.
-- **Cryptographic Hashing:** A mathematical one-way function that takes arbitrary data and outputs a fixed-length string (checksum).
-  - *Purpose:* Verifies data **Integrity**.
+#### 1. Core Cryptographic Terminology
+- **Plaintext:** Unencrypted, readable raw data in its native form.
+- **Ciphertext:** Scrambled, unreadable data generated by running plaintext through an encryption algorithm using a cryptographic key.
+- **Cryptographic Hashing:** A mathematical one-way function converting arbitrary data into a unique, fixed-length string (checksum).
+  - *Core Purpose:* Verifies data **Integrity**.
   - *Key Trait:* **One-way only** — impossible to reverse-engineer ciphertext back into original plaintext.
-  - *Algorithms:* SHA-256, SHA-3, MD5 (MD5 is legacy/deprecated).
+  - *Algorithms:* SHA-256, SHA-3, MD5 (MD5 is deprecated due to collision vulnerabilities).
 
-#### Symmetric vs. Asymmetric Encryption
+#### 2. Symmetric vs. Asymmetric Encryption Matrix
 
 | Feature | Symmetric Encryption | Asymmetric Encryption (PKI) |
-|---------|----------------------|-----------------------------|
-| **Key Count** | 1 Single Shared Secret Key | 2 Mathematically Linked Keys (Public Key + Private Key) |
-| **How It Works** | The same key encrypts and decrypts. | **Public Key:** Freely shared; used by anyone to *encrypt* data.<br>**Private Key:** Kept secret; used by owner to *decrypt* data. |
-| **Speed & Overhead** | Extremely fast; low CPU overhead. | Slower; higher computational complexity. |
-| **Primary Use Case** | Bulk data encryption (data at rest on hard drives). | Key exchange, digital signatures, web identity verification (SSL/TLS). |
-| **Leading Algorithms** | AES (128/256-bit), 3DES | RSA, ECC (Elliptic Curve Cryptography) |
+|---|---|---|
+| **Key Architecture** | **1 Single Shared Secret Key** | **2 Mathematically Linked Keys** (Public Key + Private Key) |
+| **Operational Workflow** | The exact same key encrypts and decrypts. | **Public Key:** Freely distributed; used to *encrypt* data or *verify* signatures.<br>**Private Key:** Kept strictly secret; used to *decrypt* data or *create* digital signatures. |
+| **Speed & Computational Overhead** | Extremely fast; low CPU utilization. | Significantly slower; higher computational complexity. |
+| **Primary Use Cases** | Bulk data encryption (data at rest on hard drives, database encryption). | Key exchange, digital signatures, web identity verification (SSL/TLS handshakes). |
+| **Leading Algorithms** | **AES (128/256-bit)**, 3DES | **RSA (2048/4096-bit)**, ECC (Elliptic Curve Cryptography) |
 
-#### Data States & Encryption Implementations
-- **Data at Rest:** Inactive data stored on physical storage devices (hard drives, SSDs, SANs, USB flash drives).
-  - *Protections:* Full Disk Encryption (FDE), BitLocker (Windows), FileVault (macOS).
-- **Data in Transit (In Motion):** Data actively traveling across wired networks, Wi-Fi, or the public internet.
-  - *Protections:* HTTPS / TLS (secure web), VPN / IPsec (remote network tunnel), SSH (secure console), S/MIME or PGP (encrypted email).
-- **Data in Use:** Data actively residing in system RAM, CPU caches, or CPU registers during program execution.
+#### 3. Data States & Protection Methods
 
-#### Public Key Infrastructure (PKI) & Digital Certificates
-- **Certificate Authority (CA):** A trusted third-party organization (e.g., Let's Encrypt, DigiCert) that verifies domain/organizational identity and signs digital certificates.
-- **Digital Certificate:** An electronic credential binding an organization's public key to their verified identity (used in HTTPS websites).
+| Data State | Definition | Primary Security Protections |
+|---|---|---|
+| **Data at Rest** | Inactive data stored permanently on physical storage devices (hard drives, SSDs, SANs, backup tapes, USB flash drives). | Full Disk Encryption (FDE), Microsoft BitLocker, Apple FileVault, Linux LUKS, database-level encryption. |
+| **Data in Transit (In Motion)** | Data actively traveling across wired local networks, Wi-Fi radio waves, or the public internet. | HTTPS / TLS (secure web), VPN (IPsec/SSL), SSH (secure terminal), SFTP, S/MIME or PGP (encrypted email). |
+| **Data in Use** | Data actively residing in system RAM, CPU caches, or CPU registers during program execution. | Memory encryption, secure hardware enclaves, application sandboxing. |
+
+#### 4. Public Key Infrastructure (PKI) & Digital Certificates
+- **Certificate Authority (CA):** A trusted third-party organization (e.g., Let's Encrypt, DigiCert, GlobalSign) that verifies domain/organizational identity and issues digitally signed certificates.
+- **Digital Certificate (X.509):** An electronic credential binding an organization's public key to their verified identity (used in HTTPS websites).
+- **Digital Signature:** A cryptographic mechanism providing **Authentication, Integrity, and Non-Repudiation** by signing a hash of a document with the sender's private key.
 
 ---
 
-### 8.5 Small Office / Home Office (SOHO) Wireless Security Configuration
-
-Securing wireless networks is critical because radio frequency signals broadcast outside physical building perimeters.
+### 8.6 SOHO Wireless Network Hardening & Physical Security
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1464,26 +1531,35 @@ Securing wireless networks is critical because radio frequency signals broadcast
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### Wireless Security Standards Comparison
+#### 1. Wireless Security Standards Comparison
 
-| Protocol | Release | Encryption Cipher | Security Status & Characteristics |
-|----------|---------|-------------------|-----------------------------------|
-| **Open / None** | — | None | Zero protection; all network traffic transmitted in plaintext. Used in public hotspots. |
-| **WEP** | 1997 | RC4 (64/128-bit) | **Severely Flawed & Deprecated.** Weak initialization vectors allow attackers to crack keys in under 5 minutes. |
+| Protocol | Release | Encryption Cipher | Security Status & Operational Characteristics |
+|---|:---:|---|---|
+| **Open / None** | — | None | Zero protection; all network traffic transmitted in plaintext. Vulnerable to eavesdropping on public hotspots. |
+| **WEP** | 1997 | RC4 (64/128-bit) | **Severely Flawed & Deprecated.** Weak initialization vectors allow attackers to crack encryption keys in under 5 minutes. |
 | **WPA** | 2003 | TKIP | **Deprecated.** Transitional standard designed to patch WEP flaws; vulnerable to packet spoofing. |
 | **WPA2 (802.11i)** | 2004 | **AES-CCMP** | **Current Industry Standard.** Strong encryption; requires complex passphrases to resist offline dictionary attacks. |
-| **WPA3** | 2018 | **AES-GCMP / SAE** | **Latest & Most Secure Standard.** Uses Simultaneous Authentication of Equals (SAE) to neutralize offline dictionary attacks; provides individualized session encryption on open networks. |
+| **WPA3** | 2018 | **AES-GCMP / SAE** | **Latest & Most Secure Standard.** Uses Simultaneous Authentication of Equals (SAE) to neutralize offline dictionary attacks; provides individualized session encryption. |
 
-#### SOHO Router Hardening Best Practices Checklist
-1. **Change Default Admin Credentials:** Immediately change the factory username and password (`admin`/`admin` or `admin`/`password`).
-2. **Change Default Network Name (SSID):** Rename the Wi-Fi network uniquely without disclosing hardware make/model, address, or personal info.
-3. **Select WPA3 or WPA2-AES:** Use WPA3 (or WPA2 Personal with AES); disable WEP and WPA-TKIP entirely.
-4. **Disable WPS (Wi-Fi Protected Setup):** WPS PIN feature has an architectural brute-force vulnerability allowing attackers to crack Wi-Fi keys in minutes.
-5. **Enable Isolated Guest Network:** Separates untrusted visitor devices and smart IoT gadgets from the primary corporate/home LAN.
-6. **Apply Regular Firmware Updates:** Patch known router vulnerabilities and vendor security advisories.
-7. **Disable Remote Management:** Prevents external access to the router's web management interface from the public internet WAN side.
+#### 2. SOHO Wireless Router Hardening Checklist (CompTIA Best Practices)
+1. **Change Default Admin Credentials:** Immediately replace the factory default username and password (`admin`/`admin` or `admin`/`password`) with a strong administrative passphrase.
+2. **Change Default Network Name (SSID):** Rename the Wi-Fi network uniquely without disclosing the router brand, model, company name, or physical office address.
+3. **Select WPA3 or WPA2-AES:** Use WPA3-Personal (or WPA2 with AES-CCMP); disable WEP and WPA-TKIP completely.
+4. **Disable WPS (Wi-Fi Protected Setup):** WPS contains an architectural vulnerability where the 8-digit PIN can be brute-forced in a few hours, exposing the Wi-Fi password regardless of its complexity.
+5. **Enable Isolated Guest Wi-Fi Network:** Create a separate wireless SSID for visitors and smart IoT devices that isolates them from the internal corporate LAN and shared printers.
+6. **Apply Firmware Updates:** Regularly update the router firmware to patch newly discovered security vulnerabilities and exploit vectors.
+7. **Disable Remote Management:** Turn off router configuration access from the public Internet WAN port.
+
+#### 3. Physical Security & Media Sanitization
+- **Physical Access Controls:** Proximity access badges (RFID/NFC), biometric door locks, security guards, CCTV video surveillance, and mantraps.
+- **Physical Device Locks:** Kensington cable locks securing laptops and desktop chassis to permanent furniture.
+- **Secure Media Sanitization Methods:**
+  - *Degaussing:* Using high-powered magnetic fields to permanently scramble magnetic patterns on magnetic hard disk drives (HDDs) and backup tapes.
+  - *Physical Destruction:* Industrial shredding, crushing, or incinerating storage drives (mandated for classified/sensitive data).
+  - *Cryptographic Erase / Secure Erase:* Overwriting storage blocks with random data or destroying the hardware encryption key (ideal for SSDs/NVMe drives).
 
 ---
+
 
 ## 9. Key Terms Master Glossary
 

@@ -627,7 +627,7 @@ ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font
     <div class="fc-stats">
       <div style="text-align:center"><div class="fc-stat-n k" id="fc-known">0</div><div class="fc-stat-l">Know It</div></div>
       <div style="text-align:center"><div class="fc-stat-n u" id="fc-unknown">0</div><div class="fc-stat-l">Learning</div></div>
-      <div style="text-align:center"><div class="fc-stat-n r" id="fc-rem">164</div><div class="fc-stat-l">Remaining</div></div>
+      <div style="text-align:center"><div class="fc-stat-n r" id="fc-rem">167</div><div class="fc-stat-l">Remaining</div></div>
     </div>
   </div>
 </div>
@@ -1136,10 +1136,10 @@ INNER JOIN Departments ON Employees.Department = Departments.DeptName;</div>
 <tr><td>RTO</td><td>Recovery Time Objective</td><td>"How long can systems be offline?" (Max downtime to restore)</td><td>RTO = 30 minutes requires automated failover and rapid recovery procedures.</td></tr>
 </tbody></table></div></div>`},
 
-{id:6,name:"Security",weight:19,icon:"🔒",color:"#f43f5e",qs:"~14 questions",desc:"CIA triad, AAA framework, malware taxonomy, social engineering, MFA, PKI, and SOHO wireless hardening.",
+{id:6,name:"Security",weight:19,icon:"🔒",color:"#f43f5e",qs:"~14 questions",desc:"CIA triad, AAA framework, malware taxonomy, social engineering, MFA, PKI, endpoint protection, safe browsing, and SOHO wireless hardening.",
 content:`<div class="l-badge" style="background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.3);color:#fb7185;">🔒 Domain 6 · 19%</div>
 <h1 class="l-title">Security</h1>
-<p class="l-meta">Second-highest weighted domain. Focus on information security principles, threat mitigation, authentication factors, cryptography, device hardening, and wireless network defense.</p>
+<p class="l-meta">Second-highest weighted domain (19%). Covers fundamental security frameworks, threat landscape, endpoint defense, password management, cryptography, PKI, safe browsing, and wireless hardening.</p>
 <div class="cs"><h3>1. Core Security Principles, Frameworks &amp; Compliance</h3>
 <div class="tw"><table><thead><tr><th>Principle / Framework</th><th>Definition</th><th>Key Technical Controls</th></tr></thead><tbody>
 <tr><td>Confidentiality (CIA)</td><td>Ensuring sensitive data is accessible <strong>only to authorized individuals</strong>.</td><td>AES Encryption, Access Control Lists (ACLs), Least Privilege, MFA</td></tr>
@@ -1151,51 +1151,69 @@ content:`<div class="l-badge" style="background:rgba(244,63,94,.12);border-color
 <tr><td>Non-Repudiation</td><td>Assurance that an actor cannot deny performing an action.</td><td>Digital Signatures, Public Key Infrastructure (PKI)</td></tr>
 <tr><td>Principle of Least Privilege</td><td>Users receive only minimum access required for their role.</td><td>Role-based permissions, removing local admin rights</td></tr>
 </tbody></table></div>
-<div class="ibox tip"><div class="ibox-lbl">Privacy &amp; Compliance</div><strong>PII:</strong> Personally Identifiable Information (SSN, Name, DOB).<br><strong>GDPR:</strong> EU privacy law mandating user consent &amp; data erasure.<br><strong>HIPAA:</strong> US healthcare privacy standard.<br><strong>PCI-DSS:</strong> Security standard for credit card transactions.</div></div>
-<div class="cs"><h3>2. Threat Landscape, Malware &amp; Social Engineering</h3>
+<div class="ibox tip"><div class="ibox-lbl">Privacy &amp; Compliance Regulations</div><strong>PII:</strong> Personally Identifiable Information (SSN, Name, DOB).<br><strong>GDPR:</strong> EU privacy law mandating explicit user consent &amp; the "Right to be Forgotten".<br><strong>HIPAA:</strong> US healthcare privacy standard protecting electronic PHI (ePHI).<br><strong>PCI-DSS:</strong> Global technical security standards for credit card processing systems.</div></div>
+
+<div class="cs"><h3>2. Threat Landscape, Malware Taxonomy &amp; Social Engineering</h3>
 <div class="tw"><table><thead><tr><th>Threat Type</th><th>Category</th><th>Propagation &amp; Characteristics</th></tr></thead><tbody>
 <tr><td>Virus</td><td>Malware</td><td>Attaches to host files; <strong>REQUIRES human action</strong> (opening file) to execute and replicate.</td></tr>
 <tr><td>Worm</td><td>Malware</td><td>Standalone software; self-replicates across networks <strong>WITHOUT human action</strong>.</td></tr>
 <tr><td>Trojan</td><td>Malware</td><td>Disguises as legitimate software (free utility/game) while opening a covert backdoor.</td></tr>
-<tr><td>Ransomware</td><td>Malware</td><td>Encrypts user files with strong cryptography; demands extortion payment for key.</td></tr>
+<tr><td>Ransomware</td><td>Malware</td><td>Encrypts user files with strong cryptography; demands extortion payment in Bitcoin for key.</td></tr>
 <tr><td>Spyware / Keylogger</td><td>Malware</td><td>Silently records keystrokes, steals credentials, and monitors user activity.</td></tr>
 <tr><td>Adware</td><td>Malware</td><td>Displays unsolicited pop-up advertisements; often bundled in freeware.</td></tr>
-<tr><td>Rootkit</td><td>Malware</td><td>Injects into OS kernel; replaces core binaries to hide from antivirus tools.</td></tr>
+<tr><td>Rootkit</td><td>Malware</td><td>Injects into OS kernel (Ring 0); replaces core binaries to hide from antivirus and Task Manager.</td></tr>
+<tr><td>Botnet / Zombie</td><td>Malware</td><td>Thousands of compromised computers/IoT devices controlled by C2 servers to launch DDoS attacks.</td></tr>
 <tr><td>Phishing</td><td>Social Eng.</td><td>Broad fraudulent emails impersonating trusted brands to harvest credentials.</td></tr>
 <tr><td>Spear Phishing</td><td>Social Eng.</td><td>Targeted, customized phishing email directed at a specific employee or department.</td></tr>
 <tr><td>Whaling</td><td>Social Eng.</td><td>Spear phishing targeting high-level corporate executives (CEO, CFO).</td></tr>
 <tr><td>Vishing / Smishing</td><td>Social Eng.</td><td>Voice phone call phishing (Vishing) or SMS text message phishing (Smishing).</td></tr>
 <tr><td>Pretexting</td><td>Social Eng.</td><td>Inventing a fake backstory/scenario to trick someone into revealing sensitive data.</td></tr>
 <tr><td>Baiting</td><td>Social Eng.</td><td>Leaving infected USB flash drives in public/office areas labeled "Payroll."</td></tr>
-<tr><td>Tailgating</td><td>Physical</td><td>Physically following an authorized employee through a secure badge door.</td></tr>
-<tr><td>Shoulder Surfing</td><td>Physical</td><td>Visually spying on screens or keypads. <em>Mitigation: Privacy screen filters.</em></td></tr>
+<tr><td>Tailgating</td><td>Physical</td><td>Physically following an authorized employee through a secure badge door without swiping.</td></tr>
+<tr><td>Shoulder Surfing</td><td>Physical</td><td>Visually spying on screens or keypads. <em>Mitigation: Polarized privacy screen filters.</em></td></tr>
 <tr><td>Dumpster Diving</td><td>Physical</td><td>Searching trash for sensitive documents. <em>Mitigation: Cross-cut shredders.</em></td></tr>
 </tbody></table></div></div>
-<div class="cs"><h3>3. Device Hardening, Password Hygiene &amp; Multi-Factor Authentication</h3>
-<div class="tw"><table><thead><tr><th>MFA Factor Category</th><th>Description</th><th>Real-World Examples</th></tr></thead><tbody>
-<tr><td>Something you Know</td><td>Knowledge factor (memorized info)</td><td>Password, PIN, security challenge question</td></tr>
-<tr><td>Something you Have</td><td>Possession factor (physical token/device)</td><td>Authenticator app (TOTP), SMS code, hardware YubiKey, smart card</td></tr>
-<tr><td>Something you Are</td><td>Inherence factor (biometrics)</td><td>Fingerprint scanner, facial recognition (FaceID), retina/iris scan</td></tr>
+
+<div class="cs"><h3>3. Endpoint Defense, Patch Management &amp; Mobile Device Security</h3>
+<div class="tw"><table><thead><tr><th>Security Technology</th><th>Operational Role</th><th>Key Characteristics</th></tr></thead><tbody>
+<tr><td>Signature-Based Antivirus</td><td>Pattern matching</td><td>Checks file hashes against known malware database; blind to novel zero-day attacks.</td></tr>
+<tr><td>Heuristic / Behavioral Analysis</td><td>Anomaly detection</td><td>Monitors process behaviors (e.g. mass-encryption) to detect mutating or unknown zero-day malware.</td></tr>
+<tr><td>Sandboxing</td><td>Isolated execution</td><td>Safely detonates suspicious files in a virtualized container before allowing execution on host OS.</td></tr>
+<tr><td>Host-Based Firewall</td><td>Endpoint traffic filter</td><td>Software running on local PC (Windows Defender Firewall) filtering in/out traffic by application and port.</td></tr>
+<tr><td>Network Hardware Firewall</td><td>Perimeter defense</td><td>Dedicated physical appliance between LAN and Internet performing stateful packet inspection.</td></tr>
+<tr><td>Mobile Device Management (MDM)</td><td>Centralized fleet control</td><td>Allows enterprise remote wiping, location tracking, policy enforcement, and containerized security.</td></tr>
+<tr><td>Secure Boot &amp; UEFI</td><td>Bootloader integrity</td><td>Ensures only cryptographically signed, manufacturer-trusted OS loaders can start the machine.</td></tr>
+</tbody></table></div>
+<div class="ibox warn"><div class="ibox-lbl">End-of-Life (EOL) Software Risks</div>Running software or operating systems past their End-of-Life date (e.g. Windows 7/XP) poses a severe security hazard because vendors no longer issue security patches for newly discovered exploits.</div></div>
+
+<div class="cs"><h3>4. Password Hygiene, Multi-Factor Authentication &amp; Safe Browsing</h3>
+<div class="tw"><table><thead><tr><th>MFA Factor Category</th><th>Formal Term</th><th>Real-World Examples</th></tr></thead><tbody>
+<tr><td>Something you Know</td><td>Knowledge Factor</td><td>Password, PIN, security challenge question</td></tr>
+<tr><td>Something you Have</td><td>Possession Factor</td><td>Authenticator app (TOTP), SMS code, hardware YubiKey, smart card</td></tr>
+<tr><td>Something you Are</td><td>Inherence Factor</td><td>Fingerprint scanner, facial recognition (FaceID), retina/iris scan</td></tr>
 </tbody></table></div>
 <div class="ibox warn"><div class="ibox-lbl">Exam Trap — False MFA</div>A <strong>Password + PIN</strong> is <strong>NOT</strong> MFA because both are <em>"Something you Know."</em> MFA requires <strong>2+ DIFFERENT factor categories</strong>.</div>
 <ul class="sl">
-<li><strong>Password Best Practices:</strong> Minimum 12–16 characters mixing uppercase, lowercase, numbers, and symbols. Use password managers.</li>
 <li><strong>Account Lockout Policy:</strong> Temporarily locks an account after 3–5 consecutive failed login attempts — <strong>neutralizes brute-force attacks</strong>.</li>
-<li><strong>Physical Hardening:</strong> Kensington cable locks, mantraps (two-door airlocks), and automatic screen lockouts (<strong>Win + L</strong>).</li>
+<li><strong>Credential Stuffing:</strong> Automated injection of stolen credential pairs across multiple websites exploiting <strong>password reuse</strong>. Mitigated by using password managers.</li>
+<li><strong>Typosquatting (URL Hijacking):</strong> Fraudulent sites registered with misspelled brand names (e.g. <code>paypa1.com</code>). Check browser URLs carefully!</li>
+<li><strong>Digital Certificate Validation:</strong> Look for the HTTPS padlock. Never enter passwords if the browser alerts to an expired, untrusted, or mismatched SSL/TLS certificate.</li>
 </ul></div>
-<div class="cs"><h3>4. Cryptography, Encryption &amp; PKI</h3>
-<div class="tw"><table><thead><tr><th>Type</th><th>Key Count</th><th>Operation &amp; Strength</th><th>Primary Use Case</th></tr></thead><tbody>
-<tr><td>Symmetric Encryption</td><td>1 Shared Key</td><td>Same key encrypts and decrypts (AES-128/256). Very fast.</td><td>Bulk data at rest on hard drives (BitLocker, FileVault)</td></tr>
-<tr><td>Asymmetric Encryption</td><td>2 Key Pair</td><td>Public Key (encrypts) + Private Key (decrypts) (RSA, ECC).</td><td>Key exchange, digital certificates, HTTPS/TLS, digital signatures</td></tr>
-<tr><td>Cryptographic Hashing</td><td>None (One-Way)</td><td>One-way mathematical checksum (SHA-256, MD5). Cannot be decrypted.</td><td>Verifying data <strong>Integrity</strong> and password storage</td></tr>
+
+<div class="cs"><h3>5. Cryptography, Encryption &amp; PKI</h3>
+<div class="tw"><table><thead><tr><th>Type</th><th>Key Architecture</th><th>Operation &amp; Strength</th><th>Primary Use Case</th></tr></thead><tbody>
+<tr><td>Symmetric Encryption</td><td>1 Shared Secret Key</td><td>Same key encrypts and decrypts (AES-128/256). Very fast.</td><td>Bulk data at rest on hard drives (BitLocker, FileVault)</td></tr>
+<tr><td>Asymmetric Encryption</td><td>2 Key Pair (Public + Private)</td><td>Public Key (encrypts) + Private Key (decrypts) (RSA, ECC).</td><td>Key exchange, digital certificates, HTTPS/TLS, digital signatures</td></tr>
+<tr><td>Cryptographic Hashing</td><td>None (One-Way)</td><td>One-way mathematical checksum (SHA-256, MD5). Cannot be decrypted.</td><td>Verifying data <strong>Integrity</strong> and password verification</td></tr>
 </tbody></table></div>
 <div class="tw"><table><thead><tr><th>Data State</th><th>Definition</th><th>Protection Methods</th></tr></thead><tbody>
-<tr><td>Data at Rest</td><td>Inactive data stored on physical disks or media</td><td>Full Disk Encryption (FDE), BitLocker (Windows), FileVault (macOS)</td></tr>
-<tr><td>Data in Transit</td><td>Data actively traveling over networks or the internet</td><td>HTTPS / TLS, VPN (IPsec/SSL), SSH, S/MIME email encryption</td></tr>
-<tr><td>Data in Use</td><td>Data actively in system RAM or CPU registers</td><td>Memory encryption, secure enclaves</td></tr>
+<tr><td>Data at Rest</td><td>Inactive data stored on physical disks or media</td><td>Full Disk Encryption (FDE), BitLocker (Windows), FileVault (macOS), LUKS</td></tr>
+<tr><td>Data in Transit</td><td>Data actively traveling over networks or the internet</td><td>HTTPS / TLS, VPN (IPsec/SSL), SSH, SFTP, S/MIME email encryption</td></tr>
+<tr><td>Data in Use</td><td>Data actively in system RAM or CPU registers</td><td>Memory encryption, secure hardware enclaves</td></tr>
 </tbody></table></div>
-<div class="ibox tip"><div class="ibox-lbl">Certificate Authority (CA)</div>A trusted third party (Let's Encrypt, DigiCert) that issues digital SSL/TLS certificates binding a domain's identity to a public key.</div></div>
-<div class="cs"><h3>5. SOHO Wireless Network Security Hardening</h3>
+<div class="ibox tip"><div class="ibox-lbl">Certificate Authority (CA) &amp; Digital Signatures</div><strong>Certificate Authority (CA):</strong> Trusted entity (Let's Encrypt, DigiCert) that issues signed digital certificates binding identities to public keys.<br><strong>Digital Signature:</strong> Cryptographic hash signed with a private key providing <strong>Authentication, Integrity, and Non-Repudiation</strong>.</div></div>
+
+<div class="cs"><h3>6. SOHO Wireless Network Hardening &amp; Physical Controls</h3>
 <div class="tw"><table><thead><tr><th>Standard</th><th>Cipher</th><th>Security Level &amp; Characteristics</th></tr></thead><tbody>
 <tr><td>Open / None</td><td>None</td><td>Zero encryption; all packets sent in plaintext. Public Wi-Fi risk.</td></tr>
 <tr><td>WEP</td><td>RC4</td><td><strong>Severely Flawed &amp; Deprecated.</strong> Easily cracked in under 5 minutes.</td></tr>
@@ -1203,7 +1221,14 @@ content:`<div class="l-badge" style="background:rgba(244,63,94,.12);border-color
 <tr><td>WPA2</td><td>AES-CCMP</td><td><strong>Current Standard.</strong> Strong encryption; requires complex passphrases.</td></tr>
 <tr><td>WPA3</td><td>AES-GCMP / SAE</td><td><strong>Latest &amp; Most Secure.</strong> Uses SAE to stop offline dictionary attacks; individualized encryption.</td></tr>
 </tbody></table></div>
-<div class="tag-row"><span class="tag">Disable WPS</span><span class="tag">Change Default SSID</span><span class="tag">Change Admin Password</span><span class="tag">Enable Guest Network</span><span class="tag">WPA3-SAE</span><span class="tag">Firmware Updates</span></div></div>`},
+<div class="tw"><table><thead><tr><th>SOHO Hardening Step</th><th>Why It Is Required</th></tr></thead><tbody>
+<tr><td>1. Change Default Admin Password</td><td>Stops attackers from logging into router interface with factory credentials (admin/admin).</td></tr>
+<tr><td>2. Change Default SSID</td><td>Prevents disclosing router hardware make/model and office location.</td></tr>
+<tr><td>3. Disable WPS</td><td>WPS PIN brute-force flaw allows cracking the Wi-Fi password in minutes.</td></tr>
+<tr><td>4. Enable Guest Network</td><td>Isolates visitors and unmanaged IoT smart devices from the private LAN.</td></tr>
+<tr><td>5. Media Sanitization (Degaussing/Shredding)</td><td>Permanently destroys data on retired drives to prevent dumpster diving theft.</td></tr>
+</tbody></table></div>
+<div class="tag-row"><span class="tag">Disable WPS</span><span class="tag">Change Default SSID</span><span class="tag">Change Admin Password</span><span class="tag">Enable Guest Network</span><span class="tag">WPA3-SAE</span><span class="tag">Degaussing</span><span class="tag">MDM Remote Wipe</span><span class="tag">Secure Boot</span></div></div>`},
 ];
 
 // ═══════════════════════════════════════════════
@@ -1381,6 +1406,15 @@ const FC = [
   {d:6,q:"WPA2 vs. WPA3 Wi-Fi security?",a:"WPA2: uses AES-CCMP encryption; vulnerable to offline dictionary attacks. WPA3: uses SAE (Simultaneous Authentication of Equals), providing robust protection against dictionary attacks and individualized encryption.",cat:"Wireless Security"},
   {d:6,q:"Why should WPS (Wi-Fi Protected Setup) be disabled on wireless routers?",a:"WPS has a severe PIN brute-force vulnerability that allows attackers to crack the Wi-Fi password in minutes regardless of password length.",cat:"Wireless Security"},
   {d:6,q:"What is an Account Lockout Policy and what attack does it stop?",a:"A security rule that temporarily locks a user account after 3–5 consecutive failed login attempts, effectively neutralizing online brute-force and dictionary attacks.",cat:"Device Hardening"},
+  // D6 — Advanced Endpoint, Mobile & Threat Hardening
+  {d:6,q:"What is Sandboxing in anti-malware security?",a:"Executing unknown, suspicious files in an isolated, secure virtualized container to safely observe behavior before allowing execution on the host OS.",cat:"Endpoint Security"},
+  {d:6,q:"What is a Zero-Day Vulnerability?",a:"A software security flaw that is actively exploited by attackers before the developer has discovered it or released a security patch.",cat:"Threats & Vulnerabilities"},
+  {d:6,q:"Heuristic Analysis vs. Signature-Based Antivirus?",a:"Signature-based matches known virus definitions (fast, but blind to new threats). Heuristic/Behavioral monitors suspicious actions (like mass-encryption) to detect brand-new, unknown malware.",cat:"Endpoint Security"},
+  {d:6,q:"What is Remote Wipe on mobile devices?",a:"A security feature managed via MDM that allows administrators to remotely send a signal to completely erase all data on a lost or stolen mobile phone or tablet.",cat:"Mobile Device Security"},
+  {d:6,q:"What is Typosquatting (URL Hijacking)?",a:"Registering misspelled domain names of popular websites (e.g., 'paypa1.com' or 'goolge.com') to lure unsuspecting users onto fraudulent phishing portals.",cat:"Safe Browsing & Web Security"},
+  {d:6,q:"What is a Credential Stuffing attack?",a:"An automated attack where cybercriminals take stolen usernames and passwords leaked from one breach and test them against dozens of other unrelated websites.",cat:"Authentication & Threats"},
+  {d:6,q:"What is Degaussing in media sanitization?",a:"Exposing magnetic media (HDDs, magnetic tapes) to an extremely powerful magnetic field that permanently scrambles and erases all stored data.",cat:"Physical Security & Disposal"},
+  {d:6,q:"What is the primary security danger of End-of-Life (EOL) software?",a:"The vendor no longer develops, updates, or issues security patches for it. Newly discovered vulnerabilities remain unpatched forever, making the system an easy target for exploits.",cat:"Device Hardening"},
 ];
 
 // ═══════════════════════════════════════════════
