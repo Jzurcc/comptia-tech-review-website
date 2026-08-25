@@ -444,6 +444,41 @@ ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font
   cursor:pointer;transition:all .2s;
 }
 .btn-restart:hover{opacity:.9;transform:translateY(-1px);}
+/* Quiz Mode Toolbar */
+.qz-modes-bar{
+  display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  padding:10px 14px;border-radius:12px;
+}
+.qz-mbtn{
+  background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text2);
+  padding:7px 13px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+}
+.qz-mbtn:hover{background:rgba(255,255,255,.08);color:var(--text);}
+.qz-mbtn.active{background:rgba(56,189,248,.15);border-color:var(--blue);color:var(--blue);}
+.qz-dom-select{
+  background:var(--bg2);border:1px solid var(--border);color:var(--text2);
+  padding:7px 12px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  outline:none;cursor:pointer;margin-left:auto;
+}
+.qz-dom-select:focus{border-color:var(--accent);}
+.qz-diag-box{
+  margin:24px 0 28px;text-align:left;background:rgba(255,255,255,.02);
+  border:1px solid var(--border);border-radius:12px;padding:18px 20px;
+}
+.qz-diag-title{font-size:14px;font-weight:800;margin-bottom:14px;color:var(--text);display:flex;align-items:center;justify-content:space-between;}
+.qz-diag-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+.qz-diag-row:last-child{border-bottom:none;}
+.qz-diag-left{display:flex;flex-direction:column;gap:3px;}
+.qz-diag-dom{font-weight:700;color:var(--text);}
+.qz-diag-sub{font-size:11px;color:var(--text3);}
+.qz-diag-right{display:flex;align-items:center;gap:12px;}
+.qz-diag-score{font-weight:800;font-size:13px;color:var(--text2);}
+.qz-diag-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.05em;}
+.qz-diag-badge.pass{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3);}
+.qz-diag-badge.rev{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3);}
+
 
 /* ══════════════════════ RESPONSIVE ══════════════════════ */
 @media(max-width:900px){
@@ -533,7 +568,7 @@ ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font
     <div class="stat-box"><div class="stat-num g" id="stat-done">0</div><div class="stat-lbl">Domains Done</div></div>
     <div class="stat-box"><div class="stat-num">6</div><div class="stat-lbl">Total Domains</div></div>
     <div class="stat-box"><div class="stat-num g">164</div><div class="stat-lbl">Flashcards</div></div>
-    <div class="stat-box"><div class="stat-num">15</div><div class="stat-lbl">Quiz Questions</div></div>
+    <div class="stat-box"><div class="stat-num">76</div><div class="stat-lbl">Quiz Questions</div></div>
     <div class="stat-box"><div class="stat-num g" id="stat-known-home">0</div><div class="stat-lbl">Cards Known</div></div>
   </div>
 
@@ -600,9 +635,25 @@ ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font
 <!-- ═══════════ QUIZ ═══════════ -->
 <div id="quiz-view" class="view">
   <div class="quiz-wrap">
+    
+    <!-- Quiz Mode Selector -->
+    <div class="qz-modes-bar">
+      <button class="qz-mbtn active" id="qm-all" onclick="setQuizMode('all')">🏆 Full Exam (76 Qs)</button>
+      <button class="qz-mbtn" id="qm-quick15" onclick="setQuizMode('quick15')">⚡ Quick 15 Shuffle</button>
+      <select class="qz-dom-select" id="qz-dom-select" onchange="setQuizMode(this.value)">
+        <option value="all">🎯 Filter by Domain...</option>
+        <option value="d1">Domain 1: IT Concepts (20 Qs)</option>
+        <option value="d2">Domain 2: Infrastructure (14 Qs)</option>
+        <option value="d3">Domain 3: Applications & Software (10 Qs)</option>
+        <option value="d4">Domain 4: Software Development (8 Qs)</option>
+        <option value="d5">Domain 5: Databases (10 Qs)</option>
+        <option value="d6">Domain 6: Security (14 Qs)</option>
+      </select>
+    </div>
+
     <div id="quiz-content">
       <div class="qz-meta">
-        <span class="qz-counter" id="qz-counter">Question 1 of 15</span>
+        <span class="qz-counter" id="qz-counter">Question 1 of 76</span>
         <span class="qz-score" id="qz-score">Score: 0</span>
       </div>
       <div class="qz-bar"><div class="qz-barfill" id="qz-barfill" style="width:0%"></div></div>
@@ -617,11 +668,16 @@ ul.sl li::before{content:'›';position:absolute;left:0;color:var(--accent);font
       </div>
       <button class="btn-nextq" id="btn-nextq" onclick="nextQuestion()">Next Question &#x2192;</button>
     </div>
+
     <div class="qz-results" id="qz-results">
       <div class="res-ring" id="res-ring"><div class="res-pct" id="res-pct">0%</div></div>
       <div class="res-title" id="res-title"></div>
       <div class="res-sub" id="res-sub"></div>
-      <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+      
+      <!-- Diagnostic Scorecard -->
+      <div class="qz-diag-box" id="qz-diag-box"></div>
+
+      <button class="btn-restart" onclick="restartQuiz()">Retake Quiz</button>
     </div>
   </div>
 </div>
@@ -1331,26 +1387,965 @@ const FC = [
 // DATA — QUIZ
 // ═══════════════════════════════════════════════
 const QQ = [
-  {dom:"Domain 1 — IT Concepts",q:"A technician has identified and replicated a user's problem. What should the technician do NEXT?",opts:["Implement a fix right away","Establish a theory of probable cause","Document the findings","Verify full system functionality"],c:1,exp:"After Step 1 (Identify the problem), the next step is Step 2: Establish a theory of probable cause. You must have a validated theory before implementing any fix."},
-  {dom:"Domain 1 — IT Concepts",q:"A file is 4 GB. How many MB is this equivalent to?",opts:["400 MB","2,048 MB","4,096 MB","8,192 MB"],c:2,exp:"1 GB = 1,024 MB. So 4 GB = 4 × 1,024 = 4,096 MB. Storage measurement uses binary multiples of 1,024."},
-  {dom:"Domain 1 — IT Concepts",q:"Which number system uses digits 0–9 AND letters A through F?",opts:["Binary","Octal","Decimal","Hexadecimal"],c:3,exp:"Hexadecimal is base-16 and uses 0–9 plus A=10, B=11, C=12, D=13, E=14, F=15. It's commonly used for memory addresses and color codes."},
-  {dom:"Domain 2 — Infrastructure",q:"A company uses a cloud solution where the provider manages everything — servers, OS, and the application. Employees access it via a web browser. What cloud model is this?",opts:["IaaS","PaaS","SaaS","Private Cloud"],c:2,exp:"SaaS (Software as a Service) means the provider manages everything including the full application. Users just access the software via browser without managing any infrastructure."},
-  {dom:"Domain 2 — Infrastructure",q:"Which network device connects different networks and routes traffic between them?",opts:["Switch","Hub","Router","Access Point"],c:2,exp:"A router connects different networks and routes traffic between them (e.g., your home LAN to the internet). A switch connects devices within the same network."},
-  {dom:"Domain 2 — Infrastructure",q:"A VM Snapshot is BEST described as:",opts:["A full copy of the host machine's files","A screenshot of the VM's current display","A saved state of a VM at a specific point in time","A backup of the hypervisor's configuration"],c:2,exp:"A VM snapshot saves the complete state of a virtual machine at a specific moment — memory, disk, and settings. It enables fast rollback if a change breaks something."},
-  {dom:"Domain 3 — Applications & Software",q:"A user opens a website using Incognito mode. Which of the following is TRUE?",opts:["The ISP cannot see the user's traffic","No record of the visit is saved locally on the device","The website cannot track the user at all","The connection is automatically encrypted"],c:1,exp:"Incognito/Private mode only prevents the browser from saving local history, cookies, and form data on the device. The ISP, employer network, and websites can still see your traffic."},
-  {dom:"Domain 4 — Software Development",q:"A developer writes code that is executed line-by-line each time the program runs. What type of language is this?",opts:["Compiled","Interpreted","Markup","Assembly"],c:1,exp:"Interpreted languages execute code line-by-line at runtime without pre-compiling. Examples: Python, Ruby, JavaScript. Compiled languages (C, C++) convert the entire program to machine code before running."},
-  {dom:"Domain 5 — Database Fundamentals",q:"Which SQL command is used to RETRIEVE data from a database?",opts:["INSERT","UPDATE","SELECT","DELETE"],c:2,exp:"SELECT is the SQL command for reading/retrieving data — the R in CRUD (Create, Read, Update, Delete). Example: SELECT * FROM users WHERE age > 18;"},
-  {dom:"Domain 5 — Database Fundamentals",q:"A company runs full backups every Sunday and incremental backups Monday–Saturday. The system fails on Friday. How many backup sets are needed to fully restore?",opts:["Sunday's full backup only","Sunday's full + Thursday's incremental only","Sunday's full + Monday through Thursday incrementals","Only Thursday's incremental"],c:2,exp:"Incremental backups save changes since the LAST backup of ANY type. To restore Friday's state, you need Sunday's full backup PLUS every incremental since then (Mon, Tue, Wed, Thu) — this is why incremental restores are slower."},
-  {dom:"Domain 6 — Security",q:"Which authentication method provides the HIGHEST level of security?",opts:["Username and password only","Long PIN number only","Password + fingerprint scan","Security question answer"],c:2,exp:"Password (something you know) + fingerprint (something you are) = Multi-Factor Authentication using two different factor types. This is dramatically more secure than any single factor."},
-  {dom:"Domain 6 — Security",q:"A user gets an email appearing to be from their bank asking them to click a link and verify their login. This is an example of:",opts:["Ransomware","Phishing","Brute Force Attack","Man-in-the-Middle"],c:1,exp:"Phishing uses fraudulent emails, messages, or websites impersonating trusted entities to trick users into revealing credentials. It is a form of social engineering."},
-  {dom:"Domain 6 — Security",q:"Which wireless security protocol is the MOST secure and is the current latest standard?",opts:["WEP","WPA","WPA2","WPA3"],c:3,exp:"WPA3 is the latest and most secure Wi-Fi security protocol. It provides stronger encryption and is more resistant to offline brute-force attacks. WEP is completely obsolete and cracked in minutes."},
-  {dom:"Domain 6 — Security",q:"The CIA Triad principle of Availability means:",opts:["Only authorized users can access data","Data cannot be modified without authorization","Systems and data are accessible when authorized users need them","All communications must be encrypted"],c:2,exp:"Availability means that systems and data are operational and accessible to authorized users whenever needed. Threats to availability include DoS attacks, hardware failures, and outages."},
-  {dom:"Domain 5 — Database Fundamentals",q:"What is the purpose of a Primary Key in a database table?",opts:["It encrypts sensitive columns in the table","It links two different tables together","It uniquely identifies each record in the table","It defines the data type of each column"],c:2,exp:"A Primary Key uniquely identifies every record (row) in a table. No two rows can share the same value, and it cannot be null. A Foreign Key (different concept) is what links tables together."},
+  // ─────────────────────────────────────────────
+  // DOMAIN 1: IT Concepts & Terminology (20 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A technician has identified and replicated a user's computer issue. According to the CompTIA 6-step troubleshooting methodology, what should the technician do NEXT?",
+    opts: [
+      "Implement a fix immediately to minimize downtime",
+      "Establish a theory of probable cause",
+      "Document the findings in the ticketing system",
+      "Verify full system functionality with the user"
+    ],
+    c: 1,
+    exp: "According to the official CompTIA 6-step troubleshooting methodology: Step 1 is Identify the problem, Step 2 is Establish a theory of probable cause (question the obvious), Step 3 is Test the theory, Step 4 is Establish a plan of action and implement the fix, Step 5 is Verify full system functionality, and Step 6 is Document findings, actions, and outcomes."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A storage administrator needs to calculate capacity. An application requires 4 GB of RAM. How many Megabytes (MB) is this equivalent to in binary computing?",
+    opts: ["400 MB", "2,048 MB", "4,096 MB", "8,192 MB"],
+    c: 2,
+    exp: "In computing storage measurement, units scale by multiples of 1,024 (2^10). Therefore, 4 GB = 4 × 1,024 MB = 4,096 MB."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "Which number system uses digits 0–9 along with letters A through F to represent values?",
+    opts: ["Binary", "Octal", "Decimal", "Hexadecimal"],
+    c: 3,
+    exp: "Hexadecimal is a base-16 numbering system using digits 0–9 and letters A–F (where A=10, B=11, C=12, D=13, E=14, F=15). It is widely used in MAC addresses, IPv6, and HTML/CSS color codes."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "An office internet connection is rated at 80 Mbps (Megabits per second) download speed. What is the theoretical maximum file transfer speed in Megabytes per second (MB/s)?",
+    opts: ["8 MB/s", "10 MB/s", "64 MB/s", "80 MB/s"],
+    c: 1,
+    exp: "Network throughput is measured in bits (b), while file sizes are measured in Bytes (B). Because 1 Byte = 8 bits, divide the network bandwidth by 8: 80 Mbps ÷ 8 = 10 MB/s."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A temperature sensor records raw reading '104.2'. A clinical system labels it 'Patient Core Temperature: 104.2°F (High Fever)'. According to the DIKW pyramid, what transition occurred?",
+    opts: [
+      "Data was processed into Information",
+      "Information was transformed into Wisdom",
+      "Knowledge was reduced to Data",
+      "Wisdom was converted to Knowledge"
+    ],
+    c: 0,
+    exp: "Data consists of raw, unorganized facts and numbers without context (104.2). Information is data that has been structured, labeled, and contextualized to give it meaning (Patient Temp: 104.2°F)."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "In the IPOS (Input, Processing, Output, Storage) computing cycle, which of the following hardware devices performs BOTH Input and Output?",
+    opts: ["Barcode scanner", "Touchscreen display", "Laser printer", "Webcam"],
+    c: 1,
+    exp: "A touchscreen display acts as an input device (detecting touch gestures and coordinates) and an output device (visually displaying graphics and text)."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "An international web application needs to display Japanese Kanji, Arabic script, mathematical symbols, and modern emojis. Which character encoding standard MUST be used?",
+    opts: ["7-bit ASCII", "Extended ASCII", "Unicode (UTF-8)", "EBCDIC"],
+    c: 2,
+    exp: "Unicode (and its dominant implementation UTF-8) supports over 149,000 characters spanning virtually all global writing systems, ancient scripts, technical symbols, and emojis. ASCII is limited to basic English characters."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "When interviewing an end user during Step 1 of the troubleshooting process (Identify the Problem), what questioning strategy should a technician use FIRST?",
+    opts: [
+      "Ask closed-ended yes/no questions to save time",
+      "Ask open-ended questions to allow the user to describe the symptoms freely",
+      "Tell the user which component has failed immediately",
+      "Ask leading questions that assume the user caused the issue"
+    ],
+    c: 1,
+    exp: "Technicians should begin by asking open-ended questions (e.g., 'What were you doing when the error occurred?') so the user can describe symptoms in their own words, followed by closed-ended questions to confirm specific facts."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A technician is preparing to open a desktop computer case to replace a RAM module. Which safety precaution BEST prevents Electrostatic Discharge (ESD) damage?",
+    opts: [
+      "Wear rubber-soled shoes while standing on a synthetic carpet",
+      "Attach an anti-static wrist strap clipped to an unpainted grounded metal chassis",
+      "Turn off the room lights and use a high-powered magnetic flashlight",
+      "Touch the gold RAM contacts directly before insertion"
+    ],
+    c: 1,
+    exp: "An anti-static wrist strap equalizes electrical potential between the technician and the computer chassis, safely draining static charges and preventing ESD damage to sensitive microchips."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A server room experiences an unexpected power outage. Which device provides immediate, short-term battery power allowing servers to shut down gracefully without data corruption?",
+    opts: [
+      "Surge protector strip",
+      "Uninterruptible Power Supply (UPS)",
+      "Power Distribution Unit (PDU)",
+      "Dual-voltage power supply"
+    ],
+    c: 1,
+    exp: "An Uninterruptible Power Supply (UPS) contains internal batteries that supply emergency electrical power instantaneously when the main power fails, allowing automated graceful shutdowns."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "Which form of intellectual property protection automatically applies to an original software codebase or written manuscript upon creation?",
+    opts: ["Patent", "Copyright", "Trademark", "Trade Secret"],
+    c: 1,
+    exp: "Copyright protects original creative works of authorship, including software source code, books, music, and artwork, automatically upon creation."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A software application is distributed under an Open Source (FOSS) license. What right does this guarantee to users and developers?",
+    opts: [
+      "The source code is hidden and protected against user modification",
+      "The source code is freely available for inspection, modification, and redistribution",
+      "The software can only be used on a single physical workstation",
+      "Users must pay an ongoing monthly subscription fee to compile the software"
+    ],
+    c: 1,
+    exp: "Free and Open Source Software (FOSS) provides public access to the source code, allowing anyone to inspect, modify, enhance, and redistribute the software."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A company purchases a software license that allows up to 25 employees to use the software simultaneously from any computer on the corporate network. What licensing model is this?",
+    opts: ["Per-Seat License", "Concurrent License", "Site License", "Shareware"],
+    c: 1,
+    exp: "A Concurrent (floating) license model limits the number of simultaneous active users at any given time rather than binding the license to a specific individual or computer."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "What is the legal contract between a software publisher and the end user specifying terms of use, restrictions, and warranties called?",
+    opts: ["SLA (Service Level Agreement)", "EULA (End User License Agreement)", "NDA (Non-Disclosure Agreement)", "AUP (Acceptable Use Policy)"],
+    c: 1,
+    exp: "A EULA (End User License Agreement) is the legal contract governing how proprietary software may be installed and used by the purchaser."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "After implementing a solution to fix a network printer issue, what must a technician do in Step 5 of the CompTIA troubleshooting process?",
+    opts: [
+      "Close the support ticket immediately",
+      "Verify full system functionality and implement preventive measures",
+      "Re-install the entire operating system on the user's computer",
+      "Establish a new theory of probable cause"
+    ],
+    c: 1,
+    exp: "Step 5 requires verifying full system functionality (having the user test the printer) and implementing preventive measures to ensure the issue does not recur."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "Why is Step 6 (Document findings, actions, and outcomes) critical in the troubleshooting methodology?",
+    opts: [
+      "It allows management to blame the technician if the fix fails",
+      "It creates a searchable historical knowledge base for future troubleshooting and accountability",
+      "It is only required if hardware components were physically replaced",
+      "It resets the user's network credentials automatically"
+    ],
+    c: 1,
+    exp: "Documenting findings, root causes, and resolutions creates institutional knowledge in the ticketing system, saving time for other technicians encountering similar issues."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "How many bits are in a single 'Nibble', and how many hexadecimal digits does it represent?",
+    opts: ["2 bits = 1 Hex digit", "4 bits = 1 Hex digit", "8 bits = 2 Hex digits", "16 bits = 4 Hex digits"],
+    c: 1,
+    exp: "A nibble is half a byte (4 bits). Because 4 bits can represent 16 distinct values (0000 to 1111), exactly 1 nibble corresponds to 1 hexadecimal digit (0–F)."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "Which of the following data elements is considered Personally Identifiable Information (PII) subject to legal privacy protections?",
+    opts: [
+      "A company's public support phone number",
+      "A customer's Social Security Number and date of birth",
+      "The model number of a computer monitor",
+      "The subnet mask of an internal router"
+    ],
+    c: 1,
+    exp: "Personally Identifiable Information (PII) is any data that can uniquely identify a specific individual, such as Social Security Numbers, full legal names, biometric data, or dates of birth."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "Which corporate policy governs what activities employees are permitted and forbidden to perform using company-owned computers and network infrastructure?",
+    opts: ["Acceptable Use Policy (AUP)", "Disaster Recovery Plan (DRP)", "Business Impact Analysis (BIA)", "Non-Disclosure Agreement (NDA)"],
+    c: 0,
+    exp: "An Acceptable Use Policy (AUP) defines the rules, ethical guidelines, and restrictions regarding how employees may use organizational hardware, email, and internet connections."
+  },
+  {
+    dom: "Domain 1 — IT Concepts & Terminology",
+    d: 1,
+    q: "A technician tests their theory of probable cause for a faulty workstation, but the test disproves the theory. What should the technician do NEXT?",
+    opts: [
+      "Implement a fix anyway",
+      "Establish a new theory of probable cause or escalate the issue",
+      "Verify system functionality",
+      "Document that the workstation cannot be repaired"
+    ],
+    c: 1,
+    exp: "If testing disproves the theory, the technician must establish a new theory of probable cause. If all reasonable theories are exhausted, they should escalate the problem to a higher-tier technician."
+  },
+
+  // ─────────────────────────────────────────────
+  // DOMAIN 2: Infrastructure (14 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A company uses a cloud-based customer relationship management (CRM) software. The cloud provider manages the underlying infrastructure, operating system, and software updates. Employees access the tool via a web browser. What cloud deployment model is this?",
+    opts: ["IaaS (Infrastructure as a Service)", "PaaS (Platform as a Service)", "SaaS (Software as a Service)", "On-Premises Private Cloud"],
+    c: 2,
+    exp: "SaaS (Software as a Service) delivers a complete, vendor-managed application over the web. The cloud provider handles servers, networking, storage, OS, and patching."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "An enterprise rents virtual machines, raw storage buckets, and virtual firewalls from a cloud provider. The enterprise IT staff is responsible for installing, configuring, and updating the operating systems and applications. What cloud model is this?",
+    opts: ["IaaS (Infrastructure as a Service)", "PaaS (Platform as a Service)", "SaaS (Software as a Service)", "DaaS (Desktop as a Service)"],
+    c: 0,
+    exp: "In IaaS (Infrastructure as a Service), the customer rents fundamental computing resources (compute, storage, network) and maintains full control over the operating system, middleware, and applications."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "Which networking hardware device operates at Layer 3 to connect separate, distinct networks and intelligently route data packets between them?",
+    opts: ["Network Hub", "Unmanaged Switch", "Router", "Wireless Access Point"],
+    c: 2,
+    exp: "A router operates at the Network Layer (Layer 3) and connects different networks together (such as routing traffic between a private home LAN and the public Internet)."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "Which well-known port and protocol provides secure, encrypted web browsing using Transport Layer Security (TLS)?",
+    opts: ["HTTP on Port 80", "HTTPS on Port 443", "SSH on Port 22", "DNS on Port 53"],
+    c: 1,
+    exp: "HTTPS (Hypertext Transfer Protocol Secure) operates over Port 443 and encrypts web communication using TLS/SSL."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A user types 'www.comptia.org' into their web browser. Which network protocol and port number translates this human-friendly domain name into its corresponding IP address?",
+    opts: ["DHCP on Port 67", "DNS on Port 53", "RDP on Port 3389", "SNMP on Port 161"],
+    c: 1,
+    exp: "DNS (Domain Name System) operates on Port 53 and resolves human-readable domain names (like www.comptia.org) into machine-routable numerical IP addresses."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A new laptop connects to the company Wi-Fi and is automatically assigned an IP address, subnet mask, default gateway, and DNS server address without manual configuration. Which protocol performed this task?",
+    opts: ["DNS (Port 53)", "DHCP (Ports 67/68)", "FTP (Ports 20/21)", "SMTP (Port 25)"],
+    c: 1,
+    exp: "DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network configuration parameters to client devices on ports 67 (server) and 68 (client)."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A systems administrator needs to manage a remote Linux server via a secure command-line interface. Which encrypted protocol and port should they use instead of insecure Telnet?",
+    opts: ["SSH on Port 22", "RDP on Port 3389", "HTTP on Port 80", "IMAP on Port 143"],
+    c: 0,
+    exp: "SSH (Secure Shell) operates on Port 22 and provides encrypted terminal management, replacing unencrypted Telnet (Port 23)."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "Which protocol allows a helpdesk technician to view and interact with the graphical desktop interface of a remote Windows PC over port 3389?",
+    opts: ["RDP (Remote Desktop Protocol)", "SSH (Secure Shell)", "SNMP (Simple Network Management Protocol)", "POP3 (Post Office Protocol)"],
+    c: 0,
+    exp: "RDP (Remote Desktop Protocol) operates on Port 3389 and provides a full graphical user interface for managing remote Windows systems."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "What is the key functional difference between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol)?",
+    opts: [
+      "TCP is connectionless and does not guarantee packet delivery; UDP guarantees delivery",
+      "TCP is connection-oriented, performs a 3-way handshake, and guarantees delivery; UDP is connectionless and optimized for low-latency speed",
+      "TCP is only used for wireless communication; UDP is only used for wired Ethernet",
+      "TCP operates at Layer 7; UDP operates at Layer 1"
+    ],
+    c: 1,
+    exp: "TCP is connection-oriented, verifies packet delivery with acknowledgments, and performs retransmission. UDP is connectionless with zero delivery guarantees, making it ideal for streaming video, VoIP, and gaming."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "What is the difference between a MAC address and an IP address?",
+    opts: [
+      "MAC addresses change based on location; IP addresses are permanently burned into the hardware",
+      "A MAC address is a permanent physical 48-bit hardware identifier; an IP address is a logical address configured for routing across networks",
+      "MAC addresses are 128-bit; IP addresses are always 16-bit",
+      "MAC addresses only apply to printers; IP addresses only apply to servers"
+    ],
+    c: 1,
+    exp: "A MAC (Media Access Control) address is a physical 48-bit identifier burned into the Network Interface Card (NIC) at the factory. An IP address is a logical network address assigned dynamically or statically for routing."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A system administrator is about to install a major software upgrade on a critical virtual machine. What feature should they use to capture the VM's current state so they can instantly roll back if the upgrade fails?",
+    opts: ["Full bare-metal backup to tape", "VM Snapshot", "Disk defragmentation", "Overclocking the hypervisor"],
+    c: 1,
+    exp: "A VM Snapshot preserves the exact state and memory data of a virtual machine at a specific point in time, enabling near-instantaneous rollback if modifications cause instability."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "Which type of hypervisor runs directly on the physical host server hardware without a host operating system underneath (e.g., VMware ESXi, Microsoft Hyper-V)?",
+    opts: ["Type 1 (Bare-metal) Hypervisor", "Type 2 (Hosted) Hypervisor", "Type 3 Cloud Container", "Virtual Sandbox"],
+    c: 0,
+    exp: "Type 1 (Bare-metal) hypervisors run directly on the physical server hardware, delivering superior performance, efficiency, and scalability for enterprise datacenters."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "Which modern Wi-Fi standard is formally designated as IEEE 802.11ax, offering OFDMA technology across both 2.4 GHz and 5 GHz bands (and 6 GHz in 6E)?",
+    opts: ["Wi-Fi 4 (802.11n)", "Wi-Fi 5 (802.11ac)", "Wi-Fi 6 / 6E (802.11ax)", "Wi-Fi 1 (802.11b)"],
+    c: 2,
+    exp: "Wi-Fi 6 (802.11ax) introduces OFDMA and multi-user MIMO across 2.4 GHz and 5 GHz frequencies. Wi-Fi 6E extends this into the newly opened 6 GHz spectrum."
+  },
+  {
+    dom: "Domain 2 — Infrastructure",
+    d: 2,
+    q: "A user connects wireless Bluetooth headphones to their smartphone. What network category BEST describes this short-range (~10m) wireless connection?",
+    opts: ["LAN (Local Area Network)", "PAN (Personal Area Network)", "MAN (Metropolitan Area Network)", "WAN (Wide Area Network)"],
+    c: 1,
+    exp: "A PAN (Personal Area Network) is a short-range network centered around a single person's workspace, typically utilizing Bluetooth (range ~10 meters)."
+  },
+
+  // ─────────────────────────────────────────────
+  // DOMAIN 3: Applications & Software (10 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "A user browses the web in Private/Incognito mode. Which of the following statements accurately describes what Incognito mode accomplishes?",
+    opts: [
+      "It completely hides all internet traffic from the Internet Service Provider (ISP)",
+      "It prevents the local web browser from saving browsing history, cache, and cookies on that specific computer",
+      "It renders the user 100% anonymous to law enforcement and corporate firewalls",
+      "It automatically encrypts the physical connection between the router and the ISP"
+    ],
+    c: 1,
+    exp: "Incognito/Private browsing only prevents the local browser from storing cookies, browsing history, and temporary cache files on that specific machine. It does not conceal traffic from ISPs, corporate network firewalls, or remote web servers."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "What is the primary difference between a web browser's Cache and browser Cookies?",
+    opts: [
+      "Cache stores login sessions; Cookies store downloaded movie files",
+      "Cache temporarily stores static web assets (images, CSS, JS) to accelerate page loading; Cookies store small data files with user preferences, tracking identifiers, and authentication tokens",
+      "Cache is encrypted; Cookies are executable virus files",
+      "Cache is located on the remote web server; Cookies are located in RAM only"
+    ],
+    c: 1,
+    exp: "The browser cache stores static files (images, stylesheets) on disk to make web pages load faster upon subsequent visits. Cookies are small key-value files storing session state, login tokens, and preferences."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "In modern operating system architecture, what is the core component that executes in privileged kernel mode (Ring 0) and directly manages CPU scheduling, physical memory, and hardware device drivers?",
+    opts: ["The User Shell", "The OS Kernel", "The File Explorer", "The Command Prompt"],
+    c: 1,
+    exp: "The OS Kernel is the core program that has complete, privileged control over everything in the system, managing hardware communication, memory allocation, and CPU processes."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "What is the primary architectural memory limitation of a 32-bit (x86) operating system compared to a 64-bit (x64) operating system?",
+    opts: [
+      "32-bit OS can address a maximum of 4 GB of physical RAM; 64-bit OS can address multiple Terabytes/Exabytes",
+      "32-bit OS cannot connect to the internet",
+      "32-bit OS can only run text-based console software",
+      "32-bit OS does not support USB devices"
+    ],
+    c: 0,
+    exp: "Because 2^32 = 4,294,967,296 bytes, a 32-bit operating system is mathematically limited to addressing a maximum of 4 GB of RAM. 64-bit architectures address up to 18.4 Exabytes."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "A user formats a USB flash drive using the FAT32 file system. When attempting to copy a 6 GB video file to the drive, the operating system returns an error. What is the cause?",
+    opts: [
+      "FAT32 has an architectural maximum single file size limit of 4 GB",
+      "FAT32 cannot store video files",
+      "FAT32 requires all files to be plain text",
+      "The USB drive has bad sectors and must be discarded"
+    ],
+    c: 0,
+    exp: "The FAT32 file system cannot store any individual file larger than 4 GB (4,294,967,295 bytes). To store files larger than 4 GB, the drive must be formatted with NTFS or exFAT."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "Which native Windows file system provides advanced features including file-level permissions (ACLs), cryptographic encryption (EFS), compression, and transaction journaling for data recovery?",
+    opts: ["FAT16", "FAT32", "NTFS", "ext4"],
+    c: 2,
+    exp: "NTFS (New Technology File System) is the default Windows file system offering journaling, fine-grained access control permissions, volume shadow copies, and compression."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "What is a program that runs continuously in the background of an operating system to perform automated tasks without requiring an active user interface called?",
+    opts: ["A Foreground Application", "A Service (or Daemon in Linux)", "A Pop-up blocker", "A Kernel Panic"],
+    c: 1,
+    exp: "A Service (referred to as a Daemon in Linux/Unix) is a background process that runs without direct user interaction to perform scheduled or automated system tasks."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "What is the primary difference between Generative AI and Predictive AI?",
+    opts: [
+      "Generative AI creates novel synthetic content (text, code, images, audio); Predictive AI analyzes historical data to forecast trends and probabilities",
+      "Generative AI only works with numbers; Predictive AI only writes poetry",
+      "Generative AI is hardware-based; Predictive AI is software-based",
+      "Generative AI requires no training data"
+    ],
+    c: 0,
+    exp: "Generative AI (e.g., ChatGPT, Midjourney, Claude) creates brand-new content from prompts. Predictive AI evaluates historical data patterns to forecast future outcomes (e.g., credit card fraud detection)."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "An employee uses an AI language model to draft a technical proposal. The AI invents non-existent software libraries and cites fake academic research papers with high confidence. What is this phenomenon called?",
+    opts: ["Data Overfitting", "AI Hallucination", "Model Quantization", "Prompt Injection"],
+    c: 1,
+    exp: "An AI Hallucination occurs when a Large Language Model (LLM) generates plausible-sounding but factually incorrect, fabricated, or non-existent information with high confidence."
+  },
+  {
+    dom: "Domain 3 — Applications & Software",
+    d: 3,
+    q: "Why is entering proprietary company source code, financial records, or customer PII into public AI chatbots considered a severe cybersecurity risk?",
+    opts: [
+      "It immediately damages the computer's motherboard",
+      "The confidential data may be stored on third-party servers, exposed in data breaches, or ingested to train future public model versions",
+      "Public AI models only accept binary machine code",
+      "It causes the web browser to crash permanently"
+    ],
+    c: 1,
+    exp: "Pasting proprietary code or PII into public AI models risks data leakage, trade secret exposure, regulatory violations (GDPR/HIPAA), and having confidential data incorporated into public model training datasets."
+  },
+
+  // ─────────────────────────────────────────────
+  // DOMAIN 4: Software Development Concepts (8 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "A developer writes source code in Python and runs it directly on another machine without running a compiler first. How does an Interpreted language execute?",
+    opts: [
+      "It translates the entire source code into native binary machine code (.exe) before execution",
+      "An interpreter reads, translates, and executes the source code line-by-line in real time at runtime",
+      "It bypasses the CPU and executes directly in the power supply",
+      "It can only run inside a relational database"
+    ],
+    c: 1,
+    exp: "Interpreted languages (Python, JavaScript, Ruby) are read and executed line-by-line at runtime by an interpreter program without pre-compiling the entire code into a standalone binary."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "What is the key difference between a Variable and a Constant in programming?",
+    opts: [
+      "A Variable's stored value can change dynamically during execution; a Constant's value is permanently fixed at declaration and cannot be modified at runtime",
+      "A Variable can only store whole numbers; a Constant stores text",
+      "Variables are compiled; Constants are interpreted",
+      "Constants can only be used in SQL databases"
+    ],
+    c: 0,
+    exp: "A Variable is a named storage location whose value can be altered throughout execution. A Constant is immutable — once defined, its value cannot be modified at runtime."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "In standard flowchart modeling, what does the Diamond symbol represent?",
+    opts: [
+      "The Start or End of the program flow (Terminator)",
+      "A computational calculation or variable assignment (Process)",
+      "A conditional decision or branching point with True/False exit paths",
+      "An Input/Output operation"
+    ],
+    c: 2,
+    exp: "In flowcharts, a Diamond represents a Decision/Branching point (e.g., 'Is count > 10?') with multiple possible exit paths (Yes/No or True/False)."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "In a standard flowchart, which geometric symbol is used to depict Input / Output (I/O) operations (such as prompting a user for data or displaying a message)?",
+    opts: ["Oval", "Rectangle", "Parallelogram", "Circle"],
+    c: 2,
+    exp: "A Parallelogram represents Input/Output operations (reading user input or displaying/printing results to the screen)."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "What distinguishes a DO-WHILE loop from a standard WHILE loop?",
+    opts: [
+      "A DO-WHILE loop evaluates its condition BEFORE running and may execute 0 times",
+      "A DO-WHILE loop evaluates its condition AFTER running, guaranteeing the code block executes AT LEAST ONCE",
+      "A DO-WHILE loop can only iterate a maximum of 10 times",
+      "A DO-WHILE loop does not support variables"
+    ],
+    c: 1,
+    exp: "A DO-WHILE loop is a post-test loop: it executes the code block first, then checks the condition. Therefore, it is guaranteed to execute at least once."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "Under Boolean logic, what is the output of an XOR (Exclusive OR) operation when Input A is TRUE and Input B is TRUE?",
+    opts: ["TRUE", "FALSE", "NULL", "UNDEFINED"],
+    c: 1,
+    exp: "XOR (Exclusive OR) returns TRUE if and only if EXACTLY ONE input is True. When both inputs are True (or both are False), XOR evaluates to FALSE."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "In Object-Oriented Programming (OOP), what is the relationship between a Class and an Object?",
+    opts: [
+      "A Class is a concrete instance; an Object is the database table",
+      "A Class is an architectural blueprint/template defining attributes and methods; an Object is a concrete instance created from that class blueprint in memory",
+      "Classes are only used in HTML; Objects are only used in CSS",
+      "A Class cannot contain functions"
+    ],
+    c: 1,
+    exp: "A Class is a blueprint defining properties (attributes) and behaviors (methods). An Object is an instantiated, distinct realization of that class created in memory."
+  },
+  {
+    dom: "Domain 4 — Software Development Concepts",
+    d: 4,
+    q: "Which Software Development Life Cycle (SDLC) methodology organizes work into short 1- to 4-week iterative sprints, emphasizing flexible requirements and continuous customer feedback?",
+    opts: ["Waterfall Model", "Agile / Scrum", "Linear Sequential Model", "Cleanroom Engineering"],
+    c: 1,
+    exp: "Agile (and Scrum) is an iterative, adaptive SDLC framework that delivers working software increments in short sprints with continuous stakeholder collaboration."
+  },
+
+  // ─────────────────────────────────────────────
+  // DOMAIN 5: Database Fundamentals (10 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "Which SQL command is used to read and retrieve records from a relational database table?",
+    opts: ["INSERT", "UPDATE", "SELECT", "DELETE"],
+    c: 2,
+    exp: "SELECT is the fundamental SQL Data Manipulation Language (DML) command used to query and retrieve data records from database tables."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "What is the primary function and key rule of a Primary Key in a relational database table?",
+    opts: [
+      "It encrypts the entire database with a password",
+      "It uniquely identifies every individual row in the table and can NEVER contain NULL values",
+      "It links two unrelated databases across the internet",
+      "It stores the user's home address"
+    ],
+    c: 1,
+    exp: "A Primary Key uniquely identifies every record in a table. It must be unique for each row and cannot contain null values."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "In relational database design, what is a Foreign Key, and what rule does Referential Integrity enforce?",
+    opts: [
+      "A Foreign Key is an external API; Referential Integrity ensures the database connects to the internet",
+      "A Foreign Key is a field in a child table referencing a parent table's Primary Key; Referential Integrity ensures foreign keys always match existing valid parent records",
+      "A Foreign Key is a password; Referential Integrity ensures password length",
+      "A Foreign Key deletes all duplicate tables"
+    ],
+    c: 1,
+    exp: "A Foreign Key establishes a relationship between a child and parent table. Referential Integrity ensures that a foreign key value must match an existing primary key in the parent table, preventing orphan records."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "What does the CRUD framework stand for in database management?",
+    opts: [
+      "Compile, Run, Undo, Debug",
+      "Create, Read, Update, Delete",
+      "Connect, Route, Unify, Disconnect",
+      "Copy, Rename, Upload, Download"
+    ],
+    c: 1,
+    exp: "CRUD represents the four fundamental operations of persistent storage: Create (INSERT), Read (SELECT), Update (UPDATE), and Delete (DELETE)."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "A database administrator executes the following query: 'UPDATE Employees SET Salary = 50000;'. What is the unintended consequence of omitting the WHERE clause?",
+    opts: [
+      "The database returns a syntax error and makes no changes",
+      "The salary of EVERY employee in the entire table is overwritten with 50000",
+      "Only the first employee record is updated",
+      "The table is dropped and permanently deleted"
+    ],
+    c: 1,
+    exp: "In SQL, omitting the WHERE clause from an UPDATE or DELETE statement applies the operation to every single record in the table."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "Which SQL clause combines rows from two separate tables based on a shared related column, returning only records where there is a match in both tables?",
+    opts: ["INNER JOIN", "GROUP BY", "ORDER BY", "DISTINCT"],
+    c: 0,
+    exp: "An INNER JOIN matches records from two tables based on a common join condition, including only rows where matching values exist in both tables."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "In Big Data analytics, what do the '3 Vs' represent?",
+    opts: [
+      "Viruses, Vulnerabilities, Vectoring",
+      "Volume (scale), Velocity (arrival rate), Variety (format diversity)",
+      "Validation, Verification, Virtualization",
+      "Volatility, Visibility, Value"
+    ],
+    c: 1,
+    exp: "The 3 Vs of Big Data are Volume (vast scale of data), Velocity (high-speed real-time generation), and Variety (structured, semi-structured, and unstructured formats)."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "What is the primary difference between a Data Warehouse and a Data Lake?",
+    opts: [
+      "A Data Warehouse stores cleaned, structured historical data optimized for Business Intelligence (BI); a Data Lake stores raw, unstructured data in its native format",
+      "A Data Warehouse is hardware; a Data Lake is software",
+      "A Data Warehouse only holds text; a Data Lake only holds video",
+      "A Data Warehouse cannot be queried with SQL"
+    ],
+    c: 0,
+    exp: "Data Warehouses store structured, transformed data for analytics and reporting. Data Lakes store vast repositories of raw, unfiltered data (structured, semi-structured, unstructured) until needed."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "A company performs full backups on Sundays and differential backups Monday through Saturday. If a server crashes on Thursday, what backup sets are required for full restoration?",
+    opts: [
+      "Sunday's full backup only",
+      "Sunday's full backup + Thursday's differential backup only",
+      "Sunday's full backup + Monday, Tuesday, Wednesday, and Thursday backups",
+      "Only Thursday's differential backup"
+    ],
+    c: 1,
+    exp: "Differential backups copy all data changed since the LAST FULL backup. Restoring requires only two sets: the initial Full backup plus the single latest Differential backup."
+  },
+  {
+    dom: "Domain 5 — Database Fundamentals",
+    d: 5,
+    q: "According to the industry standard 3-2-1 Backup Rule, how should enterprise backup copies be maintained?",
+    opts: [
+      "3 backups on 2 different computers in 1 office",
+      "3 total copies of data, across 2 different storage media types, with at least 1 copy stored off-site",
+      "3 servers backing up every 2 hours for 1 month",
+      "3 cloud providers storing 2 passwords on 1 USB drive"
+    ],
+    c: 1,
+    exp: "The 3-2-1 rule dictates maintaining 3 total copies of data, on 2 different media types (e.g., local disk array + tape or NAS), with at least 1 copy stored off-site (cloud or remote datacenter)."
+  },
+
+  // ─────────────────────────────────────────────
+  // DOMAIN 6: Security (14 Questions)
+  // ─────────────────────────────────────────────
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "A user is required to authenticate by entering a password and scanning their fingerprint. Which authentication standard is being implemented?",
+    opts: [
+      "Single-Factor Authentication",
+      "Multi-Factor Authentication (MFA) using Knowledge ('Something you Know') and Inherence ('Something you Are')",
+      "Authorization Delegation",
+      "Non-Repudiation without authentication"
+    ],
+    c: 1,
+    exp: "MFA requires two or more distinct factor categories. A password represents 'Something you Know' and a fingerprint represents 'Something you Are'."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "An employee receives an email appearing to come from the company's CEO urgently demanding an immediate wire transfer to a vendor. What specific type of social engineering attack is this?",
+    opts: ["Adware", "Whaling", "Baiting", "Dumpster Diving"],
+    c: 1,
+    exp: "Whaling is a specialized spear phishing attack targeting high-level corporate executives (or impersonating them) to authorize fraudulent financial transactions or disclose confidential data."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "An unauthorized visitor follows closely behind an employee through an electronic badge-access door without scanning their own credential. What physical security breach is this?",
+    opts: ["Shoulder Surfing", "Tailgating (Piggybacking)", "Phishing", "Pretexting"],
+    c: 1,
+    exp: "Tailgating (or piggybacking) occurs when an unauthorized person physically follows an authorized individual through a secure doorway or turnstile without authenticating."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "What is the key technical difference between a computer Virus and a computer Worm?",
+    opts: [
+      "A Virus self-replicates across networks without human intervention; a Worm requires a human to execute an infected host file",
+      "A Virus attaches to a host file and requires human action (e.g., opening the file) to execute and propagate; a Worm is standalone and self-replicates across networks automatically",
+      "A Virus only infects Mac computers; a Worm only infects Linux servers",
+      "Viruses are hardware-based; Worms are software-based"
+    ],
+    c: 1,
+    exp: "Viruses attach to host files and require human execution to spread. Worms are standalone programs that automatically replicate and travel across network connections without any human interaction."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "A company's files suddenly become encrypted with a .locked extension, and a pop-up window demands 2 Bitcoins in exchange for the decryption key. What malware infected the system?",
+    opts: ["Spyware", "Adware", "Ransomware", "Keylogger"],
+    c: 2,
+    exp: "Ransomware encrypts victim files using strong cryptographic ciphers and demands extortion payment (typically cryptocurrency) for the decryption key."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "What is the primary difference between Symmetric and Asymmetric encryption?",
+    opts: [
+      "Symmetric uses one shared secret key for both encryption and decryption; Asymmetric uses a mathematically linked public/private key pair",
+      "Symmetric is only used for emails; Asymmetric is only used on USB drives",
+      "Symmetric encryption cannot be decrypted",
+      "Asymmetric encryption requires no keys"
+    ],
+    c: 0,
+    exp: "Symmetric encryption uses a single shared secret key for both encryption and decryption (fast for bulk data). Asymmetric encryption uses a public key (to encrypt) and private key (to decrypt)."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "What is the primary purpose of a Cryptographic Hash function (such as SHA-256 or MD5)?",
+    opts: [
+      "To compress large video files for faster streaming",
+      "To verify data Integrity by producing a unique fixed-length checksum that cannot be reversed into plaintext",
+      "To decrypt lost user passwords",
+      "To assign dynamic IP addresses to network clients"
+    ],
+    c: 1,
+    exp: "Cryptographic hashing is a one-way mathematical function that generates a fixed-length fingerprint (checksum) used to verify that data has not been modified or corrupted (Integrity)."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "Which Wi-Fi security standard uses Simultaneous Authentication of Equals (SAE) to provide robust protection against offline dictionary brute-force attacks?",
+    opts: ["WEP", "WPA-TKIP", "WPA2-AES", "WPA3"],
+    c: 3,
+    exp: "WPA3 replaces WPA2's pre-shared key exchange with SAE (Simultaneous Authentication of Equals), neutralizing offline dictionary brute-force attacks."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "Why should WPS (Wi-Fi Protected Setup) be disabled on a SOHO wireless router?",
+    opts: [
+      "WPS reduces wireless download speed by 50%",
+      "WPS has a severe PIN brute-force vulnerability that allows attackers to crack the Wi-Fi password in minutes",
+      "WPS causes computers to overheat",
+      "WPS is incompatible with IPv6"
+    ],
+    c: 1,
+    exp: "WPS contains an architectural vulnerability where the 8-digit PIN can be brute-forced in under a few hours, allowing attackers to obtain the WPA/WPA2 passphrase regardless of its complexity."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "Which security policy automatically locks a user account after 3–5 consecutive failed login attempts, preventing automated password guessing?",
+    opts: ["Password Complexity Policy", "Account Lockout Policy", "Password Expiration Policy", "Clean Desk Policy"],
+    c: 1,
+    exp: "An Account Lockout Policy disables or locks user accounts after a specified threshold of failed password attempts, stopping online brute-force and dictionary attacks."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "Which technology protects 'Data at Rest' stored on a physical laptop hard drive if the laptop is physically stolen?",
+    opts: ["HTTPS / TLS", "VPN Tunnel", "Full Disk Encryption (e.g., BitLocker / FileVault)", "MAC Address Filtering"],
+    c: 2,
+    exp: "Full Disk Encryption (such as Microsoft BitLocker or macOS FileVault) encrypts all storage sectors, protecting data at rest against unauthorized physical access if a device is lost or stolen."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "An employee works on confidential spreadsheets on a laptop while seated in a busy public coffee shop. Which physical security control prevents nearby strangers from Shoulder Surfing?",
+    opts: ["Kensington cable lock", "Polarized privacy screen filter", "Anti-static wrist strap", "Surge protector"],
+    c: 1,
+    exp: "A polarized privacy screen filter restricts the viewing angle of a monitor so only the person directly in front of the screen can read its contents, blocking shoulder surfing from side angles."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "What role does a Certificate Authority (CA) perform in Public Key Infrastructure (PKI)?",
+    opts: [
+      "It acts as an internet service provider",
+      "It is a trusted third party that verifies an entity's identity and digitally signs their public SSL/TLS certificate",
+      "It scans incoming emails for spam",
+      "It assigns MAC addresses to network interfaces"
+    ],
+    c: 1,
+    exp: "A Certificate Authority (CA) is a trusted third-party organization (such as Let's Encrypt or DigiCert) that validates domain identities and issues digital certificates binding public keys to verified entities."
+  },
+  {
+    dom: "Domain 6 — Security",
+    d: 6,
+    q: "The CIA Triad principle of Availability ensures that:",
+    opts: [
+      "Only authorized users can read confidential files",
+      "Data is protected against unauthorized tampering and corruption",
+      "Authorized users have uninterrupted access to systems, applications, and data when needed",
+      "All wireless network traffic is encrypted with WEP"
+    ],
+    c: 2,
+    exp: "Availability ensures that authorized users have reliable, timely, and uninterrupted access to information, systems, and resources when needed (supported by RAID, backups, and UPS)."
+  }
 ];
 
 // ═══════════════════════════════════════════════
-// STATE
+// QUIZ ENGINE STATE & LOGIC
 // ═══════════════════════════════════════════════
+let activeQQ = [...QQ];
+let qzMode = 'all';
+let qzDomainStats = {};
+
+function setQuizMode(mode) {
+  qzMode = mode;
+  document.getElementById('qm-all').classList.toggle('active', mode === 'all');
+  document.getElementById('qm-quick15').classList.toggle('active', mode === 'quick15');
+  const sel = document.getElementById('qz-dom-select');
+  if (['d1','d2','d3','d4','d5','d6'].includes(mode)) {
+    sel.value = mode;
+  } else {
+    sel.value = 'all';
+  }
+
+  if (mode === 'all') {
+    activeQQ = [...QQ];
+  } else if (mode === 'quick15') {
+    activeQQ = [...QQ].sort(() => 0.5 - Math.random()).slice(0, 15);
+  } else if (mode.startsWith('d')) {
+    const domNum = parseInt(mode.replace('d', ''));
+    activeQQ = QQ.filter(q => q.d === domNum);
+  }
+  initQuiz();
+}
+
+function initQuiz() {
+  qzIdx = 0;
+  qzScore = 0;
+  qzAnswered = false;
+  qzDomainStats = {
+    1: { name: "Domain 1: IT Concepts", correct: 0, total: 0 },
+    2: { name: "Domain 2: Infrastructure", correct: 0, total: 0 },
+    3: { name: "Domain 3: Apps & Software", correct: 0, total: 0 },
+    4: { name: "Domain 4: Software Dev", correct: 0, total: 0 },
+    5: { name: "Domain 5: Databases", correct: 0, total: 0 },
+    6: { name: "Domain 6: Security", correct: 0, total: 0 }
+  };
+  activeQQ.forEach(q => {
+    if (qzDomainStats[q.d]) qzDomainStats[q.d].total++;
+  });
+
+  document.getElementById('quiz-content').style.display = 'block';
+  document.getElementById('qz-results').classList.remove('show');
+  renderQ();
+}
+
+function renderQ() {
+  if (activeQQ.length === 0) return;
+  const q = activeQQ[qzIdx], tot = activeQQ.length, pct = (qzIdx / tot) * 100;
+  document.getElementById('qz-counter').textContent = `Question ${qzIdx + 1} of ${tot}`;
+  document.getElementById('qz-score').textContent = `Score: ${qzScore}/${qzIdx}`;
+  document.getElementById('qz-barfill').style.width = pct + '%';
+  document.getElementById('qz-domain').textContent = q.dom;
+  document.getElementById('qz-q').textContent = q.q;
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('qz-opts').innerHTML = q.opts.map((o, i) =>
+    `<div class="opt" id="opt-${i}" onclick="selectAns(${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      <div class="opt-txt">${o}</div>
+    </div>`).join('');
+  document.getElementById('qz-exp').classList.remove('show');
+  document.getElementById('btn-nextq').classList.remove('show');
+  document.getElementById('btn-nextq').textContent = qzIdx < activeQQ.length - 1 ? 'Next Question →' : 'See Results →';
+  qzAnswered = false;
+}
+
+function selectAns(i) {
+  if (qzAnswered) return;
+  qzAnswered = true;
+  const q = activeQQ[qzIdx];
+  document.querySelectorAll('.opt').forEach(o => o.classList.add('dis'));
+  document.getElementById('opt-' + q.c).classList.add('correct');
+  if (i === q.c) {
+    qzScore++;
+    if (qzDomainStats[q.d]) qzDomainStats[q.d].correct++;
+  } else {
+    document.getElementById('opt-' + i).classList.add('wrong');
+  }
+  document.getElementById('qz-score').textContent = `Score: ${qzScore}/${qzIdx + 1}`;
+  document.getElementById('qz-exp-txt').textContent = q.exp;
+  document.getElementById('qz-exp').classList.add('show');
+  document.getElementById('btn-nextq').classList.add('show');
+}
+
+function nextQuestion() {
+  qzIdx++;
+  if (qzIdx >= activeQQ.length) showResults();
+  else renderQ();
+}
+
+function showResults() {
+  document.getElementById('quiz-content').style.display = 'none';
+  const r = document.getElementById('qz-results');
+  r.classList.add('show');
+  const pct = Math.round(qzScore / activeQQ.length * 100);
+  const ring = document.getElementById('res-ring');
+  ring.style.setProperty('--rpct', pct * 3.6 + 'deg');
+  let color = pct >= 80 ? 'var(--accent)' : pct >= 60 ? 'var(--blue)' : 'var(--orange)';
+  ring.style.background = `conic-gradient(${color} ${pct * 3.6}deg, rgba(255,255,255,.06) 0%)`;
+  document.getElementById('res-pct').textContent = pct + '%';
+  document.getElementById('res-title').textContent = pct >= 80 ? 'Exam Ready! 🎉' : pct >= 65 ? 'Good Progress! 👍' : 'Keep Reviewing! 📚';
+  document.getElementById('res-sub').textContent = `You answered ${qzScore} out of ${activeQQ.length} questions correctly (${pct}%).`;
+
+  // Render Domain Breakdown
+  let diagHtml = '<div class="qz-diag-title"><span>📊 Domain Diagnostic Breakdown</span><span style="font-size:11px;color:var(--text3)">Passing: 72%+ (650/900)</span></div>';
+  let hasDomains = false;
+  for (let d = 1; d <= 6; d++) {
+    const st = qzDomainStats[d];
+    if (st && st.total > 0) {
+      hasDomains = true;
+      const dPct = Math.round((st.correct / st.total) * 100);
+      const isPass = dPct >= 72;
+      diagHtml += `
+        <div class="qz-diag-row">
+          <div class="qz-diag-left">
+            <span class="qz-diag-dom">${st.name}</span>
+            <span class="qz-diag-sub">${st.correct} of ${st.total} correct</span>
+          </div>
+          <div class="qz-diag-right">
+            <span class="qz-diag-score">${dPct}%</span>
+            <span class="qz-diag-badge ${isPass ? 'pass' : 'rev'}">${isPass ? 'Ready' : 'Review'}</span>
+          </div>
+        </div>`;
+    }
+  }
+  document.getElementById('qz-diag-box').innerHTML = hasDomains ? diagHtml : '';
+}
+
+function restartQuiz() {
+  initQuiz();
+}
+
 let completedDomains = JSON.parse(localStorage.getItem('tp_done')||'[]');
 let fcKnown         = JSON.parse(localStorage.getItem('tp_known')||'[]');
 let currentDomainIdx = 0;
@@ -1507,64 +2502,7 @@ function updateFCStats(){
   document.getElementById('fc-rem').textContent=Math.max(0,rem);
 }
 
-// ═══════════════════════════════════════════════
-// QUIZ
-// ═══════════════════════════════════════════════
-function initQuiz(){
-  qzIdx=0;qzScore=0;qzAnswered=false;
-  document.getElementById('quiz-content').style.display='block';
-  document.getElementById('qz-results').classList.remove('show');
-  renderQ();
-}
-function renderQ(){
-  const q=QQ[qzIdx],tot=QQ.length,pct=(qzIdx/tot)*100;
-  document.getElementById('qz-counter').textContent=`Question ${qzIdx+1} of ${tot}`;
-  document.getElementById('qz-score').textContent=`Score: ${qzScore}/${qzIdx}`;
-  document.getElementById('qz-barfill').style.width=pct+'%';
-  document.getElementById('qz-domain').textContent=q.dom;
-  document.getElementById('qz-q').textContent=q.q;
-  const letters=['A','B','C','D'];
-  document.getElementById('qz-opts').innerHTML=q.opts.map((o,i)=>
-    `<div class="opt" id="opt-${i}" onclick="selectAns(${i})">
-      <div class="opt-letter">${letters[i]}</div>
-      <div class="opt-txt">${o}</div>
-    </div>`).join('');
-  document.getElementById('qz-exp').classList.remove('show');
-  document.getElementById('btn-nextq').classList.remove('show');
-  document.getElementById('btn-nextq').textContent=qzIdx<QQ.length-1?'Next Question →':'See Results →';
-  qzAnswered=false;
-}
-function selectAns(i){
-  if(qzAnswered)return;
-  qzAnswered=true;
-  const q=QQ[qzIdx];
-  document.querySelectorAll('.opt').forEach(o=>o.classList.add('dis'));
-  document.getElementById('opt-'+q.c).classList.add('correct');
-  if(i===q.c)qzScore++;
-  else document.getElementById('opt-'+i).classList.add('wrong');
-  document.getElementById('qz-score').textContent=`Score: ${qzScore}/${qzIdx+1}`;
-  document.getElementById('qz-exp-txt').textContent=q.exp;
-  document.getElementById('qz-exp').classList.add('show');
-  document.getElementById('btn-nextq').classList.add('show');
-}
-function nextQuestion(){
-  qzIdx++;
-  if(qzIdx>=QQ.length)showResults();
-  else renderQ();
-}
-function showResults(){
-  document.getElementById('quiz-content').style.display='none';
-  const r=document.getElementById('qz-results');r.classList.add('show');
-  const pct=Math.round(qzScore/QQ.length*100);
-  const ring=document.getElementById('res-ring');
-  ring.style.setProperty('--rpct',pct*3.6+'deg');
-  let color=pct>=80?'var(--accent)':pct>=60?'var(--blue)':'var(--orange)';
-  ring.style.background=`conic-gradient(${color} ${pct*3.6}deg, rgba(255,255,255,.06) 0%)`;
-  document.getElementById('res-pct').textContent=pct+'%';
-  document.getElementById('res-title').textContent=pct>=80?'Excellent Work! 🎉':pct>=60?'Good Progress! 👍':'Keep Studying! 📚';
-  document.getElementById('res-sub').textContent=`You answered ${qzScore} out of ${QQ.length} correctly.`;
-}
-function restartQuiz(){initQuiz();}
+
 
 // ═══════════════════════════════════════════════
 // INIT

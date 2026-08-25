@@ -1616,55 +1616,648 @@ A quick-reference list of the most commonly tested terms:
 | **Correlation vs. Causation** | "What caused X?" vs. "What happened after X?" |
 | **Best practice vs. any practice** | The "BEST" answer may not be the only valid one |
 
-### Sample Practice Questions
+### Complete 76-Question Master Practice Exam
 
-**Q1:** A user reports their computer is running slowly after visiting a website. What is the FIRST step a technician should take?
-- A) Reboot the computer
-- B) Identify and document the problem symptoms
-- C) Install antivirus software
-- D) Restore from backup
+> **Exam Simulation:** 76 scenario-based multiple choice questions weighted exactly to CompTIA Tech+ (FC0-U71) specifications. Test yourself offline or take the interactive timed quiz in [index.html](index.html).
 
-> **Correct: B** — The first step in troubleshooting is always to identify the problem.
 
 ---
 
-**Q2:** Which number system uses digits 0–9 and letters A–F?
+#### 📌 Domain 1 — IT Concepts & Terminology
+
+**Q1:** A technician has identified and replicated a user's computer issue. According to the CompTIA 6-step troubleshooting methodology, what should the technician do NEXT?
+- A) Implement a fix immediately to minimize downtime
+- B) Establish a theory of probable cause
+- C) Document the findings in the ticketing system
+- D) Verify full system functionality with the user
+
+> **Correct: B** — According to the official CompTIA 6-step troubleshooting methodology: Step 1 is Identify the problem, Step 2 is Establish a theory of probable cause (question the obvious), Step 3 is Test the theory, Step 4 is Establish a plan of action and implement the fix, Step 5 is Verify full system functionality, and Step 6 is Document findings, actions, and outcomes.
+
+**Q2:** A storage administrator needs to calculate capacity. An application requires 4 GB of RAM. How many Megabytes (MB) is this equivalent to in binary computing?
+- A) 400 MB
+- B) 2,048 MB
+- C) 4,096 MB
+- D) 8,192 MB
+
+> **Correct: C** — In computing storage measurement, units scale by multiples of 1,024 (2^10). Therefore, 4 GB = 4 × 1,024 MB = 4,096 MB.
+
+**Q3:** Which number system uses digits 0–9 along with letters A through F to represent values?
 - A) Binary
 - B) Octal
 - C) Decimal
 - D) Hexadecimal
 
-> **Correct: D** — Hexadecimal is base-16 and uses 0–9 plus A–F.
+> **Correct: D** — Hexadecimal is a base-16 numbering system using digits 0–9 and letters A–F (where A=10, B=11, C=12, D=13, E=14, F=15). It is widely used in MAC addresses, IPv6, and HTML/CSS color codes.
+
+**Q4:** An office internet connection is rated at 80 Mbps (Megabits per second) download speed. What is the theoretical maximum file transfer speed in Megabytes per second (MB/s)?
+- A) 8 MB/s
+- B) 10 MB/s
+- C) 64 MB/s
+- D) 80 MB/s
+
+> **Correct: B** — Network throughput is measured in bits (b), while file sizes are measured in Bytes (B). Because 1 Byte = 8 bits, divide the network bandwidth by 8: 80 Mbps ÷ 8 = 10 MB/s.
+
+**Q5:** A temperature sensor records raw reading '104.2'. A clinical system labels it 'Patient Core Temperature: 104.2°F (High Fever)'. According to the DIKW pyramid, what transition occurred?
+- A) Data was processed into Information
+- B) Information was transformed into Wisdom
+- C) Knowledge was reduced to Data
+- D) Wisdom was converted to Knowledge
+
+> **Correct: A** — Data consists of raw, unorganized facts and numbers without context (104.2). Information is data that has been structured, labeled, and contextualized to give it meaning (Patient Temp: 104.2°F).
+
+**Q6:** In the IPOS (Input, Processing, Output, Storage) computing cycle, which of the following hardware devices performs BOTH Input and Output?
+- A) Barcode scanner
+- B) Touchscreen display
+- C) Laser printer
+- D) Webcam
+
+> **Correct: B** — A touchscreen display acts as an input device (detecting touch gestures and coordinates) and an output device (visually displaying graphics and text).
+
+**Q7:** An international web application needs to display Japanese Kanji, Arabic script, mathematical symbols, and modern emojis. Which character encoding standard MUST be used?
+- A) 7-bit ASCII
+- B) Extended ASCII
+- C) Unicode (UTF-8)
+- D) EBCDIC
+
+> **Correct: C** — Unicode (and its dominant implementation UTF-8) supports over 149,000 characters spanning virtually all global writing systems, ancient scripts, technical symbols, and emojis. ASCII is limited to basic English characters.
+
+**Q8:** When interviewing an end user during Step 1 of the troubleshooting process (Identify the Problem), what questioning strategy should a technician use FIRST?
+- A) Ask closed-ended yes/no questions to save time
+- B) Ask open-ended questions to allow the user to describe the symptoms freely
+- C) Tell the user which component has failed immediately
+- D) Ask leading questions that assume the user caused the issue
+
+> **Correct: B** — Technicians should begin by asking open-ended questions (e.g., 'What were you doing when the error occurred?') so the user can describe symptoms in their own words, followed by closed-ended questions to confirm specific facts.
+
+**Q9:** A technician is preparing to open a desktop computer case to replace a RAM module. Which safety precaution BEST prevents Electrostatic Discharge (ESD) damage?
+- A) Wear rubber-soled shoes while standing on a synthetic carpet
+- B) Attach an anti-static wrist strap clipped to an unpainted grounded metal chassis
+- C) Turn off the room lights and use a high-powered magnetic flashlight
+- D) Touch the gold RAM contacts directly before insertion
+
+> **Correct: B** — An anti-static wrist strap equalizes electrical potential between the technician and the computer chassis, safely draining static charges and preventing ESD damage to sensitive microchips.
+
+**Q10:** A server room experiences an unexpected power outage. Which device provides immediate, short-term battery power allowing servers to shut down gracefully without data corruption?
+- A) Surge protector strip
+- B) Uninterruptible Power Supply (UPS)
+- C) Power Distribution Unit (PDU)
+- D) Dual-voltage power supply
+
+> **Correct: B** — An Uninterruptible Power Supply (UPS) contains internal batteries that supply emergency electrical power instantaneously when the main power fails, allowing automated graceful shutdowns.
+
+**Q11:** Which form of intellectual property protection automatically applies to an original software codebase or written manuscript upon creation?
+- A) Patent
+- B) Copyright
+- C) Trademark
+- D) Trade Secret
+
+> **Correct: B** — Copyright protects original creative works of authorship, including software source code, books, music, and artwork, automatically upon creation.
+
+**Q12:** A software application is distributed under an Open Source (FOSS) license. What right does this guarantee to users and developers?
+- A) The source code is hidden and protected against user modification
+- B) The source code is freely available for inspection, modification, and redistribution
+- C) The software can only be used on a single physical workstation
+- D) Users must pay an ongoing monthly subscription fee to compile the software
+
+> **Correct: B** — Free and Open Source Software (FOSS) provides public access to the source code, allowing anyone to inspect, modify, enhance, and redistribute the software.
+
+**Q13:** A company purchases a software license that allows up to 25 employees to use the software simultaneously from any computer on the corporate network. What licensing model is this?
+- A) Per-Seat License
+- B) Concurrent License
+- C) Site License
+- D) Shareware
+
+> **Correct: B** — A Concurrent (floating) license model limits the number of simultaneous active users at any given time rather than binding the license to a specific individual or computer.
+
+**Q14:** What is the legal contract between a software publisher and the end user specifying terms of use, restrictions, and warranties called?
+- A) SLA (Service Level Agreement)
+- B) EULA (End User License Agreement)
+- C) NDA (Non-Disclosure Agreement)
+- D) AUP (Acceptable Use Policy)
+
+> **Correct: B** — A EULA (End User License Agreement) is the legal contract governing how proprietary software may be installed and used by the purchaser.
+
+**Q15:** After implementing a solution to fix a network printer issue, what must a technician do in Step 5 of the CompTIA troubleshooting process?
+- A) Close the support ticket immediately
+- B) Verify full system functionality and implement preventive measures
+- C) Re-install the entire operating system on the user's computer
+- D) Establish a new theory of probable cause
+
+> **Correct: B** — Step 5 requires verifying full system functionality (having the user test the printer) and implementing preventive measures to ensure the issue does not recur.
+
+**Q16:** Why is Step 6 (Document findings, actions, and outcomes) critical in the troubleshooting methodology?
+- A) It allows management to blame the technician if the fix fails
+- B) It creates a searchable historical knowledge base for future troubleshooting and accountability
+- C) It is only required if hardware components were physically replaced
+- D) It resets the user's network credentials automatically
+
+> **Correct: B** — Documenting findings, root causes, and resolutions creates institutional knowledge in the ticketing system, saving time for other technicians encountering similar issues.
+
+**Q17:** How many bits are in a single 'Nibble', and how many hexadecimal digits does it represent?
+- A) 2 bits = 1 Hex digit
+- B) 4 bits = 1 Hex digit
+- C) 8 bits = 2 Hex digits
+- D) 16 bits = 4 Hex digits
+
+> **Correct: B** — A nibble is half a byte (4 bits). Because 4 bits can represent 16 distinct values (0000 to 1111), exactly 1 nibble corresponds to 1 hexadecimal digit (0–F).
+
+**Q18:** Which of the following data elements is considered Personally Identifiable Information (PII) subject to legal privacy protections?
+- A) A company's public support phone number
+- B) A customer's Social Security Number and date of birth
+- C) The model number of a computer monitor
+- D) The subnet mask of an internal router
+
+> **Correct: B** — Personally Identifiable Information (PII) is any data that can uniquely identify a specific individual, such as Social Security Numbers, full legal names, biometric data, or dates of birth.
+
+**Q19:** Which corporate policy governs what activities employees are permitted and forbidden to perform using company-owned computers and network infrastructure?
+- A) Acceptable Use Policy (AUP)
+- B) Disaster Recovery Plan (DRP)
+- C) Business Impact Analysis (BIA)
+- D) Non-Disclosure Agreement (NDA)
+
+> **Correct: A** — An Acceptable Use Policy (AUP) defines the rules, ethical guidelines, and restrictions regarding how employees may use organizational hardware, email, and internet connections.
+
+**Q20:** A technician tests their theory of probable cause for a faulty workstation, but the test disproves the theory. What should the technician do NEXT?
+- A) Implement a fix anyway
+- B) Establish a new theory of probable cause or escalate the issue
+- C) Verify system functionality
+- D) Document that the workstation cannot be repaired
+
+> **Correct: B** — If testing disproves the theory, the technician must establish a new theory of probable cause. If all reasonable theories are exhausted, they should escalate the problem to a higher-tier technician.
+
 
 ---
 
-**Q3:** A company stores its applications on a third-party provider's servers and pays monthly. Employees access the apps through a web browser. What cloud model is this?
-- A) IaaS
-- B) PaaS
-- C) SaaS
-- D) Private Cloud
+#### 📌 Domain 2 — Infrastructure
 
-> **Correct: C** — SaaS delivers full applications over the internet on a subscription basis.
+**Q21:** A company uses a cloud-based customer relationship management (CRM) software. The cloud provider manages the underlying infrastructure, operating system, and software updates. Employees access the tool via a web browser. What cloud deployment model is this?
+- A) IaaS (Infrastructure as a Service)
+- B) PaaS (Platform as a Service)
+- C) SaaS (Software as a Service)
+- D) On-Premises Private Cloud
+
+> **Correct: C** — SaaS (Software as a Service) delivers a complete, vendor-managed application over the web. The cloud provider handles servers, networking, storage, OS, and patching.
+
+**Q22:** An enterprise rents virtual machines, raw storage buckets, and virtual firewalls from a cloud provider. The enterprise IT staff is responsible for installing, configuring, and updating the operating systems and applications. What cloud model is this?
+- A) IaaS (Infrastructure as a Service)
+- B) PaaS (Platform as a Service)
+- C) SaaS (Software as a Service)
+- D) DaaS (Desktop as a Service)
+
+> **Correct: A** — In IaaS (Infrastructure as a Service), the customer rents fundamental computing resources (compute, storage, network) and maintains full control over the operating system, middleware, and applications.
+
+**Q23:** Which networking hardware device operates at Layer 3 to connect separate, distinct networks and intelligently route data packets between them?
+- A) Network Hub
+- B) Unmanaged Switch
+- C) Router
+- D) Wireless Access Point
+
+> **Correct: C** — A router operates at the Network Layer (Layer 3) and connects different networks together (such as routing traffic between a private home LAN and the public Internet).
+
+**Q24:** Which well-known port and protocol provides secure, encrypted web browsing using Transport Layer Security (TLS)?
+- A) HTTP on Port 80
+- B) HTTPS on Port 443
+- C) SSH on Port 22
+- D) DNS on Port 53
+
+> **Correct: B** — HTTPS (Hypertext Transfer Protocol Secure) operates over Port 443 and encrypts web communication using TLS/SSL.
+
+**Q25:** A user types 'www.comptia.org' into their web browser. Which network protocol and port number translates this human-friendly domain name into its corresponding IP address?
+- A) DHCP on Port 67
+- B) DNS on Port 53
+- C) RDP on Port 3389
+- D) SNMP on Port 161
+
+> **Correct: B** — DNS (Domain Name System) operates on Port 53 and resolves human-readable domain names (like www.comptia.org) into machine-routable numerical IP addresses.
+
+**Q26:** A new laptop connects to the company Wi-Fi and is automatically assigned an IP address, subnet mask, default gateway, and DNS server address without manual configuration. Which protocol performed this task?
+- A) DNS (Port 53)
+- B) DHCP (Ports 67/68)
+- C) FTP (Ports 20/21)
+- D) SMTP (Port 25)
+
+> **Correct: B** — DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network configuration parameters to client devices on ports 67 (server) and 68 (client).
+
+**Q27:** A systems administrator needs to manage a remote Linux server via a secure command-line interface. Which encrypted protocol and port should they use instead of insecure Telnet?
+- A) SSH on Port 22
+- B) RDP on Port 3389
+- C) HTTP on Port 80
+- D) IMAP on Port 143
+
+> **Correct: A** — SSH (Secure Shell) operates on Port 22 and provides encrypted terminal management, replacing unencrypted Telnet (Port 23).
+
+**Q28:** Which protocol allows a helpdesk technician to view and interact with the graphical desktop interface of a remote Windows PC over port 3389?
+- A) RDP (Remote Desktop Protocol)
+- B) SSH (Secure Shell)
+- C) SNMP (Simple Network Management Protocol)
+- D) POP3 (Post Office Protocol)
+
+> **Correct: A** — RDP (Remote Desktop Protocol) operates on Port 3389 and provides a full graphical user interface for managing remote Windows systems.
+
+**Q29:** What is the key functional difference between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol)?
+- A) TCP is connectionless and does not guarantee packet delivery; UDP guarantees delivery
+- B) TCP is connection-oriented, performs a 3-way handshake, and guarantees delivery; UDP is connectionless and optimized for low-latency speed
+- C) TCP is only used for wireless communication; UDP is only used for wired Ethernet
+- D) TCP operates at Layer 7; UDP operates at Layer 1
+
+> **Correct: B** — TCP is connection-oriented, verifies packet delivery with acknowledgments, and performs retransmission. UDP is connectionless with zero delivery guarantees, making it ideal for streaming video, VoIP, and gaming.
+
+**Q30:** What is the difference between a MAC address and an IP address?
+- A) MAC addresses change based on location; IP addresses are permanently burned into the hardware
+- B) A MAC address is a permanent physical 48-bit hardware identifier; an IP address is a logical address configured for routing across networks
+- C) MAC addresses are 128-bit; IP addresses are always 16-bit
+- D) MAC addresses only apply to printers; IP addresses only apply to servers
+
+> **Correct: B** — A MAC (Media Access Control) address is a physical 48-bit identifier burned into the Network Interface Card (NIC) at the factory. An IP address is a logical network address assigned dynamically or statically for routing.
+
+**Q31:** A system administrator is about to install a major software upgrade on a critical virtual machine. What feature should they use to capture the VM's current state so they can instantly roll back if the upgrade fails?
+- A) Full bare-metal backup to tape
+- B) VM Snapshot
+- C) Disk defragmentation
+- D) Overclocking the hypervisor
+
+> **Correct: B** — A VM Snapshot preserves the exact state and memory data of a virtual machine at a specific point in time, enabling near-instantaneous rollback if modifications cause instability.
+
+**Q32:** Which type of hypervisor runs directly on the physical host server hardware without a host operating system underneath (e.g., VMware ESXi, Microsoft Hyper-V)?
+- A) Type 1 (Bare-metal) Hypervisor
+- B) Type 2 (Hosted) Hypervisor
+- C) Type 3 Cloud Container
+- D) Virtual Sandbox
+
+> **Correct: A** — Type 1 (Bare-metal) hypervisors run directly on the physical server hardware, delivering superior performance, efficiency, and scalability for enterprise datacenters.
+
+**Q33:** Which modern Wi-Fi standard is formally designated as IEEE 802.11ax, offering OFDMA technology across both 2.4 GHz and 5 GHz bands (and 6 GHz in 6E)?
+- A) Wi-Fi 4 (802.11n)
+- B) Wi-Fi 5 (802.11ac)
+- C) Wi-Fi 6 / 6E (802.11ax)
+- D) Wi-Fi 1 (802.11b)
+
+> **Correct: C** — Wi-Fi 6 (802.11ax) introduces OFDMA and multi-user MIMO across 2.4 GHz and 5 GHz frequencies. Wi-Fi 6E extends this into the newly opened 6 GHz spectrum.
+
+**Q34:** A user connects wireless Bluetooth headphones to their smartphone. What network category BEST describes this short-range (~10m) wireless connection?
+- A) LAN (Local Area Network)
+- B) PAN (Personal Area Network)
+- C) MAN (Metropolitan Area Network)
+- D) WAN (Wide Area Network)
+
+> **Correct: B** — A PAN (Personal Area Network) is a short-range network centered around a single person's workspace, typically utilizing Bluetooth (range ~10 meters).
+
 
 ---
 
-**Q4:** Which authentication method provides the HIGHEST level of security?
-- A) Password only
-- B) PIN only
-- C) Password + fingerprint
-- D) Security questions only
+#### 📌 Domain 3 — Applications & Software
 
-> **Correct: C** — Combining something you "know" (password) + something you "are" (fingerprint) = MFA = most secure.
+**Q35:** A user browses the web in Private/Incognito mode. Which of the following statements accurately describes what Incognito mode accomplishes?
+- A) It completely hides all internet traffic from the Internet Service Provider (ISP)
+- B) It prevents the local web browser from saving browsing history, cache, and cookies on that specific computer
+- C) It renders the user 100% anonymous to law enforcement and corporate firewalls
+- D) It automatically encrypts the physical connection between the router and the ISP
+
+> **Correct: B** — Incognito/Private browsing only prevents the local browser from storing cookies, browsing history, and temporary cache files on that specific machine. It does not conceal traffic from ISPs, corporate network firewalls, or remote web servers.
+
+**Q36:** What is the primary difference between a web browser's Cache and browser Cookies?
+- A) Cache stores login sessions; Cookies store downloaded movie files
+- B) Cache temporarily stores static web assets (images, CSS, JS) to accelerate page loading; Cookies store small data files with user preferences, tracking identifiers, and authentication tokens
+- C) Cache is encrypted; Cookies are executable virus files
+- D) Cache is located on the remote web server; Cookies are located in RAM only
+
+> **Correct: B** — The browser cache stores static files (images, stylesheets) on disk to make web pages load faster upon subsequent visits. Cookies are small key-value files storing session state, login tokens, and preferences.
+
+**Q37:** In modern operating system architecture, what is the core component that executes in privileged kernel mode (Ring 0) and directly manages CPU scheduling, physical memory, and hardware device drivers?
+- A) The User Shell
+- B) The OS Kernel
+- C) The File Explorer
+- D) The Command Prompt
+
+> **Correct: B** — The OS Kernel is the core program that has complete, privileged control over everything in the system, managing hardware communication, memory allocation, and CPU processes.
+
+**Q38:** What is the primary architectural memory limitation of a 32-bit (x86) operating system compared to a 64-bit (x64) operating system?
+- A) 32-bit OS can address a maximum of 4 GB of physical RAM; 64-bit OS can address multiple Terabytes/Exabytes
+- B) 32-bit OS cannot connect to the internet
+- C) 32-bit OS can only run text-based console software
+- D) 32-bit OS does not support USB devices
+
+> **Correct: A** — Because 2^32 = 4,294,967,296 bytes, a 32-bit operating system is mathematically limited to addressing a maximum of 4 GB of RAM. 64-bit architectures address up to 18.4 Exabytes.
+
+**Q39:** A user formats a USB flash drive using the FAT32 file system. When attempting to copy a 6 GB video file to the drive, the operating system returns an error. What is the cause?
+- A) FAT32 has an architectural maximum single file size limit of 4 GB
+- B) FAT32 cannot store video files
+- C) FAT32 requires all files to be plain text
+- D) The USB drive has bad sectors and must be discarded
+
+> **Correct: A** — The FAT32 file system cannot store any individual file larger than 4 GB (4,294,967,295 bytes). To store files larger than 4 GB, the drive must be formatted with NTFS or exFAT.
+
+**Q40:** Which native Windows file system provides advanced features including file-level permissions (ACLs), cryptographic encryption (EFS), compression, and transaction journaling for data recovery?
+- A) FAT16
+- B) FAT32
+- C) NTFS
+- D) ext4
+
+> **Correct: C** — NTFS (New Technology File System) is the default Windows file system offering journaling, fine-grained access control permissions, volume shadow copies, and compression.
+
+**Q41:** What is a program that runs continuously in the background of an operating system to perform automated tasks without requiring an active user interface called?
+- A) A Foreground Application
+- B) A Service (or Daemon in Linux)
+- C) A Pop-up blocker
+- D) A Kernel Panic
+
+> **Correct: B** — A Service (referred to as a Daemon in Linux/Unix) is a background process that runs without direct user interaction to perform scheduled or automated system tasks.
+
+**Q42:** What is the primary difference between Generative AI and Predictive AI?
+- A) Generative AI creates novel synthetic content (text, code, images, audio); Predictive AI analyzes historical data to forecast trends and probabilities
+- B) Generative AI only works with numbers; Predictive AI only writes poetry
+- C) Generative AI is hardware-based; Predictive AI is software-based
+- D) Generative AI requires no training data
+
+> **Correct: A** — Generative AI (e.g., ChatGPT, Midjourney, Claude) creates brand-new content from prompts. Predictive AI evaluates historical data patterns to forecast future outcomes (e.g., credit card fraud detection).
+
+**Q43:** An employee uses an AI language model to draft a technical proposal. The AI invents non-existent software libraries and cites fake academic research papers with high confidence. What is this phenomenon called?
+- A) Data Overfitting
+- B) AI Hallucination
+- C) Model Quantization
+- D) Prompt Injection
+
+> **Correct: B** — An AI Hallucination occurs when a Large Language Model (LLM) generates plausible-sounding but factually incorrect, fabricated, or non-existent information with high confidence.
+
+**Q44:** Why is entering proprietary company source code, financial records, or customer PII into public AI chatbots considered a severe cybersecurity risk?
+- A) It immediately damages the computer's motherboard
+- B) The confidential data may be stored on third-party servers, exposed in data breaches, or ingested to train future public model versions
+- C) Public AI models only accept binary machine code
+- D) It causes the web browser to crash permanently
+
+> **Correct: B** — Pasting proprietary code or PII into public AI models risks data leakage, trade secret exposure, regulatory violations (GDPR/HIPAA), and having confidential data incorporated into public model training datasets.
+
 
 ---
 
-**Q5:** Which backup method copies ONLY the data that has changed since the last backup of ANY type?
-- A) Full backup
-- B) Differential backup
-- C) Incremental backup
-- D) Mirror backup
+#### 📌 Domain 4 — Software Development Concepts
 
-> **Correct: C** — Incremental backups copy only changes since the last backup (of any kind).
+**Q45:** A developer writes source code in Python and runs it directly on another machine without running a compiler first. How does an Interpreted language execute?
+- A) It translates the entire source code into native binary machine code (.exe) before execution
+- B) An interpreter reads, translates, and executes the source code line-by-line in real time at runtime
+- C) It bypasses the CPU and executes directly in the power supply
+- D) It can only run inside a relational database
+
+> **Correct: B** — Interpreted languages (Python, JavaScript, Ruby) are read and executed line-by-line at runtime by an interpreter program without pre-compiling the entire code into a standalone binary.
+
+**Q46:** What is the key difference between a Variable and a Constant in programming?
+- A) A Variable's stored value can change dynamically during execution; a Constant's value is permanently fixed at declaration and cannot be modified at runtime
+- B) A Variable can only store whole numbers; a Constant stores text
+- C) Variables are compiled; Constants are interpreted
+- D) Constants can only be used in SQL databases
+
+> **Correct: A** — A Variable is a named storage location whose value can be altered throughout execution. A Constant is immutable — once defined, its value cannot be modified at runtime.
+
+**Q47:** In standard flowchart modeling, what does the Diamond symbol represent?
+- A) The Start or End of the program flow (Terminator)
+- B) A computational calculation or variable assignment (Process)
+- C) A conditional decision or branching point with True/False exit paths
+- D) An Input/Output operation
+
+> **Correct: C** — In flowcharts, a Diamond represents a Decision/Branching point (e.g., 'Is count > 10?') with multiple possible exit paths (Yes/No or True/False).
+
+**Q48:** In a standard flowchart, which geometric symbol is used to depict Input / Output (I/O) operations (such as prompting a user for data or displaying a message)?
+- A) Oval
+- B) Rectangle
+- C) Parallelogram
+- D) Circle
+
+> **Correct: C** — A Parallelogram represents Input/Output operations (reading user input or displaying/printing results to the screen).
+
+**Q49:** What distinguishes a DO-WHILE loop from a standard WHILE loop?
+- A) A DO-WHILE loop evaluates its condition BEFORE running and may execute 0 times
+- B) A DO-WHILE loop evaluates its condition AFTER running, guaranteeing the code block executes AT LEAST ONCE
+- C) A DO-WHILE loop can only iterate a maximum of 10 times
+- D) A DO-WHILE loop does not support variables
+
+> **Correct: B** — A DO-WHILE loop is a post-test loop: it executes the code block first, then checks the condition. Therefore, it is guaranteed to execute at least once.
+
+**Q50:** Under Boolean logic, what is the output of an XOR (Exclusive OR) operation when Input A is TRUE and Input B is TRUE?
+- A) TRUE
+- B) FALSE
+- C) NULL
+- D) UNDEFINED
+
+> **Correct: B** — XOR (Exclusive OR) returns TRUE if and only if EXACTLY ONE input is True. When both inputs are True (or both are False), XOR evaluates to FALSE.
+
+**Q51:** In Object-Oriented Programming (OOP), what is the relationship between a Class and an Object?
+- A) A Class is a concrete instance; an Object is the database table
+- B) A Class is an architectural blueprint/template defining attributes and methods; an Object is a concrete instance created from that class blueprint in memory
+- C) Classes are only used in HTML; Objects are only used in CSS
+- D) A Class cannot contain functions
+
+> **Correct: B** — A Class is a blueprint defining properties (attributes) and behaviors (methods). An Object is an instantiated, distinct realization of that class created in memory.
+
+**Q52:** Which Software Development Life Cycle (SDLC) methodology organizes work into short 1- to 4-week iterative sprints, emphasizing flexible requirements and continuous customer feedback?
+- A) Waterfall Model
+- B) Agile / Scrum
+- C) Linear Sequential Model
+- D) Cleanroom Engineering
+
+> **Correct: B** — Agile (and Scrum) is an iterative, adaptive SDLC framework that delivers working software increments in short sprints with continuous stakeholder collaboration.
+
+
+---
+
+#### 📌 Domain 5 — Database Fundamentals
+
+**Q53:** Which SQL command is used to read and retrieve records from a relational database table?
+- A) INSERT
+- B) UPDATE
+- C) SELECT
+- D) DELETE
+
+> **Correct: C** — SELECT is the fundamental SQL Data Manipulation Language (DML) command used to query and retrieve data records from database tables.
+
+**Q54:** What is the primary function and key rule of a Primary Key in a relational database table?
+- A) It encrypts the entire database with a password
+- B) It uniquely identifies every individual row in the table and can NEVER contain NULL values
+- C) It links two unrelated databases across the internet
+- D) It stores the user's home address
+
+> **Correct: B** — A Primary Key uniquely identifies every record in a table. It must be unique for each row and cannot contain null values.
+
+**Q55:** In relational database design, what is a Foreign Key, and what rule does Referential Integrity enforce?
+- A) A Foreign Key is an external API; Referential Integrity ensures the database connects to the internet
+- B) A Foreign Key is a field in a child table referencing a parent table's Primary Key; Referential Integrity ensures foreign keys always match existing valid parent records
+- C) A Foreign Key is a password; Referential Integrity ensures password length
+- D) A Foreign Key deletes all duplicate tables
+
+> **Correct: B** — A Foreign Key establishes a relationship between a child and parent table. Referential Integrity ensures that a foreign key value must match an existing primary key in the parent table, preventing orphan records.
+
+**Q56:** What does the CRUD framework stand for in database management?
+- A) Compile, Run, Undo, Debug
+- B) Create, Read, Update, Delete
+- C) Connect, Route, Unify, Disconnect
+- D) Copy, Rename, Upload, Download
+
+> **Correct: B** — CRUD represents the four fundamental operations of persistent storage: Create (INSERT), Read (SELECT), Update (UPDATE), and Delete (DELETE).
+
+**Q57:** A database administrator executes the following query: 'UPDATE Employees SET Salary = 50000;'. What is the unintended consequence of omitting the WHERE clause?
+- A) The database returns a syntax error and makes no changes
+- B) The salary of EVERY employee in the entire table is overwritten with 50000
+- C) Only the first employee record is updated
+- D) The table is dropped and permanently deleted
+
+> **Correct: B** — In SQL, omitting the WHERE clause from an UPDATE or DELETE statement applies the operation to every single record in the table.
+
+**Q58:** Which SQL clause combines rows from two separate tables based on a shared related column, returning only records where there is a match in both tables?
+- A) INNER JOIN
+- B) GROUP BY
+- C) ORDER BY
+- D) DISTINCT
+
+> **Correct: A** — An INNER JOIN matches records from two tables based on a common join condition, including only rows where matching values exist in both tables.
+
+**Q59:** In Big Data analytics, what do the '3 Vs' represent?
+- A) Viruses, Vulnerabilities, Vectoring
+- B) Volume (scale), Velocity (arrival rate), Variety (format diversity)
+- C) Validation, Verification, Virtualization
+- D) Volatility, Visibility, Value
+
+> **Correct: B** — The 3 Vs of Big Data are Volume (vast scale of data), Velocity (high-speed real-time generation), and Variety (structured, semi-structured, and unstructured formats).
+
+**Q60:** What is the primary difference between a Data Warehouse and a Data Lake?
+- A) A Data Warehouse stores cleaned, structured historical data optimized for Business Intelligence (BI); a Data Lake stores raw, unstructured data in its native format
+- B) A Data Warehouse is hardware; a Data Lake is software
+- C) A Data Warehouse only holds text; a Data Lake only holds video
+- D) A Data Warehouse cannot be queried with SQL
+
+> **Correct: A** — Data Warehouses store structured, transformed data for analytics and reporting. Data Lakes store vast repositories of raw, unfiltered data (structured, semi-structured, unstructured) until needed.
+
+**Q61:** A company performs full backups on Sundays and differential backups Monday through Saturday. If a server crashes on Thursday, what backup sets are required for full restoration?
+- A) Sunday's full backup only
+- B) Sunday's full backup + Thursday's differential backup only
+- C) Sunday's full backup + Monday, Tuesday, Wednesday, and Thursday backups
+- D) Only Thursday's differential backup
+
+> **Correct: B** — Differential backups copy all data changed since the LAST FULL backup. Restoring requires only two sets: the initial Full backup plus the single latest Differential backup.
+
+**Q62:** According to the industry standard 3-2-1 Backup Rule, how should enterprise backup copies be maintained?
+- A) 3 backups on 2 different computers in 1 office
+- B) 3 total copies of data, across 2 different storage media types, with at least 1 copy stored off-site
+- C) 3 servers backing up every 2 hours for 1 month
+- D) 3 cloud providers storing 2 passwords on 1 USB drive
+
+> **Correct: B** — The 3-2-1 rule dictates maintaining 3 total copies of data, on 2 different media types (e.g., local disk array + tape or NAS), with at least 1 copy stored off-site (cloud or remote datacenter).
+
+
+---
+
+#### 📌 Domain 6 — Security
+
+**Q63:** A user is required to authenticate by entering a password and scanning their fingerprint. Which authentication standard is being implemented?
+- A) Single-Factor Authentication
+- B) Multi-Factor Authentication (MFA) using Knowledge ('Something you Know') and Inherence ('Something you Are')
+- C) Authorization Delegation
+- D) Non-Repudiation without authentication
+
+> **Correct: B** — MFA requires two or more distinct factor categories. A password represents 'Something you Know' and a fingerprint represents 'Something you Are'.
+
+**Q64:** An employee receives an email appearing to come from the company's CEO urgently demanding an immediate wire transfer to a vendor. What specific type of social engineering attack is this?
+- A) Adware
+- B) Whaling
+- C) Baiting
+- D) Dumpster Diving
+
+> **Correct: B** — Whaling is a specialized spear phishing attack targeting high-level corporate executives (or impersonating them) to authorize fraudulent financial transactions or disclose confidential data.
+
+**Q65:** An unauthorized visitor follows closely behind an employee through an electronic badge-access door without scanning their own credential. What physical security breach is this?
+- A) Shoulder Surfing
+- B) Tailgating (Piggybacking)
+- C) Phishing
+- D) Pretexting
+
+> **Correct: B** — Tailgating (or piggybacking) occurs when an unauthorized person physically follows an authorized individual through a secure doorway or turnstile without authenticating.
+
+**Q66:** What is the key technical difference between a computer Virus and a computer Worm?
+- A) A Virus self-replicates across networks without human intervention; a Worm requires a human to execute an infected host file
+- B) A Virus attaches to a host file and requires human action (e.g., opening the file) to execute and propagate; a Worm is standalone and self-replicates across networks automatically
+- C) A Virus only infects Mac computers; a Worm only infects Linux servers
+- D) Viruses are hardware-based; Worms are software-based
+
+> **Correct: B** — Viruses attach to host files and require human execution to spread. Worms are standalone programs that automatically replicate and travel across network connections without any human interaction.
+
+**Q67:** A company's files suddenly become encrypted with a .locked extension, and a pop-up window demands 2 Bitcoins in exchange for the decryption key. What malware infected the system?
+- A) Spyware
+- B) Adware
+- C) Ransomware
+- D) Keylogger
+
+> **Correct: C** — Ransomware encrypts victim files using strong cryptographic ciphers and demands extortion payment (typically cryptocurrency) for the decryption key.
+
+**Q68:** What is the primary difference between Symmetric and Asymmetric encryption?
+- A) Symmetric uses one shared secret key for both encryption and decryption; Asymmetric uses a mathematically linked public/private key pair
+- B) Symmetric is only used for emails; Asymmetric is only used on USB drives
+- C) Symmetric encryption cannot be decrypted
+- D) Asymmetric encryption requires no keys
+
+> **Correct: A** — Symmetric encryption uses a single shared secret key for both encryption and decryption (fast for bulk data). Asymmetric encryption uses a public key (to encrypt) and private key (to decrypt).
+
+**Q69:** What is the primary purpose of a Cryptographic Hash function (such as SHA-256 or MD5)?
+- A) To compress large video files for faster streaming
+- B) To verify data Integrity by producing a unique fixed-length checksum that cannot be reversed into plaintext
+- C) To decrypt lost user passwords
+- D) To assign dynamic IP addresses to network clients
+
+> **Correct: B** — Cryptographic hashing is a one-way mathematical function that generates a fixed-length fingerprint (checksum) used to verify that data has not been modified or corrupted (Integrity).
+
+**Q70:** Which Wi-Fi security standard uses Simultaneous Authentication of Equals (SAE) to provide robust protection against offline dictionary brute-force attacks?
+- A) WEP
+- B) WPA-TKIP
+- C) WPA2-AES
+- D) WPA3
+
+> **Correct: D** — WPA3 replaces WPA2's pre-shared key exchange with SAE (Simultaneous Authentication of Equals), neutralizing offline dictionary brute-force attacks.
+
+**Q71:** Why should WPS (Wi-Fi Protected Setup) be disabled on a SOHO wireless router?
+- A) WPS reduces wireless download speed by 50%
+- B) WPS has a severe PIN brute-force vulnerability that allows attackers to crack the Wi-Fi password in minutes
+- C) WPS causes computers to overheat
+- D) WPS is incompatible with IPv6
+
+> **Correct: B** — WPS contains an architectural vulnerability where the 8-digit PIN can be brute-forced in under a few hours, allowing attackers to obtain the WPA/WPA2 passphrase regardless of its complexity.
+
+**Q72:** Which security policy automatically locks a user account after 3–5 consecutive failed login attempts, preventing automated password guessing?
+- A) Password Complexity Policy
+- B) Account Lockout Policy
+- C) Password Expiration Policy
+- D) Clean Desk Policy
+
+> **Correct: B** — An Account Lockout Policy disables or locks user accounts after a specified threshold of failed password attempts, stopping online brute-force and dictionary attacks.
+
+**Q73:** Which technology protects 'Data at Rest' stored on a physical laptop hard drive if the laptop is physically stolen?
+- A) HTTPS / TLS
+- B) VPN Tunnel
+- C) Full Disk Encryption (e.g., BitLocker / FileVault)
+- D) MAC Address Filtering
+
+> **Correct: C** — Full Disk Encryption (such as Microsoft BitLocker or macOS FileVault) encrypts all storage sectors, protecting data at rest against unauthorized physical access if a device is lost or stolen.
+
+**Q74:** An employee works on confidential spreadsheets on a laptop while seated in a busy public coffee shop. Which physical security control prevents nearby strangers from Shoulder Surfing?
+- A) Kensington cable lock
+- B) Polarized privacy screen filter
+- C) Anti-static wrist strap
+- D) Surge protector
+
+> **Correct: B** — A polarized privacy screen filter restricts the viewing angle of a monitor so only the person directly in front of the screen can read its contents, blocking shoulder surfing from side angles.
+
+**Q75:** What role does a Certificate Authority (CA) perform in Public Key Infrastructure (PKI)?
+- A) It acts as an internet service provider
+- B) It is a trusted third party that verifies an entity's identity and digitally signs their public SSL/TLS certificate
+- C) It scans incoming emails for spam
+- D) It assigns MAC addresses to network interfaces
+
+> **Correct: B** — A Certificate Authority (CA) is a trusted third-party organization (such as Let's Encrypt or DigiCert) that validates domain identities and issues digital certificates binding public keys to verified entities.
+
+**Q76:** The CIA Triad principle of Availability ensures that:
+- A) Only authorized users can read confidential files
+- B) Data is protected against unauthorized tampering and corruption
+- C) Authorized users have uninterrupted access to systems, applications, and data when needed
+- D) All wireless network traffic is encrypted with WEP
+
+> **Correct: C** — Availability ensures that authorized users have reliable, timely, and uninterrupted access to information, systems, and resources when needed (supported by RAID, backups, and UPS).
+
 
 ---
 
