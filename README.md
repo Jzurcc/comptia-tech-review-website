@@ -1,6 +1,16 @@
 # CompTIA Tech+ (FC0-U71) — Exam Preparation Guide
 A helper website to help me review for a certification. Created with Claude Code. Visit the static website [here](https://jzurcc.github.io/comptia-tech-review-website/).
-[![msedge_6gDGgZ6S6F](https://github.com/user-attachments/assets/819c48a5-fe0b-471e-bab8-9324a036d72a)](https://jzurcc.github.io/comptia-tech-review-website/)
+
+**Desktop View:**
+[![msedge_cQtxcNnJYR](https://github.com/user-attachments/assets/a118972a-5842-46c3-a6c2-078324da4ccd)](https://jzurcc.github.io/comptia-tech-review-website/)
+
+**Mobile View:**
+
+<a href="https://jzurcc.github.io/comptia-tech-review-website/" target="_blank">
+  <img width="270" height="535" alt="mobile view" src="https://github.com/user-attachments/assets/9cc36c02-f3fd-488a-8774-ae3f25f884c9" />
+</a>
+
+
 
 > **Goal:** Pass the FC0-U71 exam with confidence.
 > **Approach:** Systematic domain mastery + active recall + scenario-based practice.
